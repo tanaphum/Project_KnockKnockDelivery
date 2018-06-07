@@ -4,27 +4,20 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Seller extends Model
+class Buyer extends Model
 {
-    protected $primaryKey = 'seller_id';
 
-    protected $fillable = [
-        'seller_name',
-        'shop_name',
-        'shop_location',
-        'shop_type_id',
-        'status_id',
-        'shop_latitude',
-        'shop_longitude',
-        'user_id'
-    ];
+    protected $primaryKey = 'buyer_id';
 
     public $timestamps = false;
 
-    public function shoptype()
-    {
-        return $this->belongsTo('App\ShopType','shop_type_id', 'shop_type_id');
-    }
+    protected $fillable = [
+        'buyer_firstname',
+        'buyer_lastname',
+        'telephone_number',
+        'status_id',
+        'user_id'
+    ];
 
     public function status()
     {

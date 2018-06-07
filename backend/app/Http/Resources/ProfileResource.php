@@ -20,7 +20,7 @@ class ProfileResource extends JsonResource
             'user_id' => $this->user_id,
             'role' => [
                 'role_id' => $this->role->role_id,
-                'role_name' => $this->role->role_name,
+                'role_name' => $this->role->role_name,               
             ]
         ];
     }

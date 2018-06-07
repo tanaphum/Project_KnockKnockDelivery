@@ -10,14 +10,12 @@ use App\User;
 
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    private $user;
+
+    public function __construct(User $user)
     {
         $this->middleware('auth:api', ['except' => ['login', 'signup']]);
+        $this->user = $user;
     }
 
     /**
@@ -38,7 +36,7 @@ class AuthController extends Controller
 
     public function signup(SignUpRequest $request)
     {
-        User::create($request->all());
+        $this->user->create($request->all());
         return $this->login($request);
     }
 

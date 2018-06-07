@@ -5,30 +5,64 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProfileResource as ProfileResource;
+use App\Http\Resources\ProfileResource;
 use App\Http\Resources\ProfileCollection;
 use App\Http\Requests\CreateProfileRequest;
 use App\Profile;
 use App\User;
-use App\Role;
 
 class ProfileController extends Controller
 {
-    public function profilesList($user_id)
-    {
-        $user = User::find($user_id);
+    private $profile;
+    private $user;
 
+    public function __construct(Profile $profile, User $user)
+    {
+        $this->profile = $profile;
+        $this->user = $user;
+    }
+
+    public function getProfilesByUserId($user_id)
+    {
+        if($user_id <= 0)
+        {
+            return response()->json(['message' =>'Bad Request'], 400);
+        }        
+        
+        $user = $this->user->find($user_id);
+        
         if (!$user)
             return response()->json(['message' => 'User not found'], 404);
 
-        $profiles = Profile::with('role')->where('user_id', $user_id)->get();
+        $profiles = $this->profile->with('role')->where('user_id', $user_id)->get();
         return ProfileResource::collection($profiles);
     }
 
     public function createProfile(CreateProfileRequest $request)
     {
-        Profile::create($request->all());
+        $profiles = $this->profile->with('role')->where('user_id', $request->user_id)->get();
+        $roleProfileCount = intval($profiles->where('role_id', $request->role_id)->count());
 
-        return response()->json(['message' => 'Profile created'], 201);
+        if( $profiles->count() > 3 || $roleProfileCount > 1 )
+        {
+            return response()->json('Error', 500);
+        }
+
+        $profile = $this->profile->create($request->all());
+
+        if(!$profile)
+        {
+            return response()->json('Error', 500);
+        }
+
+        return response()->json(
+            [
+                'message' => 'Successfully',
+                'result' => $profile
+            ],
+            201
+        );
     }
+
+
 }

@@ -1,0 +1,151 @@
+<div class="container">
+  <div *ngIf="isCreateSeller">
+    <div class="w3-row">
+      <div class="w3-container w3-display-middle">
+        <div class="card">
+          <div class="card-header">Create Seller Profile</div>
+          <div class="card-body">
+            <form #createSellerForm=ngForm (ngSubmit)="createSeller()">
+
+              <div class="form-group">
+                <label for="input-name">Seller Name</label>
+                <input type="text" name="name" class="form-control" id="input-name" placeholder="Seller Name" [(ngModel)]="sellerForm.sellerName"
+                  required/>
+                <span class="text-danger" [hidden]="!error.sellerName">
+                  {{error.sellerName}}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="input-shop-name">Shop Name</label>
+                <input type="text" name="shop-name" class="form-control" id="input-shop-name" placeholder="Shop Name" [(ngModel)]="sellerForm.shopName"
+                  required>
+                <span class="text-danger" [hidden]="!error.shopName">
+                  {{error.shopName}}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="input-Type">Shop Type</label>
+                <select class="form-control" name="type" id="input-Type" [(ngModel)]="sellerForm.selectedType">
+                  <option *ngFor="let item of sellerForm.type" [value]="item.model">{{item.model}}</option>
+                </select>
+                <span class="text-danger" [hidden]="!error.type">
+                  {{error.type}}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="input-localtion">Location</label>
+                <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="location" [(ngModel)]="sellerForm.location"
+                  required></textarea>
+                <span class="text-danger" [hidden]="!error.location">
+                  {{error.location}}
+                </span>
+              </div>
+
+
+              <div class="form-group">
+                <label for="input-image">Shop Image</label><br>
+                <input  type="file" name="shop-image"  id="input-image" (change)="readImageUrl($event)" [(ngModel)]="sellerForm.shopImg"
+                accept="image/*" required>
+                <span class="text-danger" [hidden]="!error.shopImg">
+                  {{error.shopImg}}
+                </span>
+                <div>
+                <img id="imagePriview" [src]="sellerForm.shopImg" />                
+              </div>
+              </div>
+
+              
+
+
+              <button type="submit" class="btn btn-block btn-success">Create</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isCreateBuyer">
+    <div class="w3-row">
+      <div class="w3-container w3-display-middle">
+        <div class="card">
+          <div class="card-header">Create Buyer Profile</div>
+          <div class="card-body">
+            <form #createBuyerForm=ngForm (ngSubmit)="onSubmit()">
+
+              <div class="form-group">
+                <label for="input-name">Buyer Name</label>
+                <input type="text" name="name" class="form-control" id="input-name" placeholder="Buyer Name" [(ngModel)]="buyerForm.buyerName"
+                  required/>
+                <span class="text-danger" [hidden]="!error.buyerName">
+                  {{error.buyerName}}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="input-localtion">Location</label>
+                <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="location" [(ngModel)]="buyerForm.location"
+                  required></textarea>
+                <span class="text-danger" [hidden]="!error.location">
+                  {{error.location}}
+                </span>
+              </div>
+
+
+              <button type="submit" class="btn btn-block btn-success">Create</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isCreateDeliver">
+    <div class="w3-row">
+      <div class="w3-container w3-display-middle">
+        <div class="card">
+          <div class="card-header">Create Deliver Profile</div>
+          <div class="card-body">
+            <form #createDeliverForm=ngForm (ngSubmit)="onSubmit()">
+
+              <div class="form-group">
+                <label for="input-name">Name</label>
+                <input type="text" name="name" class="form-control" id="input-name" placeholder="Name" [(ngModel)]="deliverForm.name" required/>
+                <span class="text-danger" [hidden]="!error.name">
+                  {{error.name}}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="input-email">Email</label>
+                <input type="email" name="email" class="form-control" id="input-email" placeholder="Email" [(ngModel)]="deliverForm.email"
+                  required>
+                <span class="text-danger" [hidden]="!error.email">
+                  {{error.email}}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="input-password">Password</label>
+                <input type="password" name="password" class="form-control" id="input-password" placeholder="Password" [(ngModel)]="deliverForm.password"
+                  required>
+                <span class="text-danger" [hidden]="!error.password">
+                  {{error.password}}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="input-confirm-password">Confirm Password</label>
+                <input type="password" name="confirmPassword" class="form-control" id="input-confirm-password" placeholder="Confirm Password"
+                  [(ngModel)]="deliverForm.password_confirmation" required>
+              </div>
+
+              <button type="submit" id="rotate" class="btn btn-block btn-success">Create</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

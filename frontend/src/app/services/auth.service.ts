@@ -31,15 +31,15 @@ export class AuthService {
   }
 
   setToken(token) {
-    localStorage.setItem('token', token);
+    localStorage.setItem('UAT', token);
   }
 
   getToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem('UAT');
   }
 
   removeToken() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('UAT');
   }
 
   isValidToken() {
@@ -70,4 +70,10 @@ export class AuthService {
     this.userLoggedIn.next(value);
   }
 
+  setUserProfile(data) {
+    console.log(data);
+    localStorage.setItem('user_id', data.user.user_id);
+
+
+  }
 }

@@ -1,25 +1,30 @@
-<div class="mt4 col-6 offset-3">
-  <div class="card">
-    <div class="card-header">Sign In</div>
-    <div class="card-body">
-        <form #loginForm=ngForm (ngSubmit)="onSubmit()">
-          <div class="alert alert-danger" [hidden]="!error">
-            {{error}}
-          </div>
-
+<div class="w3-row">
+  <div class="w3-container w3-display-middle">
+    <div class="card">
+        <div class="card-header">Sign In</div>
+        <div class="card-body">
+          <form #loginForm=ngForm (ngSubmit)="onSubmit()">
             <div class="form-group">
               <label for="input-email">Email</label>
-              <input type="email" name="email" class="form-control" id="input-email" placeholder="Email" [(ngModel)]="form.email" required>
+              <input type="email" name="email" class="form-control" id="input-email" placeholder="example@email.com" [(ngModel)]="form.email"
+                required>
             </div>
             <div class="form-group">
-                <label for="input-password">Password</label>
-                <input type="password" name="password" class="form-control" id="input-password" placeholder="Password" [(ngModel)]="form.password" required>
+              <label for="input-password">Password</label>
+              <input type="password" name="password" class="form-control" id="input-password" placeholder="**********" [(ngModel)]="form.password"
+                required>
+            </div>
+            <div class="alert alert-danger" [hidden]="!error">
+              {{error}}
             </div>
             <br>
-            <button type="submit" class="btn btn-danger btn-block">Sign In</button>
+            <button type="submit" class="btn btn-block">Sign In</button>
           </form>
-          <hr>
-          New to Knock Knock Delivery? <a routerLink="/signup">Sign up now</a>
+          <hr> New to Knock Knock Delivery?
+          <a routerLink="/signup">Sign up now</a>
+        </div>
     </div>
+
+
   </div>
 </div>

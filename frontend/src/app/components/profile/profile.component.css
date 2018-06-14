@@ -1,0 +1,91 @@
+.container {
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  max-height: 100vh;
+  max-width: 100%;
+  background-image: url('/assets/img/transportation.jpg');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.card-container {
+  width: 700px;
+  height: 500px;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 375px) {
+  .card-container {
+    width: 350px;
+    height: 600px;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .card-container {
+    width: 350px;
+    height: 600px;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+
+.btnPlus {
+  width: 150px;
+  height: 250px;
+  font-size: 64px;
+  background-color: rgba(201, 199, 199, 0.5);
+  /* border-color: gray; */
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btnPlus:hover {
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.loader-container {
+  display: inline-block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 240px;
+  height: 120px;
+  margin: auto;
+}
+
+.loader {
+  border: 14px solid #f3f3f3;
+  /* Light grey */
+  border-top: 14px solid #000000;
+  /* Blue */
+  border-radius: 50%;
+  width: 240px;
+  height: 240px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

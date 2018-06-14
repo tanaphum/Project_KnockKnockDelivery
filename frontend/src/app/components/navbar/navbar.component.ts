@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   public loggedIn: boolean;
+  private mySidebar;
 
   constructor(
     private router: Router,
@@ -18,6 +19,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.authService.authStatus.subscribe(value => this.loggedIn = value);
+    this.mySidebar = document.getElementById('mySidebar');
+
   }
 
   logout(event: MouseEvent) {
@@ -26,5 +29,17 @@ export class NavbarComponent implements OnInit {
     this.authService.changeAuthStatus(false);
     this.router.navigateByUrl('/login');
   }
+
+  w3_open() {
+      if (this.mySidebar.style.display === 'block') {
+        this.mySidebar.style.display = 'none';
+      } else {
+        this.mySidebar.style.display = 'block';
+      }
+  }
+
+  w3_close() {
+    this.mySidebar.style.display = 'none';
+}
 
 }

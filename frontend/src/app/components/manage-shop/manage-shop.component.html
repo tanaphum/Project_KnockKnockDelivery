@@ -1,0 +1,116 @@
+<div class="w3-row" id="container">
+  <div class="header">
+    <div class="w3-container">
+      <h1>
+        <b>{{seller.shop_name}}</b>
+      </h1>
+
+      <!-- <div class="w3-bottombar w3-padding-16" id="myTopnav">
+        <span class="w3-margin-right">filter:</span>
+        <button class="w3-button w3-black btn-menu">ALL PRODUCTS</button>
+        <button class="w3-button w3-white btn-menu">
+          <i class="fa fa-check w3-margin-right"></i>AVAILABLE PRODUCTS</button>
+        <button class="w3-button w3-white btn-menu">
+          <i class="fa fa-minus w3-margin-right"></i>OUT OF STOCK PRODUCT</button>
+        <button class="w3-button w3-white btn-menu">
+          <i class="fa fa-plus w3-margin-right"></i>ADD PRODUCT</button>
+          <button class="w3-button w3-white btn-menu">
+            <i class="fa fa-history w3-margin-right"></i>SHOP HISTOTY</button>
+            <button class="w3-button w3-white btn-menu">
+                <i class="fa fa-cogs w3-margin-right"></i>EDIT SHOP</button>
+      </div> -->
+      <!-- Add on  -->
+      <div class="topnav" id="myTopfilter">
+        <a id="filter">Filter: </a>
+        <a (click)="onSelectAllProducts()">
+          <i class="fa fa-inbox w3-margin-right"></i>ALL PRODUCTS</a>
+        <a (click)="onSelectAvailableProducts()">
+          <i class="fa fa-check w3-margin-right"></i>AVAILABLE PRODUCTS</a>
+        <a (click)="onSelectOutOfStockProduct()">
+          <i class="fa fa-minus w3-margin-right"></i>OUT OF STOCK PRODUCT</a>
+        <a (click)="onSelectAddProduct()">
+          <i class="fa fa-plus w3-margin-right"></i>ADD PRODUCT</a>
+        <a (click)="onSelectShopHistory()">
+          <i class="fa fa-history w3-margin-right"></i>SHOP HISTOTY</a>
+        <a (click)="onSelectEditShop()">
+          <i class="fa fa-cogs w3-margin-right"></i>EDIT SHOP</a>
+        <a href="javascript:void(0);" class="icon" (click)="toogle()">
+          <i class="fa fa-angle-down"></i>
+        </a>
+      </div>
+      <hr>
+
+    </div>
+  </div>
+
+  <div *ngIf="isAllProducts">
+    <div class="loader-container">
+      <div class="loader" *ngIf="!isLoad"></div>
+    </div>
+    <div class="table-container" *ngIf="isLoad">
+      <table datatable [dtOptions]="dtOptions" class="row-border hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Product Description</th>
+            <th>Product Price</th>
+            <th>Unit In Stock</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>{{ product.product_id }}</td>
+            <td>{{ product.product_name }}</td>
+            <td>{{ product.product_description }}</td>
+            <td>{{ product.product_price }}</td>
+            <td>{{ product.unit_in_stock }}</td>
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-info">Info</button>
+                <button type="button" class="btn btn-warning">Edit</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+
+              </div>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="isAvailableProducts">
+    <div class="w3-row-padding w3-container">
+      <p>isAvailableProducts</p>
+    </div>
+  </div>
+
+  <div *ngIf="isOutOfStockProducts">
+    <p>isOutOfStockProducts</p>
+
+  </div>
+
+  <div *ngIf="isAddProduct">
+    <div class="loader-container">
+      <div class="loader" *ngIf="!isLoad"></div>
+    </div>
+    <div class="w3-row-padding w3-container">
+      <app-create-product *ngIf="isLoad"></app-create-product>
+    </div>
+  </div>
+
+  <div *ngIf="isShopHistory">
+    <p>isShopHistory</p>
+
+  </div>
+
+  <div *ngIf="isEditShop">
+    <p>isEditShop</p>
+
+  </div>
+
+
+
+</div>

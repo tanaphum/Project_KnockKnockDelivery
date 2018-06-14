@@ -1,0 +1,75 @@
+<div class="container">
+  <br>
+  <p>{{selected_catagory}}</p>
+  <h1>Add Product</h1>
+  <form #createProductForm=ngForm (ngSubmit)="onCreate()">
+    <div class="form-group">
+      <label for="input-name">Product Name</label>
+      <input type="text" name="name" class="form-control" id="input-name" placeholder="Product Name" [(ngModel)]="form.product_name"
+        required/>
+      <span class="text-danger" [hidden]="!error.product_name">
+        {{error.product_name}}
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="input-price">Product Price</label>
+      <input type="number" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="form.product_price"
+        required/>
+      <span class="text-danger" [hidden]="!error.product_price">
+        {{error.product_price}}
+      </span>
+    </div>
+
+    <div class="form-group">
+        <label for="selectCatagory">Select Product Catagory</label>
+        <select class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="form.selected_catagory"  required>
+            <option value="" disabled selected>Select a Catagory</option>
+            <option *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option>
+          </select>
+    </div> 
+
+    <div class="form-group">
+      <label for="input-price">Product Amount Unit</label>
+      <input type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="form.product_unit_amount"
+        required>
+      <span class="text-danger" [hidden]="!error.product_unit_amount">
+        {{error.product_unit_amount}}
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="input-description">Description</label>
+      <textarea type="text" name="description" class="form-control" id="input-description" placeholder="Product Description" [(ngModel)]="form.product_description"
+        required></textarea>
+      <span class="text-danger" [hidden]="!error.product_description">
+        {{error.product_description}}
+      </span>
+    </div>
+
+
+
+    <div class="form-group">
+      <label for="input-price">Product Image</label>
+      <br>
+      <input type='file' id="img" (change)="preview($event)" accept="image/*" />
+      <br>
+      <br>
+
+      <canvas id="previewImg" #mycanvas></canvas>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <button type="submit" class="btn btn-success btn-block">Create</button>
+
+      </div>
+      <div class="col">
+        <button class="btn btn-danger btn-block" (click)="onClear()">Clear</button>
+
+      </div>
+    </div>
+  </form>
+  <br>
+
+</div>

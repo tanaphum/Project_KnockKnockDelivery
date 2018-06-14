@@ -1,7 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Knock Knock</a>
   <ul class="navbar-nav mr-auto">
   </ul>
@@ -13,4 +10,36 @@
           <a class="btn" href="#" (click)="logout($event)" *ngIf="loggedIn">Logout</a>
       </li>
     </ul>
+</nav>
+ -->
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+    <div class="w3-bar w3-white w3-card" id="myNavbar">
+      <a class="w3-bar-item w3-button w3-wide" href="/"><b>Knock Knock</b> Deliverly</a>
+      
+      <!-- Right-sided navbar links -->
+      <div class="w3-right w3-hide-small">
+        <!-- <a routerLink="/dashboard" routerLinkActive="active" class="w3-bar-item w3-button">DASHBOARD</a>
+        <a routerLink="/aboutus" routerLinkActive="active" class="w3-bar-item w3-button">ABOUT US</a> -->
+        <a routerLink="/login" class="w3-bar-item w3-button" *ngIf="router.url !== '/login' && !loggedIn"><i class="fa fa-user"></i>  Sign In</a>
+        <a class="w3-bar-item w3-button" href="/profile" *ngIf="loggedIn">Profile</a>
+        <a class="w3-bar-item w3-button" href="/" (click)="logout($event)" *ngIf="loggedIn">Log out</a>
+  
+      </div>
+      <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+  
+      <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" (click)="w3_open()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+  </div>
+  
+  <!-- Sidebar on small screens when clicking the menu icon -->
+  <nav class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="mySidebar">
+    <button class="w3-bar-item w3-button w3-large w3-right-align" (click)="w3_close()">Close &times;</button> 
+    <a class="w3-bar-item w3-button" href="/"><b>Knock Knock</b> Deliverly</a>
+    <hr>
+    <a class="w3-bar-item w3-button" routerLink="/login" (click)="w3_close()" *ngIf="router.url !== '/login' && !loggedIn">Sign In</a>
+    <a class="w3-bar-item w3-button" href="/" (click)="logout($event)" *ngIf="loggedIn">Log Out</a>
 </nav>

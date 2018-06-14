@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  form = {
+    Name: null,
+    Email: null,
+    Subject: null,
+    Message: null
+  };
+
   constructor() { }
 
   ngOnInit() {
   }
+
+  onSubmit() {
+  }
+
 
 }

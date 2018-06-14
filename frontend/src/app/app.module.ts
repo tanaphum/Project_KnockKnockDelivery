@@ -14,6 +14,14 @@ import { RequestResetComponent } from './components/password/request-reset/reque
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
 import { AuthService } from './services/auth.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { CreateProfileComponent } from './components/create-profile/create-profile.component';
+import { ManageShopComponent } from './components/manage-shop/manage-shop.component';
+import { ShopComponent } from './components/shop/shop.component';
+import { ShopsComponent } from './components/shops/shops.component';
+import { CreateProductComponent } from './components/create-product/create-product.component';
+
+import { DataTablesModule } from 'angular-datatables';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +32,12 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     ProfileComponent,
     RequestResetComponent,
     ResponseResetComponent,
-    DashboardComponent
+    DashboardComponent,
+    CreateProfileComponent,
+    ManageShopComponent,
+    ShopComponent,
+    ShopsComponent,
+    CreateProductComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +45,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    DataTablesModule
   ],
   providers: [
     AuthService,

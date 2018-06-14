@@ -1,0 +1,45 @@
+.bgImg {
+    background-position: center;
+    height:100vh;
+    width: 100%;
+    max-height: 100vh;
+    max-width: 100%;
+    background-image: url('/assets/img/delivery-keyboard-button.jpg');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+
+}
+
+.img-recommend-shop{
+    background-position: center;
+    background-size: cover;
+    width:700px;
+    height:394px;
+    background-image: url('/assets/img/mac-image.jpg');
+}
+.w3-large, .w3-xxlarge, .w3-jumbo{
+    font-family: "Raleway";
+
+}
+
+.team-member {
+    width:100%;
+    height: 100%;
+    max-height: 167px;
+}
+
+
+.jumbo {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+
+i {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+
+}

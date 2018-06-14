@@ -10,17 +10,20 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  form = {
+  private form = {
     email: null,
     password: null
   };
-  error = null;
+  private error = null;
+  private rotate;
+
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) { }
   ngOnInit() {
+    this.rotate = document.getElementById('flipper');
 
   }
 
@@ -34,11 +37,16 @@ export class LoginComponent implements OnInit {
   handleResponse(data) {
     this.authService.handleToken(data.access_token);
     this.authService.changeAuthStatus(true);
+    this.authService.setUserProfile(data);
     this.router.navigateByUrl('/profile');
+
   }
 
   handleError(error) {
     this.error = error.error.error;
   }
+
+
+
 
 }

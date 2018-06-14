@@ -1,0 +1,117 @@
+<div class="w3-row" id="container">
+
+    <div class="header">
+      <div class="w3-container">
+        <h1>
+          <b>Knock Knock Shop</b>
+        </h1>
+  
+        <!-- <div class="w3-bottombar w3-padding-16" id="myTopnav">
+          <span class="w3-margin-right">filter:</span>
+          <button class="w3-button w3-black btn-menu">ALL PRODUCTS</button>
+          <button class="w3-button w3-white btn-menu">
+            <i class="fa fa-check w3-margin-right"></i>AVAILABLE PRODUCTS</button>
+          <button class="w3-button w3-white btn-menu">
+            <i class="fa fa-minus w3-margin-right"></i>OUT OF STOCK PRODUCT</button>
+          <button class="w3-button w3-white btn-menu">
+            <i class="fa fa-plus w3-margin-right"></i>ADD PRODUCT</button>
+            <button class="w3-button w3-white btn-menu">
+              <i class="fa fa-history w3-margin-right"></i>SHOP HISTOTY</button>
+              <button class="w3-button w3-white btn-menu">
+                  <i class="fa fa-cogs w3-margin-right"></i>EDIT SHOP</button>
+        </div> -->
+        <!-- Add on  -->
+        <div class="topnav" id="myTopfilter">
+          <a class="active">ALL PRODUCTS</a>
+          <a>
+            <i class="fa fa-check w3-margin-right"></i>AVAILABLE PRODUCTS</a>
+          <a>
+            <i class="fa fa-minus w3-margin-right"></i>OUT OF STOCK PRODUCT</a>
+          <a>
+            <i class="fa fa-plus w3-margin-right"></i>ADD PRODUCT</a>
+          <a>
+            <i class="fa fa-history w3-margin-right"></i>SHOP HISTOTY</a>
+          <a>
+            <i class="fa fa-cogs w3-margin-right"></i>EDIT SHOP</a>
+          <a href="javascript:void(0);" class="icon" (click)="toogle()">
+            <i class="fa fa-angle-down"></i>
+          </a>
+        </div>
+        <hr>
+  
+      </div>
+    </div>
+  
+    <!-- First Photo Grid-->
+    <div class="w3-row-padding">
+      <div class="w3-third w3-container w3-margin-bottom">
+        <img src="assets/img/mac-image.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
+        <div class="w3-container w3-white">
+          <p>
+            <b>Mac book pro</b>
+            <i class="available"> [Available]</i>
+          </p>
+          <p>Price 50000 Bath</p>
+          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida
+            diam non fringilla.</p>
+        </div>
+        <button style=" border-radius:0" onclick="document.getElementById('id01').style.display='block'" class="btn btn-warning btn-block">Edit</button>
+      </div>
+      <div class="w3-third w3-container w3-margin-bottom">
+        <img src="assets/img/mac-image.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
+        <div class="w3-container w3-white">
+          <p>
+            <b>Mac book air</b>
+            <i class="outOfStock"> [Out of Stock]</i>
+          </p>
+          <p>Price 30000 Bath</p>
+          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida
+            diam non fringilla.</p>
+        </div>
+        <button style=" border-radius:0" class="btn btn-warning btn-block">Edit</button>
+      </div>
+      <div class="w3-third w3-container">
+        <img src="assets/img/mac-image.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
+        <div class="w3-container w3-white">
+          <p>
+            <b>Mac book pro</b>
+          </p>
+          <p>Price 50000 Bath</p>
+          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida
+            diam non fringilla.</p>
+        </div>
+        <button style=" border-radius:0" class="btn btn-warning btn-block">Edit</button>
+  
+      </div>
+    </div>
+  
+  
+  
+  
+  
+  
+  
+    <div id="id01" class="w3-modal">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <div onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-large w3-display-topright">&times;</div>
+          <img src="assets/img/mac-image.jpg" class="modal-img">
+          <div class="w3-container w3-white">
+            <p>
+              <b>Mac book pro</b>
+              <i class="available"> [Available]</i>
+            </p>
+            <p>Price 50000 Bath</p>
+            <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida
+              diam non fringilla.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  
+  
+  </div>
+  

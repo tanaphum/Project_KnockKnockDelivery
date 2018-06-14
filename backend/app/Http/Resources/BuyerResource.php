@@ -15,12 +15,13 @@ class BuyerResource extends JsonResource
     public function toArray($request)
     {
         return [ 
+            'buyer_id' => $this->buyer_id,
             'buyer_firstname' => $this->buyer_firstname,
             'buyer_lastname' => $this->buyer_lastname,
             'telephone_number' => $this->telephone_number,
-            'status' => [
-                'status_id' => $this->status->status_id,
-                'status_name' => $this->status->status_name
+            'profile_status' => [
+                'profile_status_id' => $this->profile_status->profile_status_id,
+                'profile_status_name' => $this->profile_status->profile_status_name
             ],
             'profile_id' => $this->profile_id
         ];

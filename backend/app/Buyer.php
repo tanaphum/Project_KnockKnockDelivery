@@ -15,13 +15,13 @@ class Buyer extends Model
         'buyer_firstname',
         'buyer_lastname',
         'telephone_number',
-        'status_id',
+        'profile_status_id',
         'user_id'
     ];
 
-    public function status()
+    public function profile_status()
     {
-        return $this->belongsTo('App\Status','status_id', 'status_id');
+        return $this->belongsTo('App\ProfileStatus','profile_status_id', 'profile_status_id');
     }
 
     public function profile()

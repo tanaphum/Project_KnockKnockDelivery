@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Buyer;
 use App\Profile;
+use App\User;
 use App\Http\Resources\BuyerResource as BuyerResource;
 use App\Http\Resources\BuyerCollection;
+use App\Http\Requests\BuyerRequest;
 
 class BuyerController extends Controller
 {
     private $buyer;
     private $profile;
+    private $user;
 
-    public function __construct(Buyer $buyer, Profile $profile)
+    public function __construct(Buyer $buyer, Profile $profile, User $user)
     {
         $this->buyer = $buyer;
         $this->profile = $profile;
+        $this->user = $user;
     }
 
     public function getBuyers()
@@ -33,18 +37,26 @@ class BuyerController extends Controller
             return response()->json('Bad Request', 400);
         }
 
-        $buyer = $this->buyer->with('status')->where('profile_id', $profile_id)->get();
+        $buyer = $this->buyer->with('profile_status')->where('profile_id', $profile_id)->get();
         if($buyer->isEmpty())
         {
-            return response()->json('Seller not found', 404);
+            return response()->json(['message' => 'Buyer not found'], 404);
         }
     
-        return Buyer::collection($buyer);
+        return BuyerResource::collection($buyer);
     }
 
     public function createBuyer(BuyerRequest $request)
     {
-        $checkRole = $this->profile->where('user_id', $request->user_id)->where('role_id', 2)->count();
+        $user = $this->user->find($request->user_id);
+        if($user === null)
+        {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404 );
+        }
+
+        $checkRole = $this->profile->where('user_id', $request->user_id)->where('role_id', 3)->count();
         if($checkRole > 0)
         {
             return response()->json([
@@ -62,7 +74,7 @@ class BuyerController extends Controller
         $buyer->buyer_firstname = $request->buyer_firstname;
         $buyer->buyer_lastname = $request->buyer_lastname;
         $buyer->telephone_number = $request->telephone_number;
-        $buyer->status_id = 1;
+        $buyer->profile_status_id = 1;
         $buyer->profile_id = $profile->profile_id;
 
         $buyer->save();
@@ -76,7 +88,7 @@ class BuyerController extends Controller
         );
     }
 
-    public function updateBuyer($buyer_id ,Request $request)
+    public function updateBuyer(BuyerRequest $request, $buyer_id)
     {
         if($buyer_id < 0)
         {
@@ -90,10 +102,19 @@ class BuyerController extends Controller
             return response()->json('Buyer not found', 404);
         }
 
-        $buyer->buyer_firstname = $request->input('buyer_firstname');
-        $buyer->buyer_lastname = $request->input('buyer_lastname');
-        $buyer->telephone_number = $request->input('telephone_number');
-        $buyer->status_id = $request->input('status_id');
+        $buyer->buyer_firstname = $request->buyer_firstname;
+        $buyer->buyer_lastname = $request->buyer_lastname;
+        $buyer->telephone_number = $request->telephone_number;
+        
+        if ($request->profile_status_id == null)
+        {
+            $buyer->profile_status_id = 1;
+        }
+        else
+        {
+            $buyer->profile_status_id = $request->profile_status_id;
+        }
+
         $buyer->save();
 
         return response()->json(

@@ -4,15 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SellerRequest extends FormRequest
+class ProductRequest extends FormRequest
 {
     protected $rules = [
-        'seller_name' => 'required',
-        'shop_name' => 'required',
-        'shop_location' => 'required',
-        'shop_type_id' => 'required',
-        'shop_latitude' => 'required',
-        'shop_longitude' => 'required',
+        'product_name' => 'required',
+        'product_description' => 'required',
+        'product_price' => 'required',
+        'unit_in_stock' => 'required',
+        'product_category_id' => 'required',
         // 'seller_photos' => 'required|array',
         // 'seller_photos.*' => 'required|image|mimes:jpeg,bmp,png|max:7000'
     ];
@@ -48,7 +47,7 @@ class SellerRequest extends FormRequest
         $rules = $this->rules;
 
         //เปลี่ยนหรือเพิ่มกฎสำหรับเมธอด Post     
-        $rules['user_id'] =  'required';
+        // $rules['user_id'] =  'required';
         return $rules;
     }
     
@@ -56,6 +55,4 @@ class SellerRequest extends FormRequest
     {
         return $this->rules;
     }
-    
 }
-    

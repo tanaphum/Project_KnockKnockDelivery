@@ -13,7 +13,7 @@ class Seller extends Model
         'shop_name',
         'shop_location',
         'shop_type_id',
-        'status_id',
+        'profile_status_id',
         'shop_latitude',
         'shop_longitude',
         'user_id'
@@ -26,9 +26,9 @@ class Seller extends Model
         return $this->belongsTo('App\ShopType','shop_type_id', 'shop_type_id');
     }
 
-    public function status()
+    public function profile_status()
     {
-        return $this->belongsTo('App\Status','status_id', 'status_id');
+        return $this->belongsTo('App\ProfileStatus','profile_status_id', 'profile_status_id');
     }
 
     public function profile()

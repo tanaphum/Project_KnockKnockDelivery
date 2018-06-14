@@ -26,12 +26,18 @@ Route::group([
     Route::get('shoptypes', 'ShopTypeController@getShopTypes');
     Route::post('seller', 'SellerController@createSeller');
     Route::put('seller/{profile_id}', 'SellerController@updateSeller');
+    
+    Route::get('seller/{seller_id}/products', 'ProductController@getProductsBySellerId');
+    Route::post('seller/{seller_id}/product', 'ProductController@createProduct');
+    Route::put('seller/{seller_id}/product/{product_id}', 'ProductController@updateProduct');
+    Route::delete('seller/product/{product_id}', 'ProductController@deleteProduct');
 });
 
 Route::group([
     // 'middleware' => 'jwt.auth',
 ], function ($router) {
     Route::get('buyers', 'BuyerController@getBuyers');
+    Route::get('buyer/profile/{profile_id}', 'BuyerController@getBuyerByProfileId');
     Route::post('buyer', 'BuyerController@createBuyer');
     Route::put('buyer/{buyer_id}', 'BuyerController@updateBuyer');
 });
@@ -43,4 +49,12 @@ Route::group([
     Route::get('deliver/profile/{profile_id}', 'DeliverController@getDeliverByProfileId');
     Route::post('deliver', 'DeliverController@createDeliver');
     Route::put('deliver/{deliver_id}', 'DeliverController@updateDeliver');
+});
+
+Route::group([
+    // 'middleware' => 'jwt.auth',
+], function ($router) {
+    Route::get('categories', 'CategoryController@getCategories');
+    Route::get('products', 'ProductController@getProducts');
+    Route::get('product/{product_id}', 'ProductController@getProductByProductId');
 });

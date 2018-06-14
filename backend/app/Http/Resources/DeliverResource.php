@@ -20,9 +20,9 @@ class DeliverResource extends JsonResource
             'deliver_lastname' => $this->deliver_lastname,
             'birthOfDate' => $this->birthOfDate,
             'telephone_number' => $this->telephone_number,
-            'status' => [
-                'status_id' => $this->status->status_id,
-                'status_name' => $this->status->status_name
+            'profile_status' => [
+                'profile_status_id' => $this->profile_status->profile_status_id,
+                'profile_status_name' => $this->profile_status->profile_status_name
             ],
             'profile_id' => $this->profile_id
         ];

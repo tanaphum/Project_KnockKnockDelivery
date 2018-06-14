@@ -6,16 +6,19 @@ use App\Http\Resources\DeliverResource as DeliverResource;
 use App\Http\Requests\DeliverRequest;
 use App\Profile;
 use App\Deliver;
+use App\User;
 
 class DeliverController extends Controller
 {
     private $deliver;
     private $profile;
+    private $user;
 
-    public function __construct(Deliver $deliver, Profile $profile)
+    public function __construct(Deliver $deliver, Profile $profile, User $user)
     {
         $this->deliver = $deliver;
         $this->profile = $profile;
+        $this->user = $user;
     }
 
     public function getDelivers()
@@ -32,7 +35,7 @@ class DeliverController extends Controller
             return response()->json(['message' =>'Bad Request'], 400);
         }
 
-        $deliver = $this->deliver->with('status','profile')->where('profile_id', $profile_id)->get();
+        $deliver = $this->deliver->with('profile_status','profile')->where('profile_id', $profile_id)->get();
         if($deliver->isEmpty())
         {
             return response()->json(['message' => 'Seller not found'], 404);
@@ -43,6 +46,14 @@ class DeliverController extends Controller
 
     public function createDeliver(DeliverRequest $request)
     {
+        $user = $this->user->find($request->user_id);
+        if($user === null)
+        {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404 );
+        }
+        
         $checkRole = $this->profile->where('user_id', $request->user_id)->where('role_id', 4)->count();
         if($checkRole > 0)
         {
@@ -62,7 +73,7 @@ class DeliverController extends Controller
         $deliver->deliver_lastname = $request->deliver_lastname;
         $deliver->dateOfBirth = date($request->dateOfBirth);
         $deliver->telephone_number = $request->telephone_number;
-        $deliver->status_id = 1;
+        $deliver->profile_status_id = 1;
         $deliver->profile_id = $profile->profile_id;
 
         $saveDeliver = $deliver->save();
@@ -95,7 +106,14 @@ class DeliverController extends Controller
         $deliver->deliver_lastname = $request->deliver_lastname;
         $deliver->dateOfBirth = date($request->dateOfBirth);
         $deliver->telephone_number = $request->telephone_number;
-        $deliver->status_id = $request->status_id;
+        if ($request->profile_status_id == null)
+        {
+            $deliver->profile_status_id = 1;
+        }
+        else
+        {
+            $deliver->profile_status_id = $request->profile_status_id;
+        }
 
         $deliver->save();
 

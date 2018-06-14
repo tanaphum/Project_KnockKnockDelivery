@@ -17,14 +17,14 @@ class Deliver extends Model
     ];
 
     protected $hidden = [
-        'status_id'
+        'profile_status_id'
     ];
     
     public $timestamps = false;
 
-    public function status()
+    public function profile_status()
     {
-        return $this->belongsTo('App\Status','status_id', 'status_id');
+        return $this->belongsTo('App\ProfileStatus','profile_status_id', 'profile_status_id');
     }
 
     public function profile()

@@ -10,16 +10,25 @@ use App\Http\Resources\ProfileCollection;
 use App\Http\Requests\CreateProfileRequest;
 use App\Profile;
 use App\User;
+use App\Seller;
+use App\Buyer;
+use App\Deliver;
 
 class ProfileController extends Controller
 {
     private $profile;
     private $user;
+    private $seller;
+    private $buyer;
+    private $deliver;
 
-    public function __construct(Profile $profile, User $user)
+    public function __construct(Profile $profile, User $user, Seller $seller, Buyer $buyer, Deliver $deliver )
     {
         $this->profile = $profile;
         $this->user = $user;
+        $this->seller = $seller;
+        $this->buyer = $buyer;
+        $this->deliver = $deliver;
     }
 
     public function getProfilesByUserId($user_id)
@@ -64,5 +73,80 @@ class ProfileController extends Controller
         );
     }
 
+    public function deleteProfile(DeleteProfileRequest $request ,$profile_id)
+    {
+        if($profile_id <= 0)
+        {
+            return response()->json(['message' => 'Bad request'], 400 );
+        }
+
+        $role_id = $request->role_id;
+
+        if($role_id === 2)
+        {
+            $seller = $this->seller->find($profile_id);
+
+            if($seller === null)
+            {
+                return response()->json(['message' => 'Seller not found'], 404 );
+            }
+
+            $profile = $this->profile->find($profile_id);
+            if($profile === null)
+            {
+                return response()->json(['message' => 'Profile not found'], 404 );
+            }
+
+            $seller->delete();
+            $profile->delete();
+
+            return response()->json(['message' => 'Successfully']); 
+        }
+        else if ($role_id === 3)
+        {
+            $buyer = $this->buyer->find($profile_id);
+
+            if($buyer === null)
+            {
+                return response()->json(['message' => 'Buyer not found'], 404 );
+            }
+
+            $profile = $this->profile->find($profile_id);
+            if($profile === null)
+            {
+                return response()->json(['message' => 'Profile not found'], 404 );
+            }
+
+            $buyer->delete();
+            $profile->delete();
+
+            return response()->json(['message' => 'Successfully']); 
+        }
+        else if($role_id === 4)
+        {
+            $deliver = $this->deliver->find($profile_id);
+
+            if($deliver === null)
+            {
+                return response()->json(['message' => 'Deliver not found'], 404 );
+            }
+
+            $profile = $this->profile->find($profile_id);
+            if($profile === null)
+            {
+                return response()->json(['message' => 'Profile not found'], 404 );
+            }
+
+            $deliver->delete();
+            $profile->delete();
+
+            return response()->json(['message' => 'Successfully']); 
+        }
+        else
+        {
+            return response()->json(['message' => 'Role not found']); 
+        }
+       
+    }
 
 }

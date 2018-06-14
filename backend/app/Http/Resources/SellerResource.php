@@ -23,9 +23,9 @@ class SellerResource extends JsonResource
                 'shop_type_id' => $this->shoptype->shop_type_id,
                 'shop_type_name' => $this->shoptype->shop_type_name
             ],
-            'status' => [
-                'status_id' => $this->status->status_id,
-                'status_name' => $this->status->status_name
+            'profile_status' => [
+                'profile_status_id' => $this->profile_status->profile_status_id,
+                'profile_status_name' => $this->profile_status->profile_status_name
             ],
             'profile_id' => $this->profile_id
         ];

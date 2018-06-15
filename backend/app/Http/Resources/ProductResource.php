@@ -19,7 +19,6 @@ class ProductResource extends JsonResource
             'product_name' => $this->product_name,
             'product_description' => $this->product_description,
             'product_price' => $this->product_price,
-            'product_available' => $this->product_available,
             'category' => [
                 'category_id' => $this->category->category_id,
                 'category_name' => $this->category->category_name               
@@ -27,6 +26,10 @@ class ProductResource extends JsonResource
             'seller' => [
                 'seller_id' => $this->seller->seller_id,
                 'seller_name' => $this->seller->seller_name
+            ],
+            'product_status_id' => [
+                'product_status_id' => $this->product_status->product_status_id,
+                'product_status_name' => $this->product_status->product_status_name
             ]
         ];
     }

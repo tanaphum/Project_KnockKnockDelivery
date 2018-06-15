@@ -28,4 +28,9 @@ class Product extends Model
         return $this->belongsTo('App\Seller', 'seller_id', 'seller_id');
     }
 
+    public function product_status()
+    {
+        return $this->belongsTo('App\ProductStatus', 'product_status_id', 'product_status_id');
+    }
+
 }

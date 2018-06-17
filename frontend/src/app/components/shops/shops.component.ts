@@ -23,7 +23,7 @@ export class ShopsComponent implements OnInit {
 
   getAllProducts() {
     this.BuyerService.getAllProducts().subscribe(
-      response => console.log("getAllProducts: ", response)
+      response => console.log("getAllProducts: ",response)
       ,
       error => console.log(error)
     )

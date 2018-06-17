@@ -14,16 +14,16 @@ export class AuthService {
   };
 
   private userLoggedIn = new BehaviorSubject<boolean>(this.loggedIn());
-  authStatus = this.userLoggedIn.asObservable();
+  authStatus = this.userLoggedIn.asObservable()
 
   constructor(private http: HttpClient) { }
 
   signup(data) {
-    return this.http.post(`${this.baseUrl}/signup`, data);
+    return this.http.post(`${this.baseUrl}/signup`, data)
   }
 
   login(data) {
-    return this.http.post(`${this.baseUrl}/login`, data);
+    return this.http.post(`${this.baseUrl}/login`, data)
   }
 
   handleToken(token) {
@@ -71,7 +71,7 @@ export class AuthService {
   }
 
   setUserProfile(data) {
-    console.log(data);
+    console.log(data)
     localStorage.setItem('user_id', data.user.user_id);
 
 

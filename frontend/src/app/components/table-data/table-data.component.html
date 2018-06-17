@@ -1,0 +1,30 @@
+<table datatable [dtOptions]="dtOptions" class="row-border hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Product Name</th>
+      <th>Product Description</th>
+      <th>Product Price</th>
+      <th>Unit In Stock</th>
+      <th>Product status</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.product_id }}</td>
+      <td>{{ product.product_name }}</td>
+      <td>{{ product.product_description }}</td>
+      <td>{{ product.product_price }}</td>
+      <td>{{ product.unit_in_stock }}</td>
+      <td>{{ product.product_available }}</td>
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn btn-info">Info</button>
+          <button type="button" class="btn btn-warning">Edit</button>
+          <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

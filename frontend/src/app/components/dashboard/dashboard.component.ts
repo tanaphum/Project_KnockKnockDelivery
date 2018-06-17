@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
     Email: null,
     Subject: null,
     Message: null
-  };
+  }
 
   constructor() { }
 
@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onSubmit() {
+    
   }
 
 

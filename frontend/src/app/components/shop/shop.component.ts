@@ -6,16 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
-  constructor() {}
 
-  ngOnInit() {}
+  constructor() { }
+
+  ngOnInit() {
+  }
 
   toogle() {
-    var x = document.getElementById('myTopfilter');
-    if (x.className === 'topnav') {
-      x.className += 'responsive';
+    var x = document.getElementById("myTopfilter");
+    if (x.className === "topnav") {
+        x.className += " responsive";
     } else {
-      x.className = 'topnav';
+        x.className = "topnav";
     }
-  }
+}
+
 }

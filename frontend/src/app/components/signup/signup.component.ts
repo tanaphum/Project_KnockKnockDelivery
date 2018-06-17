@@ -15,9 +15,9 @@ export class SignupComponent implements OnInit {
     email: null,
     password: null,
     password_confirmation: null
-  };
+  }
 
-  error = [];
+  error = []
 
   constructor(
     private authService: AuthService,
@@ -27,21 +27,21 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit() {
+  onSubmit(){
     this.authService.signup(this.form).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)
-    );
+    )
   }
 
   handleResponse(data) {
-    this.authService.handleToken(data.access_token);
-    this.authService.changeAuthStatus(true);
-    this.router.navigateByUrl('/profile');
+    this.authService.handleToken(data.access_token)
+    this.authService.changeAuthStatus(true)
+    this.router.navigateByUrl('/profile')
   }
 
-  handleError(error) {
-    this.error = error.error.errors;
+  handleError(error){
+    this.error = error.error.errors;  
   }
 
 }

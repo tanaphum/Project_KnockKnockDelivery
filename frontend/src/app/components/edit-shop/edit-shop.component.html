@@ -1,0 +1,82 @@
+<div class="container">
+  <br>
+  <h1>Edit shop</h1>
+  <form #editShopForm=ngForm (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="input-name">Shop Name</label>
+      <input type="text" name="shop-name" class="form-control" id="input-name" placeholder="Shop Name"  [(ngModel)]="form.shop_name"
+        required/>
+      <!-- <span class="text-danger" [hidden]="!error.shop_name">
+          {{error.shop_name}}
+        </span> -->
+    </div>
+
+    <div class="form-group">
+      <label for="seller-name">Seller Name</label>
+      <input type="text" name="seller-name" class="form-control" id="seller-name" placeholder="Seller Name"  [(ngModel)]="form.seller_name"
+        required/>
+      <!-- <span class="text-danger" [hidden]="!error.seller_name">
+          {{error.seller_name}}
+        </span> -->
+    </div>
+
+    <!-- <div class="form-group">
+      <label for="selectCatagory">Shop Catagory</label>
+      <select class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="form.selected_catagory"
+        required>
+        <option disabled selected>Select a Catagory</option>
+        <option *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option>
+      </select>
+    </div> -->
+
+    <div class="form-group">
+        <label for="selectCatagory">Shop Catagory</label>
+        <select class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory" (ngModelChange)="onCatagorySelected($event)"
+          required>
+          <option *ngFor="let item of catagory" [value]="item.shop_type_id">{{item.shop_type_name}}</option>
+        </select>
+      </div>
+
+
+    <div class="form-group">
+      <label for="input-location">Shop Location</label>
+      <textarea type="text" name="location" class="form-control" id="input-location" placeholder="Shop Location" [(ngModel)]="form.shop_location"
+        required></textarea>
+      <!-- <span class="text-danger" [hidden]="!error.shop_location">
+          {{error.shop_location}}
+        </span> -->
+    </div>
+
+    <div class="form-group">
+      <label for="input-description">Shop Description</label>
+      <textarea type="text" name="description" class="form-control" id="input-description" placeholder="Shop Description" [(ngModel)]="form.shop_description"
+        required></textarea>
+      <!-- <span class="text-danger" [hidden]="!error.product_description">
+          {{error.shop_description}}
+        </span> -->
+    </div>
+
+    <div class="form-group">
+      <label for="input-price">Shop Image</label>
+      <br>
+      <input type='file' id="img" (change)="preview($event)" accept="image/*" />
+      <br>
+      <br>
+
+      <canvas id="previewImg" #mycanvas></canvas>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <button type="submit" class="btn btn-success btn-block">Edit</button>
+
+      </div>
+      <div class="col">
+        <button class="btn btn-danger btn-block" (click)="onClear()">Clear</button>
+
+      </div>
+    </div>
+  </form>
+  <br>
+</div>

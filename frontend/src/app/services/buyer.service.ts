@@ -13,7 +13,7 @@ export class BuyerService {
   constructor(private http: HttpClient) { }
 
   getAllProducts() {
-    return this.http.get(`${this.baseUrl}products`);
+    return this.http.get(`${this.baseUrl}products`)
 
   }
 }

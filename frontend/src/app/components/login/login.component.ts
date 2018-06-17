@@ -13,8 +13,8 @@ export class LoginComponent implements OnInit {
   private form = {
     email: null,
     password: null
-  };
-  private error = null;
+  }
+  private error = null
   private rotate;
 
 
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) { }
   ngOnInit() {
-    this.rotate = document.getElementById('flipper');
+    this.rotate = document.getElementById("flipper");
 
   }
 
@@ -31,14 +31,14 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.form).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)
-    );
+    )
   }
 
   handleResponse(data) {
-    this.authService.handleToken(data.access_token);
-    this.authService.changeAuthStatus(true);
-    this.authService.setUserProfile(data);
-    this.router.navigateByUrl('/profile');
+    this.authService.handleToken(data.access_token)
+    this.authService.changeAuthStatus(true)
+    this.authService.setUserProfile(data)
+    this.router.navigateByUrl('/profile')
 
   }
 

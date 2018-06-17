@@ -21,6 +21,8 @@ import { ShopsComponent } from './components/shops/shops.component';
 import { CreateProductComponent } from './components/create-product/create-product.component';
 
 import { DataTablesModule } from 'angular-datatables';
+import { TableDataComponent } from './components/table-data/table-data.component';
+import { EditShopComponent } from './components/edit-shop/edit-shop.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { DataTablesModule } from 'angular-datatables';
     ManageShopComponent,
     ShopComponent,
     ShopsComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    TableDataComponent,
+    EditShopComponent
   ],
   imports: [
     BrowserModule,

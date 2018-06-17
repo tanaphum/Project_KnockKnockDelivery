@@ -1,0 +1,13 @@
+.container{
+    margin-bottom: 50px;
+    background-color: rgb(236, 236, 236);
+    border-radius: 5px;
+
+}
+
+#previewImg {
+    height: 200px;
+    width: 280px;
+    border:1px solid gray;
+    background-color: white;
+}

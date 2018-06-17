@@ -1,6 +1,5 @@
 <div class="container">
   <br>
-  <p>{{selected_catagory}}</p>
   <h1>Add Product</h1>
   <form #createProductForm=ngForm (ngSubmit)="onCreate()">
     <div class="form-group">
@@ -21,13 +20,22 @@
       </span>
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="selectCatagory">Select Product Catagory</label>
         <select class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="form.selected_catagory"  required>
             <option value="" disabled selected>Select a Catagory</option>
             <option *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option>
           </select>
-    </div> 
+    </div>  -->
+
+    <div class="form-group">
+        <label for="selectCatagory">Shop Catagory</label>
+        <select class="form-control"  id="selectCatagory" [(ngModel)]="dafault_catagory" (ngModelChange)="onCatagorySelected($event)"
+          required>
+          <option value="" disabled selected>Select a Catagory</option>
+          <option *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option>
+        </select>
+      </div>
 
     <div class="form-group">
       <label for="input-price">Product Amount Unit</label>

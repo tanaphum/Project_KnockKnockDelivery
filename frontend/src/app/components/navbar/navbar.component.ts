@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  public loggedIn: boolean;
+  public loggedIn: boolean
   private mySidebar;
 
   constructor(
@@ -18,16 +18,16 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.authStatus.subscribe(value => this.loggedIn = value);
-    this.mySidebar = document.getElementById('mySidebar');
+    this.authService.authStatus.subscribe(value => this.loggedIn = value)
+    this.mySidebar = document.getElementById("mySidebar");
 
   }
 
   logout(event: MouseEvent) {
-    event.preventDefault();
-    this.authService.removeToken();
-    this.authService.changeAuthStatus(false);
-    this.router.navigateByUrl('/login');
+    event.preventDefault()
+    this.authService.removeToken()
+    this.authService.changeAuthStatus(false)
+    this.router.navigateByUrl('/login')
   }
 
   w3_open() {
@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
   }
 
   w3_close() {
-    this.mySidebar.style.display = 'none';
+    this.mySidebar.style.display = "none";
 }
 
 }

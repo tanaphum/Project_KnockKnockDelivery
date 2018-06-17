@@ -1,7 +1,7 @@
 <?php
 
 Route::group([
-    'middleware' => 'api',
+    'middleware' => ['api','CORS'],
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('login', 'AuthController@login');
@@ -13,6 +13,7 @@ Route::group([
 
 Route::group([
     // 'middleware' => 'jwt.auth',
+    'middleware' => 'CORS',
 ], function ($router) {
     Route::get('user/{user_id}/profiles', 'ProfileController@getProfilesByUserId');
     Route::post('profile', 'ProfileController@createProfile');    
@@ -20,6 +21,7 @@ Route::group([
 
 Route::group([
     // 'middleware' => 'jwt.auth',
+    'middleware' => 'CORS',
 ], function ($router) {
     Route::get('sellers', 'SellerController@getSellers');
     Route::get('seller/profile/{profile_id}', 'SellerController@getSellerByProfileId');
@@ -35,6 +37,7 @@ Route::group([
 
 Route::group([
     // 'middleware' => 'jwt.auth',
+    'middleware' => 'CORS',
 ], function ($router) {
     Route::get('buyers', 'BuyerController@getBuyers');
     Route::get('buyer/profile/{profile_id}', 'BuyerController@getBuyerByProfileId');
@@ -44,6 +47,7 @@ Route::group([
 
 Route::group([
     // 'middleware' => 'jwt.auth',
+    'middleware' => 'CORS',
 ], function ($router) {
     Route::get('delivers', 'DeliverController@getDelivers');
     Route::get('deliver/profile/{profile_id}', 'DeliverController@getDeliverByProfileId');
@@ -53,6 +57,7 @@ Route::group([
 
 Route::group([
     // 'middleware' => 'jwt.auth',
+    'middleware' => 'CORS',
 ], function ($router) {
     Route::get('categories', 'CategoryController@getCategories');
     Route::get('products', 'ProductController@getProducts');

@@ -131,7 +131,12 @@ class SellerController extends Controller
         }
         $seller->shop_latitude = $request->shop_latitude;
         $seller->shop_longitude = $request->shop_longitude;
-        $seller->save();
+
+        $saveSeller = $seller->save();
+        if(!$saveSeller)
+        {
+            return response()->json(['message'=>'Seller not save'], 400);
+        }
         
         return response()->json(
             [

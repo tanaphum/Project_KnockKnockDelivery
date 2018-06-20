@@ -55,6 +55,7 @@
     <div class="table-container">
       <app-table-data [products]="products"></app-table-data>
     </div>
+
   </div>
 
   <div *ngIf="isAvailableProducts">
@@ -70,11 +71,8 @@
   </div>
 
   <div *ngIf="isAddProduct">
-    <div class="loader-container">
-      <div class="loader" *ngIf="!isLoad"></div>
-    </div>
     <div class="w3-row-padding w3-container">
-      <app-create-product *ngIf="isLoad"></app-create-product>
+      <app-create-product></app-create-product>
     </div>
   </div>
 
@@ -84,9 +82,9 @@
   </div>
 
   <div *ngIf="isEditShop">
-    <app-edit-shop></app-edit-shop>
+    <div class="w3-row-padding w3-container">
+      <app-edit-shop></app-edit-shop>
+    </div>
   </div>
-
-
 
 </div>

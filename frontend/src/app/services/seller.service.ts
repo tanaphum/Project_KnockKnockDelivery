@@ -45,6 +45,10 @@ export class SellerService {
 
   }
 
+  deleteProduct(id){
+    return this.http.delete(`${this.baseUrl}seller/product/` + id)
+  }
+
 }
 
 

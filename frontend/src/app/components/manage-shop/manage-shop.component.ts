@@ -56,7 +56,7 @@ export class ManageShopComponent implements OnInit {
         this.sellerService.getAllProducts(this.seller).subscribe(
             response => {
                 this.products = response.data;
-                console.log("response from getAllProducts: ", response.data)
+                // console.log("response from getAllProducts: ", response.data)
                 this.setIsAvailableProduct();
 
             },
@@ -67,7 +67,7 @@ export class ManageShopComponent implements OnInit {
     getProductCategories() {
         this.sellerService.getProductCategories().subscribe(
             response => {
-                console.log("response from catagory: ", response)
+                // console.log("response from catagory: ", response)
                 this.catagory = response.data;
                 localStorage.setItem("product_catagory", JSON.stringify(this.catagory));
                 this.isLoad = true;
@@ -88,7 +88,7 @@ export class ManageShopComponent implements OnInit {
 
     setIsAvailableProduct() {
         this.products.forEach(element => {
-            console.log("setIsAvailableProduct element: ",element)
+            // console.log("setIsAvailableProduct element: ",element)
             if(element.unit_in_stock == 0){
                 this.outOfStockProducts.push(element);
             }

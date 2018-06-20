@@ -105,7 +105,10 @@ export class CreateProductComponent implements OnInit {
 
 
     this.sellerService.createProduct(tempForm, this.seller).subscribe(
-      response => console.log("response onCreate: ", response),
+      response =>   {
+        console.log("response onCreate: ", response)
+        this.onClear();
+      },
       error => console.log("error: ", error)
 
     )

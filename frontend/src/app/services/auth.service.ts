@@ -73,7 +73,14 @@ export class AuthService {
   setUserProfile(data) {
     console.log(data)
     localStorage.setItem('user_id', data.user.user_id);
-
-
   }
+
+  sendPasswordResetLink(data) {
+    return this.http.post(`${this.baseUrl}/sendPasswordResetLink`, data)
+  }
+  
+  changePassword(data) {
+    return this.http.post(`${this.baseUrl}/resetPassword`, data)
+  }
+  
 }

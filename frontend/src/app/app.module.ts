@@ -24,6 +24,11 @@ import { DataTablesModule } from 'angular-datatables';
 import { TableDataComponent } from './components/table-data/table-data.component';
 import { EditShopComponent } from './components/edit-shop/edit-shop.component';
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+
+
 
 @NgModule({
   declarations: [
@@ -49,7 +54,9 @@ import { EditShopComponent } from './components/edit-shop/edit-shop.component';
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    DataTablesModule
+    DataTablesModule,
+    BrowserAnimationsModule,
+    NgbModule.forRoot()
   ],
   providers: [
     AuthService,

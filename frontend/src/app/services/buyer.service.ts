@@ -13,7 +13,35 @@ export class BuyerService {
   constructor(private http: HttpClient) { }
 
   getAllProducts() {
-    return this.http.get(`${this.baseUrl}products`)
+    return this.http.get<Product>(`${this.baseUrl}products`)
 
   }
+
+  getProductCategories() {
+    return this.http.get<productCategory>(`${this.baseUrl}categories`)
+  }
 }
+
+export interface Product {
+  data: [{
+    product_id: null,
+    product_name: null,
+    product_description: null,
+    product_price: null,
+    unit_in_stock: null,
+    product_available: null,
+    category: {
+      category_id: null,
+      category_name: null
+    }
+  }]
+}
+
+export interface productCategory {
+  message: null,
+  data: [
+    { category_id: null, category_name: "" }]
+
+}
+
+

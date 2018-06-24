@@ -51,39 +51,38 @@ export class ProfileComponent implements OnInit {
         this.userProfile = data;
         if (this.userProfile.data != undefined) {
           console.log("this.userProfile", this.userProfile.data);
-          this.userProfile.data.forEach(async profile => {
+
+          this.userProfile.data.forEach(async (profile,idx) => {
+            console.log("idx: ",idx);
+            console.log("this.userProfile: ",this.userProfile.data.length)
             if (profile.role.role_id == 2) {
               this.sellerProfile = await this.fetchProfileDetail(profile)
               console.log("sellerProfile: ", this.sellerProfile)
               this.validSeller = true;
-              // this.isShow = true;
-
-
             }
-            else if (profile.role.role_id == 3) {
+            if (profile.role.role_id == 3) {
               this.buyerProfile = await this.fetchProfileDetail(profile)
               console.log("buyerProfile: ", this.buyerProfile)
               this.validBuyer = true;
-              // this.isShow = true;
-
-
             }
-            else if (profile.role.role_id == 4) {
+            if (profile.role.role_id == 4) {
               this.deliverProfile = await this.fetchProfileDetail(profile)
               console.log("deliverProfile: ", this.deliverProfile)
               this.validDeliver = true;
-              // this.isShow = true;
-
             }
-          });
-          this.isShow = true;
-
-
-
+            if ((idx+1) == this.userProfile.data.length) {
+              this.callback();
+            }        
+          })
         }
       },
       error => console.log(error)
     )
+  }
+
+  callback() {
+    this.isShow = true;
+
   }
 
   createProfile(id) {
@@ -94,7 +93,7 @@ export class ProfileComponent implements OnInit {
   }
 
   async fetchProfileDetail(profile) {
-    return await this.userService.fetchProfileDetail(profile)
+    return this.userService.fetchProfileDetail(profile)
 
   }
 

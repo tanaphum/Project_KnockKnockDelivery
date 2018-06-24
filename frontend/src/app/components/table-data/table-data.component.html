@@ -1,6 +1,7 @@
 <table datatable [dtOptions]="dtOptions" class="row-border hover">
   <thead>
     <tr>
+      <th>No.</th>
       <th>ID</th>
       <th>Product Name</th>
       <th>Product Description</th>
@@ -11,7 +12,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of products">
+    <tr *ngFor="let product of products;let  i = index">
+      <td>{{ i+1 }}</td>
       <td>{{ product.product_id }}</td>
       <td>{{ product.product_name }}</td>
       <td>{{ product.product_description }}</td>
@@ -42,6 +44,7 @@
           </button>
         </div>
         <div class="modal-body">
+
           <p>
             <strong>Product ID: </strong>{{ product_id }}</p>
           <p>
@@ -50,6 +53,8 @@
             <strong>Product Description: </strong>{{ product_description }}</p>
           <p>
             <strong>Product Price: </strong>{{ product_price }}</p>
+          <p>
+            <strong>Product Catagory: </strong>{{ selected_catagory }}</p>
           <p>
             <strong>Product in stock: </strong>{{ unit_in_stock }}</p>
           <!-- <p><strong>Product ID: </strong>{{ product_available }}</p> -->
@@ -71,35 +76,58 @@
           </button>
         </div>
         <div class="modal-body">
-          <form #editProductForm=ngForm (ngSubmit)="onCreate()">
+          <form #editProductForm=ngForm>
             <div class="form-group">
               <label for="input-id">Product id</label>
-              <input type="number" name="id" class="form-control" id="input-id" placeholder="Product Name" [(ngModel)]="product_id" disabled/>
+              <input [disabled]="isClick" type="number" name="id" class="form-control" id="input-id" placeholder="Product Name" [(ngModel)]="product_id" disabled/>
             </div>
 
             <div class="form-group">
               <label for="input-name">Product name</label>
-              <input type="text" name="name" class="form-control" id="input-name" placeholder="Product name" [(ngModel)]="product_name"
+              <input [disabled]="isClick" type="text" name="name" class="form-control" id="input-name" placeholder="Product name" [(ngModel)]="product_name"
                 required/>
             </div>
 
             <div class="form-group">
+                <label for="input-price">Product Price</label>
+                <input [disabled]="isClick" type="text" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="product_price"
+                  required>
+              </div>
+
+            <div class="form-group">
               <label for="input-price">Product Amount Unit</label>
-              <input type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="unit_in_stock"
+              <input [disabled]="isClick" type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="unit_in_stock"
                 required>
             </div>
 
             <div class="form-group">
-              <label for="input-description">Product Description</label>
-              <textarea type="text" name="description" class="form-control" id="input-description" placeholder="Product Description" [(ngModel)]="product_description"
-                required></textarea>
+              <label for="selectCatagory">Product Catagory</label>
+              <select [disabled]="isClick" class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory"
+                (ngModelChange)="onCatagorySelected($event)" required>
+                <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option>
+              </select>
             </div>
 
+            <div class="form-group">
+              <label for="input-description">Product Description</label>
+              <textarea [disabled]="isClick" type="text" name="description" class="form-control" id="input-description" placeholder="Product Description" [(ngModel)]="product_description"
+                required></textarea>
+            </div>
           </form>
+          <div *ngIf="isEdit">
+            <p style="color:Green">Product has been edit</p>
+          </div>
+          <div *ngIf="error">
+            <p style="color:red">error</p>
+          </div>
+          <div *ngIf="isClick" class="w3-display-middle">
+            <p class="loading">Saving</p>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-warning" (click)="onEdit()">Save changes</button>
+          <button *ngIf="isEdit" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
+          <button *ngIf="!isEdit" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button *ngIf="!isEdit" type="button" class="btn btn-warning" (click)="onEdit()" [disabled]="isClick">Save changes</button>
         </div>
       </div>
     </div>
@@ -117,16 +145,15 @@
         <div class="modal-body">
           <p>Delete {{ product_name }} ??</p>
           <div *ngIf="isDelete">
-              <p style="color:red" >Product has been delete</p>
-            </div>
+            <p style="color:red">Product has been delete</p>
+          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button *ngIf="isDelete" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
+          <button *ngIf="!isDelete" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           <button *ngIf="!isDelete" type="button" class="btn btn-danger" (click)="onDelete(product_id)">Delete</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-

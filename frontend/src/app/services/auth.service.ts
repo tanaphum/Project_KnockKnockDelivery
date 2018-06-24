@@ -40,6 +40,12 @@ export class AuthService {
 
   removeToken() {
     localStorage.removeItem('UAT');
+    localStorage.removeItem('product_catagory');
+    localStorage.removeItem('seller');
+    localStorage.removeItem('shop_catagory');
+    localStorage.removeItem('user_id');
+
+
   }
 
   isValidToken() {

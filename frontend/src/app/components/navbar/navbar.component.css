@@ -1,6 +1,14 @@
   #mySidebar {
     background-color: #f5f6fa;
   }
+
+  @media screen and (max-width: 375px) {
+    #mySidebar {
+      background-color: #f5f6fa;
+      width: 375px;
+    }
+
+  }
   
   nav a {
      padding: 8px 8px 8px 32px;

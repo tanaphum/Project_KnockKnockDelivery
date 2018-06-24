@@ -19,10 +19,13 @@ export class EditShopComponent implements OnInit {
     selected_catagory: null
   }
 
+  private isClick: boolean = false;
+  private isEdit: boolean = false;
   private dafault_catagory: Number;
   private catagory;
   private seller;
-  private error;
+  private error: boolean = false;
+  private errorMessage;
 
   @ViewChild("mycanvas") mycanvas;
 
@@ -92,9 +95,9 @@ export class EditShopComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("onSubmit", this.form)
+    this.isClick = !this.isClick;
 
-    var temp = {
+    let temp = {
       seller_name: this.form.seller_name,
       shop_name: this.form.shop_name,
       shop_location: this.form.shop_location,
@@ -102,10 +105,23 @@ export class EditShopComponent implements OnInit {
       profile_status_id: 1,
       profile_id: this.seller.profile_id
     }
+    console.log("onSubmit", temp)
+
 
     this.sellerService.updateShop(temp, this.seller).subscribe(
-      response => console.log("response onSubmit: ", response),
-      error => console.log("error onSubmit: ", error)
+      response => {
+        console.log("response onSubmit: ", response)
+        this.isClick = !this.isClick;
+        this.isEdit = !this.isEdit;
+      },
+      error => { 
+        console.log("error onSubmit: ", error) 
+        this.isClick = !this.isClick;
+        this.error = !this.error;
+        this.errorMessage = error.error.message
+
+      
+      }
     )
 
   }

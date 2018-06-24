@@ -11,8 +11,9 @@ import { SellerService } from '../../services/seller.service';
 export class CreateProductComponent implements OnInit {
 
   // @Input() name: String;
-
-  private isLoad: boolean;
+  private isClick:boolean = false;
+  private isLoad: boolean = false;
+  private isCreate: boolean = false;
   private form = {
     product_name: null,
     product_type: null,
@@ -40,7 +41,6 @@ export class CreateProductComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isLoad = false
     this.seller = JSON.parse(localStorage.getItem("seller"));
     this.catagory = JSON.parse(localStorage.getItem("product_catagory"));
 
@@ -91,6 +91,8 @@ export class CreateProductComponent implements OnInit {
   onCreate() {
     console.log("onCreate")
     console.log("form: ", this.form)
+    this.isClick = !this.isClick;
+
 
     var tempForm =
     {
@@ -107,10 +109,14 @@ export class CreateProductComponent implements OnInit {
     this.sellerService.createProduct(tempForm, this.seller).subscribe(
       response =>   {
         console.log("response onCreate: ", response)
+        this.isClick = !this.isClick;
+        this.isCreate = !this.isCreate;
         this.onClear();
       },
-      error => console.log("error: ", error)
-
+      error => {
+        this.isClick = !this.isClick;
+        console.log("error: ", error)
+      }
     )
 
   }
@@ -123,6 +129,8 @@ export class CreateProductComponent implements OnInit {
     this.form.product_catagory = '';
     this.form.product_description = '';
     this.form.product_image = '';
+    this.form.selected_catagory = '';
+    this.form.product_unit_amount = '';
 
   }
 

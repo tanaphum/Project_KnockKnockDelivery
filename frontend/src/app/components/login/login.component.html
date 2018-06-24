@@ -1,4 +1,7 @@
-<div class="w3-row">
+<div class="loader-container">
+  <div class="loader" [hidden]="!isShow"></div>
+</div>
+<div class="w3-row" [hidden]="isShow">
   <div class="w3-container w3-display-middle">
     <div class="card">
         <div class="card-header">Sign In</div>
@@ -18,7 +21,7 @@
               {{error}}
             </div>
             <br>
-            <button type="submit" class="btn btn-block">Sign In</button>
+            <button type="submit" class="btn btn-block" [disabled]="isClick">Sign In</button>
             <a routerLink="/request-password-reset">Forgot your password?</a>
           </form>
           <hr> New to Knock Knock Delivery?

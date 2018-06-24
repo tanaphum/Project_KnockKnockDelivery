@@ -49,6 +49,11 @@ export class SellerService {
     return this.http.delete(`${this.baseUrl}seller/product/` + id)
   }
 
+  updateProduct(id, product, seller) {
+    return this.http.put(`${this.baseUrl}seller/` + seller.seller_id + `/product/` + id, product)
+
+  }
+
 }
 
 

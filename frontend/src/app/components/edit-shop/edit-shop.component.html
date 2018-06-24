@@ -5,7 +5,7 @@
 
     <div class="form-group">
       <label for="input-name">Shop Name</label>
-      <input type="text" name="shop-name" class="form-control" id="input-name" placeholder="Shop Name"  [(ngModel)]="form.shop_name"
+      <input [disabled]="isClick" type="text" name="shop-name" class="form-control" id="input-name" placeholder="Shop Name"  [(ngModel)]="form.shop_name"
         required/>
       <!-- <span class="text-danger" [hidden]="!error.shop_name">
           {{error.shop_name}}
@@ -14,7 +14,7 @@
 
     <div class="form-group">
       <label for="seller-name">Seller Name</label>
-      <input type="text" name="seller-name" class="form-control" id="seller-name" placeholder="Seller Name"  [(ngModel)]="form.seller_name"
+      <input [disabled]="isClick" type="text" name="seller-name" class="form-control" id="seller-name" placeholder="Seller Name"  [(ngModel)]="form.seller_name"
         required/>
       <!-- <span class="text-danger" [hidden]="!error.seller_name">
           {{error.seller_name}}
@@ -32,16 +32,16 @@
 
     <div class="form-group">
         <label for="selectCatagory">Shop Catagory</label>
-        <select class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory" (ngModelChange)="onCatagorySelected($event)"
+        <select [disabled]="isClick" class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory" (ngModelChange)="onCatagorySelected($event)"
           required>
-          <option *ngFor="let item of catagory" [value]="item.shop_type_id">{{item.shop_type_name}}</option>
+          <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.shop_type_id">{{item.shop_type_name}}</option>
         </select>
       </div>
 
 
     <div class="form-group">
       <label for="input-location">Shop Location</label>
-      <textarea type="text" name="location" class="form-control" id="input-location" placeholder="Shop Location" [(ngModel)]="form.shop_location"
+      <textarea [disabled]="isClick" type="text" name="location" class="form-control" id="input-location" placeholder="Shop Location" [(ngModel)]="form.shop_location"
         required></textarea>
       <!-- <span class="text-danger" [hidden]="!error.shop_location">
           {{error.shop_location}}
@@ -50,7 +50,7 @@
 
     <div class="form-group">
       <label for="input-description">Shop Description</label>
-      <textarea type="text" name="description" class="form-control" id="input-description" placeholder="Shop Description" [(ngModel)]="form.shop_description"
+      <textarea [disabled]="isClick" type="text" name="description" class="form-control" id="input-description" placeholder="Shop Description" [(ngModel)]="form.shop_description"
         required></textarea>
       <!-- <span class="text-danger" [hidden]="!error.product_description">
           {{error.shop_description}}
@@ -60,16 +60,29 @@
     <div class="form-group">
       <label for="input-price">Shop Image</label>
       <br>
-      <input type='file' id="img" (change)="preview($event)" accept="image/*" />
+      <input [disabled]="isClick" type='file' id="img" (change)="preview($event)" accept="image/*" />
       <br>
       <br>
 
       <canvas id="previewImg" #mycanvas></canvas>
     </div>
 
+    <div *ngIf="isClick">
+      <p class="loading">Saving</p>
+    </div>
+
+    <div *ngIf="isCreate">
+      <p class="success" >Upload Success</p>
+    </div>
+
+    <div *ngIf="error">
+      <p class="error" >{{errorMessage}}</p>
+    </div>
+    
+
     <div class="row">
       <div class="col">
-        <button type="submit" class="btn btn-success btn-block">Edit</button>
+        <button type="submit" class="btn btn-success btn-block" [disabled]="isClick">Edit</button>
 
       </div>
       <div class="col">

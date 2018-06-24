@@ -51,22 +51,21 @@
   </div>
 
   <div *ngIf="isAllProducts">
-
     <div class="table-container">
-      <app-table-data [products]="products"></app-table-data>
+      <app-table-data [products]="products" (reloadPage)="ngOnInit($event)"></app-table-data>
     </div>
 
   </div>
 
   <div *ngIf="isAvailableProducts">
     <div class="table-container">
-      <app-table-data [products]="availableProducts"></app-table-data>
+      <app-table-data [products]="availableProducts" (reloadPage)="ngOnInit($event)"></app-table-data>
     </div>
   </div>
 
   <div *ngIf="isOutOfStockProducts">
     <div class="table-container">
-      <app-table-data [products]="outOfStockProducts"></app-table-data>
+      <app-table-data [products]="outOfStockProducts" (reloadPage)="ngOnInit($event)"></app-table-data>
     </div>
   </div>
 

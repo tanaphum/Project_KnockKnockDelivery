@@ -18,7 +18,7 @@
             </div>
           </div>
           <div class="card-body w3-center" *ngIf="!validSeller">
-            <button class="btn btnPlus">+</button>
+            <button class="btn btnPlus" (click)="createProfile(2)">+</button>
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="card-body w3-center" *ngIf="!validBuyer">
-            <button class="btn btnPlus">+</button>
+            <button class="btn btnPlus" (click)="createProfile(3)">+</button>
           </div>
         </div>
       </div>

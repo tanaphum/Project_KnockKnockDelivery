@@ -16,6 +16,9 @@ export class LoginComponent implements OnInit {
   }
   private error = null
   private rotate;
+  isClick: boolean = false;
+  isShow: boolean = false;
+
 
 
   constructor(
@@ -28,6 +31,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isClick = !this.isClick;    
+    this.isShow = !this.isShow;   
     this.authService.login(this.form).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)
@@ -45,8 +50,6 @@ export class LoginComponent implements OnInit {
   handleError(error) {
     this.error = error.error.error;
   }
-
-
 
 
 }

@@ -21,14 +21,17 @@ class ChangePasswordController extends Controller
     {
         return $this->getPasswordResetTableRow($request)->count()> 0 ? $this->changePassword($request) : $this->tokenNotFoundResponse();
     }
+
     private function getPasswordResetTableRow($request)
     {
         return DB::table('password_resets')->where(['email' => $request->email,'token' =>$request->resetToken]);
     }
+
     private function tokenNotFoundResponse()
     {
         return response()->json(['error' => 'Token or Email is incorrect'],Response::HTTP_UNPROCESSABLE_ENTITY);
     }
+    
     private function changePassword($request)
     {
         $user = $this->user->whereEmail($request->email)->first();

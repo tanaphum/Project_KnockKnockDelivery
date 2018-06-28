@@ -14,12 +14,14 @@ export class ProfileComponent implements OnInit {
   private validSeller: Boolean;
   private validBuyer: Boolean;
   private validDeliver: Boolean;
+  private isAdmin:Boolean = false;
   private isShow: Boolean;
 
   private isSellerProfile: Boolean;
   private isBuyerProfile: Boolean;
   private isDeliverProfile: Boolean;
 
+  private adminProfile;
   private userProfile;
   private sellerProfile;
   private buyerProfile;
@@ -55,6 +57,11 @@ export class ProfileComponent implements OnInit {
           this.userProfile.data.forEach(async (profile,idx) => {
             console.log("idx: ",idx);
             console.log("this.userProfile: ",this.userProfile.data.length)
+            if(profile.role.role_id == 1) {
+              // this.adminProfile = await this.fetchProfileDetail(profile);
+              this.isAdmin = !this.isAdmin;
+            }
+
             if (profile.role.role_id == 2) {
               this.sellerProfile = await this.fetchProfileDetail(profile)
               console.log("sellerProfile: ", this.sellerProfile)
@@ -104,6 +111,8 @@ export class ProfileComponent implements OnInit {
 
     
   }
+
+
 
 
 

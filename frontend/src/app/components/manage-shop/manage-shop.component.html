@@ -28,21 +28,24 @@
       </div> -->
       <!-- Add on  -->
       <div class="topnav" id="myTopfilter">
-        <a id="filter">Filter: </a>
+        <a id="filter">Menu: </a>
         <a (click)="onSelectAllProducts()" [style.background-color]="isAllProducts ? '#B7B7B7': '#FFFFFF'">
           <i class="fa fa-inbox w3-margin-right"></i>ALL PRODUCTS</a>
-        <a (click)="onSelectAvailableProducts()" [style.background-color]="isAvailableProducts ? '#B7B7B7': '#FFFFFF'">
+        <!-- <a (click)="onSelectAvailableProducts()" [style.background-color]="isAvailableProducts ? '#B7B7B7': '#FFFFFF'">
           <i class="fa fa-check w3-margin-right"></i>AVAILABLE PRODUCTS</a>
         <a (click)="onSelectOutOfStockProduct()" [style.background-color]="isOutOfStockProducts ? '#B7B7B7': '#FFFFFF'">
-          <i class="fa fa-minus w3-margin-right"></i>OUT OF STOCK PRODUCT</a>
+          <i class="fa fa-minus w3-margin-right"></i>OUT OF STOCK PRODUCT</a> -->
         <a (click)="onSelectAddProduct()" [style.background-color]="isAddProduct ? '#B7B7B7': '#FFFFFF'">
           <i class="fa fa-plus w3-margin-right"></i>ADD PRODUCT</a>
         <a (click)="onSelectShopHistory()" [style.background-color]="isShopHistory ? '#B7B7B7': '#FFFFFF'">
           <i class="fa fa-history w3-margin-right"></i>SHOP HISTOTY</a>
+        <a (click)="onSelectNortification()" [style.background-color]="isNorti ? '#B7B7B7': '#FFFFFF'">
+          <i class="fa fa-bell w3-margin-right"></i>NORTIFICATION</a>
         <a (click)="onSelectEditShop()" [style.background-color]="isEditShop ? '#B7B7B7': '#FFFFFF'">
           <i class="fa fa-cogs w3-margin-right"></i>EDIT SHOP</a>
         <a href="javascript:void(0);" class="icon" (click)="toogle()">
           <i class="fa fa-angle-down"></i>
+         
         </a>
       </div>
       <hr>
@@ -83,6 +86,12 @@
   <div *ngIf="isEditShop">
     <div class="w3-row-padding w3-container">
       <app-edit-shop></app-edit-shop>
+    </div>
+  </div>
+
+  <div *ngIf="isNorti">
+    <div class="w3-row-padding w3-container">
+      <p>Shop Nortification</p>
     </div>
   </div>
 

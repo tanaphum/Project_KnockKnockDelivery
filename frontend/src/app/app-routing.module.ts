@@ -14,6 +14,8 @@ import { ShopComponent } from './components/shop/shop.component';
 import { ShopsComponent } from './components/shops/shops.component';
 import { ResponseResetComponent } from './components/password/response-reset/response-reset.component';
 import { CreateProductComponent } from './components/create-product/create-product.component';
+import { AdminComponent } from './components/admin/admin.component';
+
 
 
 const routes: Routes = [
@@ -46,7 +48,8 @@ const routes: Routes = [
     path: 'shop',
     component: ShopComponent,
     canActivate: [IsLoggedInService]
-  },  {
+  },  
+  {
     path: 'shops',
     component: ShopsComponent,
     canActivate: [IsLoggedInService]
@@ -75,6 +78,11 @@ const routes: Routes = [
     path: 'response-password-reset',
     component: ResponseResetComponent,
     canActivate: [IsNotLoggedInService]
+  },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [IsLoggedInService]
   },
 ];
 

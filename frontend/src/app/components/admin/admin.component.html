@@ -1,0 +1,124 @@
+<div class="loader-container">
+  <div class="loader" [hidden]="isLoad"></div>
+</div>
+<div [hidden]="!isLoad">
+  <div class="container" [hidden]="isMenu">
+    <div class="card-container w3-display-middle">
+      <div id="inner">
+        <h4>Admin session</h4>
+        <p>Select one menu</p>
+        <div id="menu">
+          <div class="row">
+            <div class="col-12" id="menu-top">
+              <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1">
+              <div (click)="userInSystem()">
+                <p class="w3-display-middle">User in system</p>
+              </div>
+            </div>
+            <div class="col-12" id="menu-button">
+              <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg2">
+              <div (click)="holdingUser()">
+                <p class="w3-display-middle">Holding user</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <div [hidden]="!isMenu">
+    <div [hidden]="isHolding">
+      <div class="w3-container" id="holding-container">
+        <h1><b>Holding user</b></h1>
+        <div class="row" id="search">
+          <div class="col">
+            <select class="form-control" [(ngModel)]="selectedRole">
+              <option disabled selected hidden [ngValue]="undefined"> Select role</option>
+              <option *ngFor="let role of roles" [ngValue]="selectedRole">{{role}}</option>
+            </select>
+          </div>
+          <div class="col">
+            <button class="btn">Search</button>
+          </div>
+        </div>
+        <div id="dataTable">
+            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>  
+                    <th> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of users;let  i = index">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.status }}</td>
+                    <td>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="openEdit(user)">Edit</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="openDelete(user)">Delete</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+      </div>
+    </div>
+    <div [hidden]="!isHolding">
+      <div class="w3-container" id="system-container">
+        <h1><b>User in system</b></h1>
+        <div class="row" id="search">
+            <div class="col">
+              <select class="form-control" [(ngModel)]="selectedRole">
+                <option disabled selected hidden [ngValue]="undefined"> Select role</option>
+                <option *ngFor="let role of roles" [ngValue]="selectedRole">{{role}}</option>
+              </select>
+            </div>
+            <div class="col">
+              <button class="btn">Search</button>
+            </div>
+          </div>
+          <div id="dataTable">
+              <table datatable [dtOptions]="dtOptions" class="row-border hover">
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Status</th>  
+                      <th> </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of users;let  i = index">
+                      <td>{{ i+1 }}</td>
+                      <td>{{ user.id }}</td>
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.status }}</td>
+                      <td>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#EditModal" (click)="approve(user)">Approve</button>
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="reject(user)">Reject</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,10 @@
   <div class="loader" [hidden]="isShow"></div>
 </div>
 <div class="container" [hidden]="!isShow">
-  <div class="card card-container w3-display-middle">
+  <div *ngIf="isAdmin">
+    <app-admin></app-admin>
+  </div>
+  <div class="card card-container w3-display-middle" *ngIf="!isAdmin">
     <div class="w3-row-padding">
       <div class="w3-third">
         <div class="card">

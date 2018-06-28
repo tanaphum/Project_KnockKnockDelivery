@@ -26,6 +26,7 @@ import { EditShopComponent } from './components/edit-shop/edit-shop.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 
@@ -46,7 +47,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ShopsComponent,
     CreateProductComponent,
     TableDataComponent,
-    EditShopComponent
+    EditShopComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

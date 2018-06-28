@@ -8,13 +8,14 @@ import { SellerService } from '../../services/seller.service';
 })
 export class ManageShopComponent implements OnInit {
 
-    private isAllProducts: boolean;
-    private isAvailableProducts: boolean;
-    private isOutOfStockProducts: boolean;
-    private isAddProduct: boolean;
-    private isShopHistory: boolean;
-    private isEditShop: boolean;
-    private isLoad: boolean;
+    private isAllProducts: boolean = true;
+    private isAvailableProducts: boolean = false;
+    private isOutOfStockProducts: boolean = false;
+    private isAddProduct: boolean = false;
+    private isShopHistory: boolean = false;
+    private isEditShop: boolean = false;
+    private isNorti:boolean = false;
+    private isLoad: boolean = false;
 
     private seller;
     private products;
@@ -38,13 +39,6 @@ export class ManageShopComponent implements OnInit {
 
 
     onSetUpPage() {
-        this.isAllProducts = true;
-        this.isAvailableProducts = false;
-        this.isOutOfStockProducts = false;
-        this.isAddProduct = false;
-        this.isShopHistory = false;
-        this.isEditShop = false;
-        this.isLoad = false;
         this.dtOptions = {
             pagingType: 'full_numbers'
         };
@@ -108,9 +102,6 @@ export class ManageShopComponent implements OnInit {
         }
     }
 
-    isSelected() {
-        return false
-    }
 
     onSelectAllProducts() {
         this.isAllProducts = true;
@@ -119,28 +110,31 @@ export class ManageShopComponent implements OnInit {
         this.isAddProduct = false;
         this.isShopHistory = false;
         this.isEditShop = false;
+        this.isNorti = false;  
         this.ngOnInit();
     }
 
     onSelectAvailableProducts() {
         this.isAllProducts = false;
-        this.isAvailableProducts = true;
         this.isOutOfStockProducts = false;
         this.isAddProduct = false;
         this.isShopHistory = false;
         this.isEditShop = false;
-        // this.ngOnInit();
+        this.isNorti = false;  
+        this.isAvailableProducts = true;
+
 
     }
 
     onSelectOutOfStockProduct() {
         this.isAllProducts = false;
         this.isAvailableProducts = false;
-        this.isOutOfStockProducts = true;
         this.isAddProduct = false;
         this.isShopHistory = false;
         this.isEditShop = false;
-        // this.ngOnInit();
+        this.isNorti = false;  
+        this.isOutOfStockProducts = true;
+
 
     }
 
@@ -149,9 +143,10 @@ export class ManageShopComponent implements OnInit {
         this.isAllProducts = false;
         this.isAvailableProducts = false;
         this.isOutOfStockProducts = false;
-        this.isAddProduct = true;
         this.isShopHistory = false;
         this.isEditShop = false;
+        this.isNorti = false;  
+        this.isAddProduct = true;
 
     }
 
@@ -160,8 +155,10 @@ export class ManageShopComponent implements OnInit {
         this.isAvailableProducts = false;
         this.isOutOfStockProducts = false;
         this.isAddProduct = false;
-        this.isShopHistory = true;
         this.isEditShop = false;
+        this.isNorti = false;  
+        this.isShopHistory = true;
+
 
     }
 
@@ -171,8 +168,18 @@ export class ManageShopComponent implements OnInit {
         this.isOutOfStockProducts = false;
         this.isAddProduct = false;
         this.isShopHistory = false;
+        this.isNorti = false;  
         this.isEditShop = true;
+    }
 
+    onSelectNortification() {
+        this.isAllProducts = false;
+        this.isAvailableProducts = false;
+        this.isOutOfStockProducts = false;
+        this.isAddProduct = false;
+        this.isShopHistory = false;
+        this.isEditShop = false;
+        this.isNorti = true;  
     }
 
 

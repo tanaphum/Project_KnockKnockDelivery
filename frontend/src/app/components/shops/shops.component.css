@@ -73,7 +73,8 @@
 
 #catagory {
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 5px;  
+  margin-left: 5px;
   padding-left: 5px;
   color: black;
   background-color: white;
@@ -109,6 +110,10 @@
   background-color: #F1F1F1F1;
   width: 100%;
 
+}
+
+#search-button {
+  z-index: 0;
 }
 
 #before-footer {

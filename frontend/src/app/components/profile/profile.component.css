@@ -13,44 +13,93 @@
 }
 
 .card-container {
-  width: 700px;
-  height: 500px;
-  background-color: rgba(0, 0, 0, 0.5);
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  opacity: 1;
+  width: 412px;
+  height: 420px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid black;
+  border-radius: 1%;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 
 }
 
-@media screen and (max-width: 375px) {
+
+.button-top,
+.button-center,
+.button-button {
+  width: 300px;
+  height: 50px;
+}
+
+.button-top  p,
+.button-center p,
+.button-button p{
+  color:black;
+  font-size: 16px;
+  /* font-family: "Raleway"; */
+
+}
+
+#roundImg1,
+#roundImg2,
+#roundImg3 {
+  border-radius: 50%;
+
+}
+
+#inner,
+#menu{
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-bottom: 50px;
+  padding-left: 20px;
+}
+
+#menu-top,
+#menu-center,
+#menu-button {
+  height: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+  display: flex;
+  /* justify-content: center;  */
+}
+
+#menu-top:hover,
+#menu-center:hover,
+#menu-button:hover {
+  cursor: pointer;
+  background-color: rgb(175, 175, 175);
+  border-radius: 1%;
+}
+
+@media screen and (min-width: 320px) {
   .card-container {
-    width: 350px;
-    height: 600px;
-    background-color: rgba(0, 0, 0, 0.5);
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    margin-top: 25px;
+    width: 280px;
+    height: 450px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    border-radius: 1%;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (min-width: 425px) {
   .card-container {
     width: 350px;
-    height: 600px;
-    background-color: rgba(0, 0, 0, 0.5);
-    align-items: center;
-    display: flex;
-    justify-content: center;
+    height: 450px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    border-radius: 1%;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
   }
 }
 
 
 
 .btnPlus {
-  width: 150px;
-  height: 250px;
+  width: 250px;
+  height: 100px;
   font-size: 64px;
   background-color: rgba(201, 199, 199, 0.5);
   /* border-color: gray; */

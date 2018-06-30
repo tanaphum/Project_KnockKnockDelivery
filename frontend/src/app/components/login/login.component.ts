@@ -48,7 +48,10 @@ export class LoginComponent implements OnInit {
   }
 
   handleError(error) {
+    this.isShow = !this.isShow;   
+    this.isClick = !this.isClick;    
     this.error = error.error.error;
+
   }
 
 

@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
     this.userService.getUserProfile(id).subscribe(
       data => {
         this.userProfile = data;
-        if (this.userProfile.data != undefined) {
+        if (this.userProfile.data.length != 0) {
           console.log("this.userProfile", this.userProfile.data);
 
           this.userProfile.data.forEach(async (profile,idx) => {
@@ -61,7 +61,6 @@ export class ProfileComponent implements OnInit {
               // this.adminProfile = await this.fetchProfileDetail(profile);
               this.isAdmin = !this.isAdmin;
             }
-
             if (profile.role.role_id == 2) {
               this.sellerProfile = await this.fetchProfileDetail(profile)
               console.log("sellerProfile: ", this.sellerProfile)
@@ -81,6 +80,10 @@ export class ProfileComponent implements OnInit {
               this.callback();
             }        
           })
+        }
+        else{
+          console.log("Empty profile")
+          this.isShow = true;
         }
       },
       error => console.log(error)
@@ -108,8 +111,11 @@ export class ProfileComponent implements OnInit {
     console.log('enterManageShop')
     localStorage.setItem("seller",JSON.stringify(sellerProfile));
     this.router.navigateByUrl('/manage-shop')
+  }
 
-    
+  enterShops() {
+    this.router.navigateByUrl('/shops')
+
   }
 
 

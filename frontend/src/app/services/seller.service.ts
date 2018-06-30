@@ -32,6 +32,10 @@ export class SellerService {
     return temp
   }
 
+  getAllShops(){
+    return this.http.get<shops>(`${this.baseUrl}sellers/`)
+  }
+
   getShopCategories() {
     return this.http.get<shopCategorie>(`${this.baseUrl}shoptypes`)
   }
@@ -83,6 +87,25 @@ export interface shopCategorie {
   message: null,
   data: [
     { category_id: null, category_name: "" }]
+
+}
+
+export interface shops {
+  data: [{
+    seller_id: null,
+    seller_name: null,
+    shop_name: null,
+    shop_location: null,
+    shop_type: {
+        shop_type_id: null,
+        shop_type_name: null
+    },
+    profile_status: {
+        profile_status_id: null,
+        profile_status_name: null
+    },
+    profile_id: 1
+}]
 
 }
 

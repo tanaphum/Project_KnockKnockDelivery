@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { SellerService } from '../../services/seller.service';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,20 +13,23 @@ export class CreateProfileComponent implements OnInit {
 
   private create_profile_id;
   private user_id;
-  private isCreateBuyer: Boolean;
-  private isCreateSeller: Boolean;
-  private isCreateDeliver: Boolean;
+  private isCreateBuyer: Boolean = false;
+  private isCreateSeller: Boolean = false;
+  private isCreateDeliver: Boolean = false;
+  isShow: boolean = false;
 
   sellerForm = {
     sellerName: null,
     shopName: null,
     location: null,
-    type: [{ model: '1' }, { model: '2' }, { model: '3' }],
+    type:null,
     selectedType:null,
     shopImg: null,
     profile_id: null,
     status_id:1,
   }
+
+  private shopCatagory;
 
   buyerForm = {
     buyerName: null,
@@ -45,25 +50,35 @@ export class CreateProfileComponent implements OnInit {
 
   constructor(    
     private userService: UserService,
+    private sellerService: SellerService,
+
   ) { }
 
   ngOnInit() {
-    this.isCreateBuyer = false;
-    this.isCreateSeller = false;
-    this.isCreateDeliver = false;
     this.validateCreateProfile();
   }
 
   validateCreateProfile() {
     this.create_profile_id = localStorage.getItem("create-profile-id");
     if (this.create_profile_id == 2) {
-      this.isCreateSeller = true;
+      this.isShow = !this.isShow;   
+      this.sellerService.getShopCategories().subscribe(
+        Response => {
+          this.isShow = !this.isShow;   
+          console.log("Response from get catagory: ",Response.data);
+          this.shopCatagory = Response.data;
+        },
+        error => {
+          console.log("[Error] from get catagory: ",error);
+        }
+      )
+      this.isCreateSeller = !this.isCreateSeller;
     }
     else if (this.create_profile_id == 3) {
-      this.isCreateBuyer = true;
+      this.isCreateBuyer = !this.isCreateBuyer;
     }
     else if (this.create_profile_id == 4) {
-      this.isCreateDeliver = true;
+      this.isCreateDeliver = !this.isCreateDeliver;
     }
 
 

@@ -30,7 +30,7 @@ export class UserService {
             shop_location: seller.location,
             shop_type_id: seller.selectedType,
             status_id: 1,
-            profile_id: seller.profile_id
+            user_id: seller.profile_id
         }
         return this.http.post(`${this.baseUrl}seller`, seller_form)
     }

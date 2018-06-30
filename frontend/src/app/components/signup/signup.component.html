@@ -1,4 +1,7 @@
-<div class="w3-row">
+<div class="loader-container">
+  <div class="loader" [hidden]="!isShow"></div>
+</div>
+<div class="w3-row" [hidden]="isShow">
   <div class="w3-container w3-display-middle">
     <div class="card">
       <div class="card-header">Sign Up</div>
@@ -28,16 +31,17 @@
             <label for="input-password">Password</label>
             <input type="password" name="password" class="form-control" id="input-password" placeholder="Password" [(ngModel)]="form.password"
               required>
-            <span class="text-danger" [hidden]="!error.password">
-              {{error.password}}
-            </span>
           </div>
 
           <div class="form-group">
             <label for="input-confirm-password">Confirm Password</label>
-            <input type="password" name="confirmPassword" class="form-control" id="input-confirm-password" placeholder="Confirm Password"
+            <input type="password" minLength="8" name="confirmPassword" class="form-control" id="input-confirm-password" placeholder="Confirm Password"
               [(ngModel)]="form.password_confirmation" required>
+              <span class="text-danger" [hidden]="!error.password">
+                {{error.password}}
+              </span>
           </div>
+
 
           <button type="submit" class="btn btn-block">Sign Up</button>
         </form>

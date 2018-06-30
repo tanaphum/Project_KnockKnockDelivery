@@ -28,44 +28,68 @@
 
     <div class="w3-container" id="btn-container">
       <div class="w3-quarter w3-padding">
-        <button class="btn btn-success btn-block" type="button">Shop</button>
+        <button class="btn btn-success btn-block" id="btn-Shop" type="button">Shop</button>
       </div>
       <div class="w3-quarter w3-padding">
-        <button class="btn btn-danger btn-block" type="button">Collection</button>
+        <button class="btn btn-danger btn-block" id="btn-Collection" type="button">Collection</button>
       </div>
       <div class="w3-quarter w3-padding">
-        <button class="btn btn-warning btn-block" type="button">Promotion</button>
+        <button class="btn btn-warning btn-block" id="btn-Promo" type="button">Promotion</button>
       </div>
       <div class="w3-quarter w3-padding">
-        <button class="btn btn-primary btn-block" type="button">Recommend For You</button>
+        <button class="btn btn-primary btn-block" id="btn-Recommend" type="button">Recommend For You</button>
       </div>
     </div>
 
 
 
 
-  
-  <div class="w3-container w3-padding w3-light-grey">
-      <div *ngFor="let product of products">
+
+    <div class="w3-container w3-padding w3-light-grey">
+      <div *ngFor="let product of products;let i = index" [hidden]="i >= 12">
+        <div class="w3-container w3-quarter">
+          <div class="card">
+            <img class="card-img-top" src="assets/img/mac-image.jpg" alt="">
+            <div class="card-body">
+              <h5 class="card-title" id="title">{{product.product_name}}</h5>
+              <p class="card-text" id="description">{{product.product_description}}</p>
+              <h4 class="card-text" id="text">&#3647; {{product.product_price}}</h4>
+              <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Detail</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="w3-padding-32 w3-light-grey">
+      <button class="btn btn-outline-info btn-block">See More</button>
+    </div>
+
+
+
+    <div class="w3-container w3-white" id="before-footer">
+      <p>Our shop</p>
+      <div class="w3-container w3-padding">
+        <div *ngFor="let shop of shops;let i = index" [hidden]="i >= 12">
           <div class="w3-container w3-quarter">
             <div class="card">
               <img class="card-img-top" src="assets/img/mac-image.jpg" alt="">
               <div class="card-body">
-                <h5 class="card-title" id="title">{{product.product_name}}</h5>
-                <p class="card-text" id="description">{{product.product_description}}</p>
-                <h4 class="card-text" id="text">&#3647; {{product.product_price}}</h4>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <h5 class="card-title" id="title">{{shop.shop_name}}</h5>
+                <p class="card-text" id="description">{{shop.shop_location}}</p>
+                <p class="card-text" id="text">{{shop.shop_type.shop_type_name}}</p>
+                <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoModal" (click)="openInfo(shop)">Detail</a>
+                
               </div>
             </div>
           </div>
         </div>
-  </div>
+      </div>
+      <div class="w3-padding-32">
+        <button class="btn btn-outline-info btn-block">See More</button>
+      </div>
+    </div>
 
-
-  <div class="w3-container w3-white" id="before-footer"> 
-    <p>Some text or content</p>
-  </div>       
-              
     <!-- Contact Section -->
     <div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
       <h3 class="w3-center">CONTACT</h3>
@@ -121,5 +145,35 @@
       <p> &copy; Collage Of Art Media And Technology</p>
     </footer>
 
+  </div>
+</div>
+
+
+
+<!-- //////////////////////////////////// Modal /////////////////////////////////////////// -->
+
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Product Information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <img class="card-img-top" src="assets/img/mac-image.jpg" alt="">
+
+        <p>
+          <strong>Product Name: </strong>{{ form.product_name }}</p>
+        <p>
+          <strong>Product Description: </strong>{{ form.product_description }}</p>
+        <p>
+          <strong>Product Price: </strong>{{ form.product_price }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Add to cart</button>
+      </div>
+    </div>
   </div>
 </div>

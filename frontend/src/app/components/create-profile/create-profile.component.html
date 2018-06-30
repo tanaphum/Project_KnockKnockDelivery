@@ -1,4 +1,7 @@
-<div class="container">
+<div class="loader-container">
+  <div class="loader" [hidden]="!isShow"></div>
+</div>
+<div class="container" [hidden]="isShow">
   <div *ngIf="isCreateSeller">
     <div class="w3-row">
       <div class="w3-container w3-display-middle">
@@ -28,7 +31,7 @@
               <div class="form-group">
                 <label for="input-Type">Shop Type</label>
                 <select class="form-control" name="type" id="input-Type" [(ngModel)]="sellerForm.selectedType">
-                  <option *ngFor="let item of sellerForm.type" [value]="item.model">{{item.model}}</option>
+                  <option *ngFor="let item of shopCatagory" [value]="item.shop_type_id">{{item.shop_type_name}}</option>
                 </select>
                 <span class="text-danger" [hidden]="!error.type">
                   {{error.type}}

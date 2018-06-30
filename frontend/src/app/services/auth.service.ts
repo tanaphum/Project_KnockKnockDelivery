@@ -34,6 +34,10 @@ export class AuthService {
     localStorage.setItem('UAT', token);
   }
 
+  setUserId(data) {
+    localStorage.setItem("user_id",data)
+  }
+
   getToken() {
     return localStorage.getItem('UAT');
   }

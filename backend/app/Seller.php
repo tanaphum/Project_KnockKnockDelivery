@@ -14,8 +14,6 @@ class Seller extends Model
         'shop_location',
         'shop_type_id',
         'profile_status_id',
-        'shop_latitude',
-        'shop_longitude',
         'user_id'
     ];
 

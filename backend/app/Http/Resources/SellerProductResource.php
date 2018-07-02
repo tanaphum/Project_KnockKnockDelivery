@@ -24,7 +24,7 @@ class SellerProductResource extends JsonResource
                 'category_id' => $this->category->category_id,
                 'category_name' => $this->category->category_name               
             ],
-            'product_status_id' => [
+            'product_status' => [
                 'product_status_id' => $this->product_status->product_status_id,
                 'product_status_name' => $this->product_status->product_status_name
             ]

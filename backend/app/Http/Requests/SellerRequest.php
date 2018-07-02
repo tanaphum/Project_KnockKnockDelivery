@@ -11,8 +11,8 @@ class SellerRequest extends FormRequest
         'shop_name' => 'required',
         'shop_location' => 'required',
         'shop_type_id' => 'required',
-        'shop_latitude' => 'required',
-        'shop_longitude' => 'required',
+//        'shop_latitude' => 'required',
+//        'shop_longitude' => 'required',
         // 'seller_photos' => 'required|array',
         // 'seller_photos.*' => 'required|image|mimes:jpeg,bmp,png|max:7000'
     ];

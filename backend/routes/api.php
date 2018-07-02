@@ -73,9 +73,9 @@ Route::group([
     Route::get('admins', 'AdminController@getAdmins');
     Route::get('admin/profile/{profile_id}', 'AdminController@getAdminByProfileId');
     Route::post('admin', 'AdminController@createAdmin');
-    Route::post('searchUsers', 'AdminController@searchUsers');
+    Route::post('search-user', 'AdminController@searchUsers');
     Route::put('admin/{admin_id}', 'AdminController@updateAdmin');
-    Route::put('adminUpdateStatusUser', 'AdminController@adminUpdateStatusUser');
+    Route::put('admin/updatestatus/profile/{profile_id}', 'AdminController@adminUpdateStatusUser');
 });
 
 // order

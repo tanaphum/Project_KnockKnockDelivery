@@ -15,14 +15,22 @@ import { Router } from '@angular/router';
 export class ShopsComponent implements OnInit {
 
   private products;
-  private isLoad: boolean = true;
   private product_catagory;
   private shops;
+  private isShow: boolean = false;
+  private cart_num = 0;
+
 
   private form = {
     product_name: null,
     product_description: null,
     product_price:null
+  }
+
+  private shop = {
+    shop_name: null,
+    shop_type: null,
+    shop_location:null
   }
 
 
@@ -34,8 +42,8 @@ export class ShopsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isLoad = !this.isLoad;
     this.getAllProducts();
+    this.setCartNum();
 
   }
 
@@ -56,7 +64,6 @@ export class ShopsComponent implements OnInit {
       response => {
         console.log("getProductCatagory: ", response.data);
         this.product_catagory = response.data;
-        // this.isLoad = !this.isLoad;
         this.getAllShops();
       },
       error => console.log(error)
@@ -71,6 +78,8 @@ export class ShopsComponent implements OnInit {
       response => {
         console.log("getAllShops: ", response.data);
         this.shops = response.data;
+        // this.isShow = !this.isShow;    
+
       },
       error => console.log(error)
     )
@@ -83,9 +92,51 @@ export class ShopsComponent implements OnInit {
     this.form.product_price=product.product_price
   }
 
+  openShopInfo(shop){
+    console.log("onClick shop: ",shop)
+    this.shop.shop_name = shop.shop_name,
+    this.shop.shop_type = shop.shop_type.shop_type_name,
+    this.shop.shop_location = shop.shop_location
+  }
+
+  goToShop(shop) {
+    console.log("onClick goToShop: ",shop)
+
+  }
+
   addToCart(product) {
     console.log("addToCart: ",product)
-    // localStorage.setItem("cart",product);
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    if(cart == null){
+      let obj = [];
+      obj.push(product);
+      // console.log("product: ",product);
+      localStorage.setItem("cart",JSON.stringify(obj));
+      this.setCartNum();
+
+    }
+    else{
+      cart.push(product)
+      console.log("cart: ",cart);
+      localStorage.setItem("cart",JSON.stringify(cart));
+      this.setCartNum();
+
+    }
+  }
+
+  setCartNum(){
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    console.log("Cart lenght: ",cart.length)
+    this.cart_num = cart.length;
+
+  }
+
+  goToCart() {
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    console.log("Cart : ",cart)
+    this.router.navigateByUrl('/cart')
+
+
   }
 
 }

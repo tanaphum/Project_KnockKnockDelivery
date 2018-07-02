@@ -1,28 +1,43 @@
-<div class="w3-row" id="container">
-  <div class="loader-container">
-    <div class="loader" *ngIf="isLoad"></div>
-  </div>
-  <div *ngIf="!isLoad">
-    <div class="row" id="searchBox">
-      <div class="col-sm-10 col-md-6 col-centered">
+<div class="loader-container">
+  <div class="loader" [hidden]="!isShow"></div>
+</div>
+<div class="w3-row" id="container" [hidden]="isShow">
+
+  <!-- <div class="row">
+    <div class="col-sm-10 col-md-6 col-centered">
+        <i class="fa fa-shopping-cart" id="cart"></i>
+    </div>
+  </div> -->
+
+    <div class="w3-row" id="searchBox">
+      <div class="w3-col m3 w3-center">
+          <p></p>
+      </div>
+      <div class="w3-col m6 w3-center">
         <div class="input-group mb-6" id="search">
           <input type="text" class="form-control input-lg" placeholder="Search">
           <div class="input-group-append">
             <button class="btn btn-warning" id="search-button">
               <i class="fa fa-search"></i>
             </button>
-          </div>
+          </div>          
         </div>
       </div>
+      <div class="w3-col m3 w3-center" id="cart" (click)="goToCart()">
+        <i class="fa fa-shopping-cart" >
+            <span *ngIf="cart_num!=0" class="cart-num" id="topActionCartNumber">{{cart_num}}</span>
+        </i>
+      </div>
+
     </div>
+
 
     <div class="row" id="header-container">
       <div class="col-2" id="catagory_container">
         <p id="catagory" *ngFor="let catagory of product_catagory"> {{catagory.category_name}}</p>
       </div>
       <div class="col-10 w3-green">
-
-      </div>
+        </div>
     </div>
 
 
@@ -78,7 +93,7 @@
                 <h5 class="card-title" id="title">{{shop.shop_name}}</h5>
                 <p class="card-text" id="description">{{shop.shop_location}}</p>
                 <p class="card-text" id="text">{{shop.shop_type.shop_type_name}}</p>
-                <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoModal" (click)="openInfo(shop)">Detail</a>
+                <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoShopModal" (click)="openShopInfo(shop)">Detail</a>
                 
               </div>
             </div>
@@ -145,12 +160,11 @@
       <p> &copy; Collage Of Art Media And Technology</p>
     </footer>
 
-  </div>
 </div>
 
 
 
-<!-- //////////////////////////////////// Modal /////////////////////////////////////////// -->
+<!-- //////////////////////////////////// Product Modal /////////////////////////////////////////// -->
 
 <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -172,7 +186,36 @@
           <strong>Product Price: </strong>{{ form.product_price }}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Add to cart</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="addToCart(form)">Add to cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- //////////////////////////////////// Shop Modal /////////////////////////////////////////// -->
+
+<div class="modal fade" id="infoShopModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Product Information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <img class="card-img-top" src="assets/img/mac-image.jpg" alt="">
+
+        <p>
+          <strong>Shop Name: </strong>{{ shop.shop_name }}</p>
+        <p>
+          <strong>Shop Type: </strong>{{ shop.shop_type }}</p>
+        <p>
+          <strong>Shop Location: </strong>{{ shop.shop_location }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="goToShop(form)">To to shop</button>
       </div>
     </div>
   </div>

@@ -1,3 +1,36 @@
-<p>
-  cart works!
-</p>
+<div class="loader-container">
+  <div class="loader" [hidden]="!isShow"></div>
+</div>
+<div class="w3-row" id="container" [hidden]="isShow">
+  <div class="container">
+    <div class="card card-container w3-display-middle">
+      <div class="card-header">Cart</div>
+      <div class="card-body">
+        <div class="row" id="inner" *ngFor="let product of cart;let i = index">
+          <div class="col" style="display:flex">
+            <p id="remove" (click)="deleteProduct(product)">
+              <i class="fa fa-trash"></i>
+            </p>
+            <p>&nbsp;{{product.product_name}}</p>
+          </div>
+          <div class="col d-flex justify-content-between">
+            <p>{{product.product_price}} &#3647;</p>
+            <div>
+              <p>
+                <span>
+                  <button class="btn btn-default" (click)="decrease(product)">-</button>
+                  1
+                </span>
+                <button class="btn btn-default" (click)="increase(product)">+</button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-between">
+          <button class="btn btn-info" (click)="backToShop()">Back to shopping</button>
+          <button class="btn btn-success">Check Out</button>
+      </div>
+    </div>
+  </div>
+</div>

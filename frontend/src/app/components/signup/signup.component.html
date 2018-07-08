@@ -12,10 +12,34 @@
         </div> -->
 
           <div class="form-group">
-            <label for="input-name">Name</label>
-            <input type="text" name="name" class="form-control" id="input-name" placeholder="Name" [(ngModel)]="form.name" required/>
-            <span class="text-danger" [hidden]="!error.name">
-              {{error.name}}
+            <label for="input-name">First Name</label>
+            <input type="text" name="firstname" class="form-control" id="input-firstname" placeholder="First Name" [(ngModel)]="form.firstname" required/>
+            <span class="text-danger" [hidden]="!error.firstname">
+              {{error.firstname}}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="input-name">Last Name</label>
+            <input type="text" name="lastname" class="form-control" id="input-lastname" placeholder="Last Name" [(ngModel)]="form.lastname" required/>
+            <span class="text-danger" [hidden]="!error.lastname">
+              {{error.lastname}}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="input-email">Identity No.</label>
+            <input type="text" name="identity_no" class="form-control" id="input-identity_no" placeholder="Identity no." [(ngModel)]="form.identity_no" required>
+            <span class="text-danger" [hidden]="!error.identity_no">
+              {{error.identity_no}}
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="input-email">Telephone number</label>
+            <input type="number" name="telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number" [(ngModel)]="form.telephone_number" required>
+            <span class="text-danger" [hidden]="!error.telephone_number">
+              {{error.telephone_number}}
             </span>
           </div>
 

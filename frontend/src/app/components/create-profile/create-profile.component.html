@@ -1,54 +1,79 @@
-<div class="loader-container">
-  <div class="loader" [hidden]="!isShow"></div>
+<div class="loader-container"[hidden]="!isShow">
+  <div class="loader" ></div>
 </div>
 <div class="container" [hidden]="isShow">
   <div *ngIf="isCreateSeller">
-    <div class="w3-row">
       <div class="w3-container w3-display-middle">
-        <div class="card">
+        <div class="card w3-margin-top">
           <div class="card-header">Create Seller Profile</div>
           <div class="card-body">
             <form #createSellerForm=ngForm (ngSubmit)="createSeller()">
 
               <div class="form-group">
-                <label for="input-name">Seller Name</label>
-                <input type="text" name="name" class="form-control" id="input-name" placeholder="Seller Name" [(ngModel)]="sellerForm.sellerName"
-                  required/>
-                <span class="text-danger" [hidden]="!error.sellerName">
-                  {{error.sellerName}}
-                </span>
-              </div>
-
-              <div class="form-group">
                 <label for="input-shop-name">Shop Name</label>
-                <input type="text" name="shop-name" class="form-control" id="input-shop-name" placeholder="Shop Name" [(ngModel)]="sellerForm.shopName"
+                <input type="text" name="shop-name" class="form-control" id="input-shop-name" placeholder="Shop Name" [(ngModel)]="sellerForm.shop_name"
                   required>
                 <span class="text-danger" [hidden]="!error.shopName">
                   {{error.shopName}}
                 </span>
               </div>
-
-              <div class="form-group">
-                <label for="input-Type">Shop Type</label>
-                <select class="form-control" name="type" id="input-Type" [(ngModel)]="sellerForm.selectedType">
-                  <option *ngFor="let item of shopCatagory" [value]="item.shop_type_id">{{item.shop_type_name}}</option>
-                </select>
-                <span class="text-danger" [hidden]="!error.type">
-                  {{error.type}}
-                </span>
-              </div>
+              
 
               <div class="form-group">
                 <label for="input-localtion">Location</label>
-                <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="location" [(ngModel)]="sellerForm.location"
+                <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="location" [(ngModel)]="sellerForm.shop_location"
                   required></textarea>
                 <span class="text-danger" [hidden]="!error.location">
                   {{error.location}}
                 </span>
               </div>
 
+              <div class="form-group">
+                <label for="input-lat">Shop Latitude</label>
+                <input type="number" name="lat" class="form-control" id="input-lat" placeholder="Latitude" [(ngModel)]="sellerForm.shop_latitude">
+                <span class="text-danger" [hidden]="!error.lat">
+                  {{error.lat}}
+                </span>
+              </div>
 
               <div class="form-group">
+                <label for="input-long">Shop Longtitude</label>
+                <input type="number" name="long" class="form-control" id="input-long" placeholder="Longtitude" [(ngModel)]="sellerForm.shop_longitude">
+                <span class="text-danger" [hidden]="!error.long">
+                  {{error.long}}
+                </span>
+              </div>
+
+              <div class="form-group">
+                <agm-map [zoom]="18" [latitude]="latitude" [longitude]="longtitude" (mapClick)="onChooseLocation($event)" >
+                  <agm-marker [latitude]="latitude" [longitude]="longtitude"></agm-marker>
+                </agm-map>
+                
+                <!-- <agm-map [zoom]="18" >
+                  <agm-direction [origin]="dir.origin" [destination]="dir.destination" [renderOptions]="options"></agm-direction>
+                  <agm-marker *ngIf="dir" [latitude]="dir.origin.lat" [longitude]="dir.origin.lng">
+                    <agm-info-window #infoWindow>
+                      <strong>{{sellerForm.shop_latitude}}</strong><br>
+                    </agm-info-window>
+                  </agm-marker>
+                  <agm-marker *ngIf="dir" [latitude]="dir.destination.lat" [longitude]="dir.destination.lng" >
+                    <agm-info-window #infoWindow>
+                      <strong>{{sellerForm.shop_latitude}}</strong><br>
+                    </agm-info-window>
+                  </agm-marker>
+                </agm-map>
+                <agm-map [zoom]="18" [latitude]="latitude" [longitude]="longtitude" >
+                  <agm-marker [latitude]="latitude" [longitude]="longtitude">
+                    <agm-info-window #infoWindow>
+                      <strong>Shop Location</strong><br>
+                    </agm-info-window>
+                  </agm-marker>
+                </agm-map> -->
+              </div>
+
+
+
+              <!-- <div class="form-group">
                 <label for="input-image">Shop Image</label><br>
                 <input  type="file" name="shop-image"  id="input-image" (change)="readImageUrl($event)" [(ngModel)]="sellerForm.shopImg"
                 accept="image/*" required>
@@ -58,7 +83,7 @@
                 <div>
                 <img id="imagePriview" [src]="sellerForm.shopImg" />                
               </div>
-              </div>
+              </div> -->
 
               
 
@@ -68,7 +93,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
   <div *ngIf="isCreateBuyer">
     <div class="w3-row">
@@ -76,23 +100,15 @@
         <div class="card">
           <div class="card-header">Create Buyer Profile</div>
           <div class="card-body">
-            <form #createBuyerForm=ngForm (ngSubmit)="onSubmit()">
+            <form #createBuyerForm=ngForm (ngSubmit)="createBuyer()">
+
 
               <div class="form-group">
-                <label for="input-name">Buyer Name</label>
-                <input type="text" name="name" class="form-control" id="input-name" placeholder="Buyer Name" [(ngModel)]="buyerForm.buyerName"
-                  required/>
-                <span class="text-danger" [hidden]="!error.buyerName">
-                  {{error.buyerName}}
-                </span>
-              </div>
-
-              <div class="form-group">
-                <label for="input-localtion">Location</label>
-                <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="location" [(ngModel)]="buyerForm.location"
+                <label for="input-localtion">Address</label>
+                <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="Address" [(ngModel)]="buyerForm.buyer_location"
                   required></textarea>
-                <span class="text-danger" [hidden]="!error.location">
-                  {{error.location}}
+                <span class="text-danger" [hidden]="!error.buyer_location">
+                  {{error.buyer_location}}
                 </span>
               </div>
 
@@ -108,41 +124,36 @@
     <div class="w3-row">
       <div class="w3-container w3-display-middle">
         <div class="card">
-          <div class="card-header">Create Deliver Profile</div>
+          <div class="card-header">Create Shipper Profile</div>
           <div class="card-body">
-            <form #createDeliverForm=ngForm (ngSubmit)="onSubmit()">
+            <form #createDeliverForm=ngForm (ngSubmit)="createDeliver()">
 
               <div class="form-group">
-                <label for="input-name">Name</label>
-                <input type="text" name="name" class="form-control" id="input-name" placeholder="Name" [(ngModel)]="deliverForm.name" required/>
-                <span class="text-danger" [hidden]="!error.name">
-                  {{error.name}}
+                <label for="input-bank_account_no">Bank account no</label>
+                <input type="text" name="bank_account_no" class="form-control" id="input-bank_account_no" placeholder="Bank account no" [(ngModel)]="deliverForm.bank_account_no" required/>
+                <span class="text-danger" [hidden]="!error.bank_account_no">
+                  {{error.bank_account_no}}
                 </span>
               </div>
 
               <div class="form-group">
-                <label for="input-email">Email</label>
-                <input type="email" name="email" class="form-control" id="input-email" placeholder="Email" [(ngModel)]="deliverForm.email"
-                  required>
-                <span class="text-danger" [hidden]="!error.email">
-                  {{error.email}}
-                </span>
-              </div>
+                  <label for="selectBank">Select bank account</label>
+                  <select [disabled]="isClick" class="form-control" name="selectBank" id="selectBank" [(ngModel)]="dafault_bank" #selectBank="ngModel" (ngModelChange)="onBankSelected($event)"
+                    required>
+                    <option value="" disabled selected>Select bank account</option>
+                    <option [disabled]="isUpdate" *ngFor="let bank of bankAcc" [value]="bank.bank_account_id">{{bank.bank_account_name}}</option>
+                  </select>
+                </div>
 
-              <div class="form-group">
-                <label for="input-password">Password</label>
-                <input type="password" name="password" class="form-control" id="input-password" placeholder="Password" [(ngModel)]="deliverForm.password"
-                  required>
-                <span class="text-danger" [hidden]="!error.password">
-                  {{error.password}}
-                </span>
-              </div>
-
-              <div class="form-group">
-                <label for="input-confirm-password">Confirm Password</label>
-                <input type="password" name="confirmPassword" class="form-control" id="input-confirm-password" placeholder="Confirm Password"
-                  [(ngModel)]="deliverForm.password_confirmation" required>
-              </div>
+                <div class="form-group">
+                    <label for="input-shipper_transfer_slip">Shipper transfer slip</label>
+                    <br>
+                    <input [disabled]="isClick"type='file' id="img" (change)="preview($event)" accept="image/*" />
+                    <br>
+                    <br>
+              
+                    <!-- <canvas id="previewImg" #mycanvas></canvas> -->
+                  </div>
 
               <button type="submit" id="rotate" class="btn btn-block btn-success">Create</button>
             </form>

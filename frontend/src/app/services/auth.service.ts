@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { HttpHeaders } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +14,21 @@ export class AuthService {
     login: 'http://localhost:8000/api/auth/login',
     signup: 'http://localhost:8000/api/auth/signup'
   };
+  private UAT = localStorage.getItem('UAT')
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': 'Bearer '+ this.UAT,
+      'Accept':'application/json, text/plain, */*',
+
+    })
+  };
 
   private userLoggedIn = new BehaviorSubject<boolean>(this.loggedIn());
   authStatus = this.userLoggedIn.asObservable()
 
   constructor(private http: HttpClient) { }
+
 
   signup(data) {
     return this.http.post(`${this.baseUrl}/signup`, data)
@@ -24,6 +36,15 @@ export class AuthService {
 
   login(data) {
     return this.http.post(`${this.baseUrl}/login`, data)
+  }
+
+  logOut() {
+    return this.http.post(`${this.baseUrl}/logout`,{},this.httpOptions)
+  }
+
+  refresh() {
+    return this.http.post(`${this.baseUrl}/refresh`, {})
+
   }
 
   handleToken(token) {
@@ -48,6 +69,11 @@ export class AuthService {
     localStorage.removeItem('seller');
     localStorage.removeItem('shop_catagory');
     localStorage.removeItem('user_id');
+    localStorage.removeItem('cart');
+    localStorage.removeItem('masterData');
+
+    
+
 
 
   }
@@ -75,6 +101,8 @@ export class AuthService {
   loggedIn() {
     return this.isValidToken();
   }
+
+
 
   changeAuthStatus(value: boolean) {
     this.userLoggedIn.next(value);

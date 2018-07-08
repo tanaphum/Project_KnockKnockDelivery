@@ -13,7 +13,12 @@
 
   .w3-container  {
     width: 500px;
+    padding-top: 20px;
 
+  }
+
+  agm-map {
+    height: 250px;
   }
 
   
@@ -48,4 +53,3 @@
     transform: rotate(360deg);
   }
 }
-

@@ -11,10 +11,14 @@ import { AuthService } from '../../services/auth.service';
 export class SignupComponent implements OnInit {
 
   form = {
-    name: null,
+    firstname: null,
+    lastname: null,
+    identity_no: null,
+    telephone_number: null,
     email: null,
     password: null,
-    password_confirmation: null
+    password_confirmation: null,
+
   }
 
   isShow: boolean = false;
@@ -41,6 +45,10 @@ export class SignupComponent implements OnInit {
     else if(this.form.password != this.form.password_confirmation){
       this.isShow = !this.isShow;   
       this.error['password'] = 'Password and confirm password not match';
+    }
+    else if(this.form.identity_no.length<13) {
+      this.isShow = !this.isShow;   
+      this.error['identity_no'] = 'Identity no must more than 13 digit';
     }
     else{
       this.authService.signup(this.form).subscribe(

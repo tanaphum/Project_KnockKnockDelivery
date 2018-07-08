@@ -13,7 +13,7 @@
 
     <div class="form-group">
       <label for="input-price">Product Price</label>
-      <input [disabled]="isClick" type="number" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="form.product_price"
+      <input [disabled]="isClick" min="1" max="1000" type="number" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="form.product_price"
         required/>
       <span class="text-danger" [hidden]="!error.product_price">
         {{error.product_price}}
@@ -25,7 +25,7 @@
       <select [disabled]="isClick" class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="form.selected_catagory"
         required>
         <option value="" disabled selected>Select a Catagory</option>
-        <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option>
+        <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.product_category_id">{{item.product_category_name}}</option>
       </select>
     </div>
 
@@ -38,14 +38,14 @@
         </select>
       </div> -->
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="input-price">Product Amount Unit</label>
-      <input [disabled]="isClick" type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="form.product_unit_amount"
+      <input [disabled]="isClick" type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="form.unit_in_stock"
         required>
-      <span class="text-danger" [hidden]="!error.product_unit_amount">
-        {{error.product_unit_amount}}
+      <span class="text-danger" [hidden]="!error.unit_in_stock">
+        {{error.unit_in_stock}}
       </span>
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label for="input-description">Description</label>
@@ -59,7 +59,7 @@
     <div class="form-group">
       <label for="input-price">Product Image</label>
       <br>
-      <input [disabled]="isClick"type='file' id="img" (change)="preview($event)" accept="image/*" />
+      <input [disabled]="isClick"type='file' id="img" (change)="preview($event)" accept="image/*" #fileInput/>
       <br>
       <br>
 

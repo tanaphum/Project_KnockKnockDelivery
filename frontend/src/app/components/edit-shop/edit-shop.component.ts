@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,Input, Output,  EventEmitter } from '@angular/core';
 import { SellerService } from '../../services/seller.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -24,9 +25,15 @@ export class EditShopComponent implements OnInit {
   private dafault_catagory: Number;
   private catagory;
   private seller;
+  private masterData;
   private error: boolean = false;
   private errorMessage;
+  title: string = 'My first AGM project';
+  latitude: any;
+  longtitude: any;
 
+
+  @Output() reloadPage = new EventEmitter();
   @ViewChild("mycanvas") mycanvas;
 
   fileToUpload: File = null;
@@ -36,28 +43,57 @@ export class EditShopComponent implements OnInit {
 
   constructor(
     private sellerService: SellerService,
+    private router: Router,
+
   ) { }
 
   ngOnInit() {
-    this.seller = JSON.parse(localStorage.getItem("seller"));
-    this.getShopCatagory();
+    this.seller = JSON.parse(localStorage.getItem("seller_id"));
+    // this.getShopCatagory();
 
 
   }
+  getGeoLocation(){
+    if (navigator.geolocation) {
+        var options = {
+          enableHighAccuracy: true
+        };
 
-  getShopCatagory() {
-    this.catagory = JSON.parse(localStorage.getItem("shop_catagory"));
-    this.catagory.forEach((element, idx) => {
-      if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
-        this.dafault_catagory = idx + 1;
-        this.form.selected_catagory = idx + 1;
-        this.setUpPage()
-      }
-
-    });
-
-
+        navigator.geolocation.getCurrentPosition(position=> {
+          this.latitude = position.coords.latitude;
+          this.longtitude = position.coords.longitude;
+          
+          
+          }, error => {
+            console.log(error);
+          }, options);
+    }
   }
+
+  // getShopCatagory() {
+  //   // this.catagory = JSON.parse(localStorage.getItem("shop_catagory"));
+  //   // this.masterData = JSON.parse(localStorage.getItem('masterData'))
+  //   // this.catagory = this.masterData.product_category;
+  //   // this.catagory.forEach((element, idx) => {
+  //   //   if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
+  //   //     this.dafault_catagory = idx + 1;
+  //   //     this.form.selected_catagory = idx + 1;
+  //   //     this.setUpPage()
+  //   //   }
+
+  //   // });
+  //   this.masterData = JSON.parse(localStorage.getItem('masterData'))
+  //   this.catagory = this.masterData.product_category;
+  //   this.catagory.forEach((element, idx) => {
+  //     if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
+  //       this.dafault_catagory = idx + 1;
+  //       this.form.selected_catagory = idx + 1;
+  //       this.setUpPage()
+  //     }
+
+  //   });
+
+  // }
 
   setUpPage() {
     this.form.shop_name = this.seller.shop_name;
@@ -98,12 +134,11 @@ export class EditShopComponent implements OnInit {
     this.isClick = !this.isClick;
 
     let temp = {
-      seller_name: this.form.seller_name,
       shop_name: this.form.shop_name,
       shop_location: this.form.shop_location,
-      shop_type_id: this.form.selected_catagory,
-      profile_status_id: 1,
-      profile_id: this.seller.profile_id
+      shop_latitude:1234,
+      shop_longitude:1234,
+      shop_logo_image:null,
     }
     console.log("onSubmit", temp)
 
@@ -113,6 +148,13 @@ export class EditShopComponent implements OnInit {
         console.log("response onSubmit: ", response)
         this.isClick = !this.isClick;
         this.isEdit = !this.isEdit;
+        // this.reloadPage.emit(null)
+        if(response.message == 'Successfully') {
+          alert("Update shop success!!!");
+          this.router.navigateByUrl('/manage-shop')
+        }
+
+
       },
       error => { 
         console.log("error onSubmit: ", error) 

@@ -12,43 +12,40 @@
           <p>Select one menu</p>
           <div id="menu">
             <div class="row">
-              <div class="col-12 w3-display-container" id="menu-top" *ngIf="validSeller" (click)="enterManageShop(sellerProfile)">
+              <div class="col-12 w3-display-container" id="menu-top" [hidden]="validSeller" (click)="enterManageShop(sellerProfile)">
                 <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1">
                 <div class="w3-padding-large">
-                  <p><b>Seller</b></p>
-                  <p>{{sellerProfile.shop_name}}</p>
+                      <p>Seller</p>
                 </div>
               </div>
-              <div class="col-12 w3-display-container" id="menu-top" *ngIf="!validSeller" (click)="createProfile(2)">
+              <div class="col-12 w3-display-container" id="menu-top" [hidden]="!validSeller" (click)="createProfile(2)">
                 <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1">
                 <div class="w3-padding-large">
                   <p>Create Seller profile</p>
                 </div>
               </div>
-              <div class="col-12 w3-display-container" id="menu-center" *ngIf="validBuyer" (click)="enterShops()">
+              <div class="col-12 w3-display-container" id="menu-center" [hidden]="validBuyer" (click)="enterShops()">
                 <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg2">
                 <div class="w3-padding-large">
-                  <p><b>Buyer</b></p>
-                  <p>{{buyerProfile.buyer_firstname}}</p>
+                        <p>Buyer</p>
                 </div>
               </div>
-              <div class="col-12 w3-display-container" id="menu-top" *ngIf="!validBuyer" (click)="createProfile(3)">
+              <div class="col-12 w3-display-container" id="menu-top" [hidden]="!validBuyer" (click)="createProfile(3)">
                 <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1">
                 <div class="w3-padding-large">
                   <p>Create Buyer profile</p>
                 </div>
               </div>
-              <div class="col-12 w3-display-container" id="menu-button" *ngIf="validDeliver">
+              <div class="col-12 w3-display-container" id="menu-button" [hidden]="validDeliver" (click)="enterDeliver()">
                   <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg3">
                   <div class="w3-padding-large">
-                    <p><b>Deliver</b></p>
-                    <p>{{deliverProfile.deliver_firstname}}</p>
+                          <p>Shipper</p>
                   </div>
                 </div>
-                <div class="col-12 w3-display-container" id="menu-top" *ngIf="!validDeliver" (click)="createProfile(4)">
+                <div class="col-12 w3-display-container" id="menu-top" [hidden]="!validDeliver" (click)="createProfile(4)">
                   <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1">
                   <div class="w3-padding-large">
-                    <p>Create Deliver profile</p>
+                    <p>Create Shipper profile</p>
                   </div>
                 </div>
             </div>

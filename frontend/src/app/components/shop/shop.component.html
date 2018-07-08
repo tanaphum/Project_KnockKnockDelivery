@@ -1,117 +1,93 @@
-<div class="w3-row" id="container">
+<div class="loader-container" [hidden]="!isShow">
+  <div class="loader" ></div>
+</div>
+<div class="w3-row" id="container" [hidden]="isShow">
 
-    <div class="header">
-      <div class="w3-container">
-        <h1>
-          <b>Knock Knock Shop</b>
-        </h1>
-  
-        <!-- <div class="w3-bottombar w3-padding-16" id="myTopnav">
-          <span class="w3-margin-right">filter:</span>
-          <button class="w3-button w3-black btn-menu">ALL PRODUCTS</button>
-          <button class="w3-button w3-white btn-menu">
-            <i class="fa fa-check w3-margin-right"></i>AVAILABLE PRODUCTS</button>
-          <button class="w3-button w3-white btn-menu">
-            <i class="fa fa-minus w3-margin-right"></i>OUT OF STOCK PRODUCT</button>
-          <button class="w3-button w3-white btn-menu">
-            <i class="fa fa-plus w3-margin-right"></i>ADD PRODUCT</button>
-            <button class="w3-button w3-white btn-menu">
-              <i class="fa fa-history w3-margin-right"></i>SHOP HISTOTY</button>
-              <button class="w3-button w3-white btn-menu">
-                  <i class="fa fa-cogs w3-margin-right"></i>EDIT SHOP</button>
-        </div> -->
-        <!-- Add on  -->
-        <div class="topnav" id="myTopfilter">
-          <a class="active">ALL PRODUCTS</a>
-          <a>
-            <i class="fa fa-check w3-margin-right"></i>AVAILABLE PRODUCTS</a>
-          <a>
-            <i class="fa fa-minus w3-margin-right"></i>OUT OF STOCK PRODUCT</a>
-          <a>
-            <i class="fa fa-plus w3-margin-right"></i>ADD PRODUCT</a>
-          <a>
-            <i class="fa fa-history w3-margin-right"></i>SHOP HISTOTY</a>
-          <a>
-            <i class="fa fa-cogs w3-margin-right"></i>EDIT SHOP</a>
-          <a href="javascript:void(0);" class="icon" (click)="toogle()">
-            <i class="fa fa-angle-down"></i>
-          </a>
-        </div>
-        <hr>
-  
-      </div>
+  <!-- <div class="row">
+    <div class="col-sm-10 col-md-6 col-centered">
+        <i class="fa fa-shopping-cart" id="cart"></i>
     </div>
-  
-    <!-- First Photo Grid-->
-    <div class="w3-row-padding">
-      <div class="w3-third w3-container w3-margin-bottom">
-        <img src="assets/img/mac-image.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p>
-            <b>Mac book pro</b>
-            <i class="available"> [Available]</i>
-          </p>
-          <p>Price 50000 Bath</p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida
-            diam non fringilla.</p>
-        </div>
-        <button style=" border-radius:0" onclick="document.getElementById('id01').style.display='block'" class="btn btn-warning btn-block">Edit</button>
+  </div> -->
+
+    <div class="w3-row" id="searchBox">
+      <div class="w3-col m3 w3-center">
+          <p></p>
       </div>
-      <div class="w3-third w3-container w3-margin-bottom">
-        <img src="assets/img/mac-image.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p>
-            <b>Mac book air</b>
-            <i class="outOfStock"> [Out of Stock]</i>
-          </p>
-          <p>Price 30000 Bath</p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida
-            diam non fringilla.</p>
+      <div class="w3-col m6 w3-center">
+        <div class="input-group mb-6" id="search">
+          <input type="text" class="form-control input-lg" placeholder="Search">
+          <div class="input-group-append">
+            <button class="btn btn-warning" id="search-button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>          
         </div>
-        <button style=" border-radius:0" class="btn btn-warning btn-block">Edit</button>
       </div>
-      <div class="w3-third w3-container">
-        <img src="assets/img/mac-image.jpg" alt="Norway" style="width:100%" class="w3-hover-opacity">
-        <div class="w3-container w3-white">
-          <p>
-            <b>Mac book pro</b>
-          </p>
-          <p>Price 50000 Bath</p>
-          <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida
-            diam non fringilla.</p>
-        </div>
-        <button style=" border-radius:0" class="btn btn-warning btn-block">Edit</button>
-  
+      <div class="w3-col m3 w3-center" id="cart" (click)="goToCart()">
+        <i class="fa fa-shopping-cart" >
+            <span *ngIf="cart_num!=0" class="cart-num" id="topActionCartNumber">{{cart_num}}</span>
+        </i>
       </div>
+
     </div>
-  
-  
-  
-  
-  
-  
-  
-    <div id="id01" class="w3-modal">
-      <div class="w3-modal-content">
-        <div class="w3-container">
-          <div onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-large w3-display-topright">&times;</div>
-          <img src="assets/img/mac-image.jpg" class="modal-img">
-          <div class="w3-container w3-white">
-            <p>
-              <b>Mac book pro</b>
-              <i class="available"> [Available]</i>
-            </p>
-            <p>Price 50000 Bath</p>
-            <p>Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida
-              diam non fringilla.</p>
+
+    
+
+    <div class="row" id="header-container">
+      <div class="col-2  w3-green" >
+        <p>Hello</p>
+      </div>
+      <div class="col-10 w3-green">
+        </div>
+    </div>
+
+    <div class="w3-container w3-padding w3-light-grey">
+      <div *ngFor="let product of products;let i = index" [hidden]="i >= 12">
+        <div class="w3-container w3-quarter">
+          <div class="card">
+              <div class="card-img-top d-flex justify-content-center">
+                  <img [src]="baseUrl+product.product_image_1" alt="" >
+              </div>            
+              <div class="card-body">
+                <h5 class="card-title" id="title">{{product.product_name}}</h5>
+                <p class="card-text" id="description">{{product.product_description}}</p>
+                <h4 class="card-text" id="text">&#3647; {{product.product_price}}</h4>
+                <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Detail</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  
-  
-  
-  
-  
+    <div class="w3-padding-32 w3-light-grey">
+      <button class="btn btn-outline-info btn-block">See More</button>
+    </div>
+
+
+<!-- //////////////////////////////////// Product Modal /////////////////////////////////////////// -->
+
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Product Information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="card-img-top d-flex justify-content-center">
+              <img [src]="baseUrl+form.product_image_1" alt="" >
+          </div> 
+        <p>
+          <strong>Product Name: </strong>{{ form.product_name }}</p>
+        <p>
+          <strong>Product Description: </strong>{{ form.product_description }}</p>
+        <p>
+          <strong>Product Price: </strong>{{ form.product_price }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="addToCart(form)">Add to cart</button>
+      </div>
+    </div>
   </div>
-  
+</div>

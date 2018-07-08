@@ -1,9 +1,10 @@
 <div class="loader-container">
-  <div class="loader" [hidden]="!isShow"></div>
+  <div class="loader" ></div>
 </div>
-<div class="w3-row" id="container" [hidden]="isShow">
+<div class="w3-row" id="container" >
   <div class="container">
-    <div class="card card-container w3-display-middle">
+
+    <div class="card card-container w3-display-middle" [hidden]="!isCheckOut">
       <div class="card-header">Cart</div>
       <div class="card-body">
         <div class="row" id="inner" *ngFor="let product of cart;let i = index">
@@ -18,8 +19,8 @@
             <div>
               <p>
                 <span>
-                  <button class="btn btn-default" (click)="decrease(product)">-</button>
-                  1
+                  <button class="btn btn-default" (click)="decrease(product)" [disabled]="product.amount == 1">-</button>
+                  {{product.amount}}
                 </span>
                 <button class="btn btn-default" (click)="increase(product)">+</button>
               </p>
@@ -28,8 +29,30 @@
         </div>
       </div>
       <div class="card-footer d-flex justify-content-between">
-          <button class="btn btn-info" (click)="backToShop()">Back to shopping</button>
-          <button class="btn btn-success">Check Out</button>
+        <button class="btn btn-info" (click)="backToShop()">Back to shopping</button>
+        <button class="btn btn-success" (click)="checkOut()">Check Out</button>
+      </div>
+    </div>
+
+    <div class="w3-display-middle" [hidden]="isCheckOut">
+      <div class="card card-container" [hidden]="!isWarting">
+        <div class="card-header">Waiting shipper</div>
+        <div class="card-body">
+          <h2>Waiting...</h2>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+
+      <div class="card card-container" [hidden]="isWarting">
+        <div class="card-header">Get shipper</div>
+        <div class="card-body">
+          <h2>Shipper detail</h2>
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <button class="btn btn-success" >Ok</button>
+        </div>
       </div>
     </div>
   </div>

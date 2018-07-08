@@ -16,6 +16,8 @@ import { ResponseResetComponent } from './components/password/response-reset/res
 import { CreateProductComponent } from './components/create-product/create-product.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { CartComponent } from './components/cart/cart.component';
+import { DeliverComponent } from './components/deliver/deliver.component';
+
 
 
 
@@ -59,6 +61,11 @@ const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+    canActivate: [IsLoggedInService]
+  },
+  {
+    path: 'deliver',
+    component: DeliverComponent,
     canActivate: [IsLoggedInService]
   },
   {

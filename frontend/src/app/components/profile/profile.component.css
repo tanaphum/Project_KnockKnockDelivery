@@ -62,7 +62,22 @@
   margin-bottom: 10px;
   align-items: center;
   display: flex;
-  /* justify-content: center;  */
+  /* justify-content: space-between;  */
+}
+
+#cog{
+  height: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between; 
+}
+
+#cog:hover {
+  cursor: pointer;
+  background-color: rgb(175, 175, 175);
+  border-radius: 1%;
 }
 
 #menu-top:hover,

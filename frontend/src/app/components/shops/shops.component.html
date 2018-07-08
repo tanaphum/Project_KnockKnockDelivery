@@ -1,5 +1,5 @@
-<div class="loader-container">
-  <div class="loader" [hidden]="!isShow"></div>
+<div class="loader-container" [hidden]="!isShow">
+  <div class="loader" ></div>
 </div>
 <div class="w3-row" id="container" [hidden]="isShow">
 
@@ -31,16 +31,16 @@
 
     </div>
 
-
+<!-- 
     <div class="row" id="header-container">
       <div class="col-2" id="catagory_container">
-        <p id="catagory" *ngFor="let catagory of product_catagory"> {{catagory.category_name}}</p>
+        <p id="catagory" *ngFor="let catagory of product_catagory"> {{catagory.product_category_name}}</p>
       </div>
       <div class="col-10 w3-green">
         </div>
-    </div>
+    </div> -->
 
-
+<!-- 
     <div class="w3-container" id="btn-container">
       <div class="w3-quarter w3-padding">
         <button class="btn btn-success btn-block" id="btn-Shop" type="button">Shop</button>
@@ -54,17 +54,19 @@
       <div class="w3-quarter w3-padding">
         <button class="btn btn-primary btn-block" id="btn-Recommend" type="button">Recommend For You</button>
       </div>
-    </div>
+    </div> -->
 
 
 
 
 
-    <div class="w3-container w3-padding w3-light-grey">
+    <!-- <div class="w3-container w3-padding w3-light-grey">
       <div *ngFor="let product of products;let i = index" [hidden]="i >= 12">
         <div class="w3-container w3-quarter">
           <div class="card">
-            <img class="card-img-top" src="assets/img/mac-image.jpg" alt="">
+            <div class="d-flex justify-content-center">
+                <img class="card-img-top" [src]="baseUrl+product.product_image_1" alt="" >
+            </div>
             <div class="card-body">
               <h5 class="card-title" id="title">{{product.product_name}}</h5>
               <p class="card-text" id="description">{{product.product_description}}</p>
@@ -75,24 +77,26 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> 
+    
     <div class="w3-padding-32 w3-light-grey">
       <button class="btn btn-outline-info btn-block">See More</button>
-    </div>
+    </div> -->
 
 
 
     <div class="w3-container w3-white" id="before-footer">
-      <p>Our shop</p>
       <div class="w3-container w3-padding">
         <div *ngFor="let shop of shops;let i = index" [hidden]="i >= 12">
           <div class="w3-container w3-quarter">
             <div class="card">
-              <img class="card-img-top" src="assets/img/mac-image.jpg" alt="">
+                <div class="d-flex justify-content-center">
+                    <img class="card-img-top" [src]="baseUrl+shop.shop_logo_image" alt="" >
+                </div>
               <div class="card-body">
                 <h5 class="card-title" id="title">{{shop.shop_name}}</h5>
                 <p class="card-text" id="description">{{shop.shop_location}}</p>
-                <p class="card-text" id="text">{{shop.shop_type.shop_type_name}}</p>
+                <!-- <p class="card-text" id="text">{{shop.shop_type.shop_type_name}}</p> -->
                 <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoShopModal" (click)="openShopInfo(shop)">Detail</a>
                 
               </div>
@@ -100,7 +104,7 @@
           </div>
         </div>
       </div>
-      <div class="w3-padding-32">
+      <div class="w3-padding-32" [hidden]="shops.length < 12">
         <button class="btn btn-outline-info btn-block">See More</button>
       </div>
     </div>
@@ -176,8 +180,9 @@
         </button>
       </div>
       <div class="modal-body">
-          <img class="card-img-top" src="assets/img/mac-image.jpg" alt="">
-
+          <div class="d-flex justify-content-center">
+              <img class="card-img-top" [src]="baseUrl+form.product_image_1" alt="" >
+          </div>
         <p>
           <strong>Product Name: </strong>{{ form.product_name }}</p>
         <p>
@@ -199,23 +204,22 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Product Information</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Shop Information</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          <img class="card-img-top" src="assets/img/mac-image.jpg" alt="">
-
+          <div class="d-flex justify-content-center">
+              <img class="card-img-top" [src]="baseUrl+shop.shop_logo_image" alt="" >
+          </div>
         <p>
           <strong>Shop Name: </strong>{{ shop.shop_name }}</p>
-        <p>
-          <strong>Shop Type: </strong>{{ shop.shop_type }}</p>
         <p>
           <strong>Shop Location: </strong>{{ shop.shop_location }}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="goToShop(form)">To to shop</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="goToShop(shop)">To to shop</button>
       </div>
     </div>
   </div>

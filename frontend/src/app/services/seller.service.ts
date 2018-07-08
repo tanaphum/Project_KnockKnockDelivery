@@ -8,10 +8,11 @@ import { HttpHeaders } from '@angular/common/http';
 export class SellerService {
 
   private baseUrl = 'http://localhost:8000/api/';
-
+  private UAT = localStorage.getItem('UAT')
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer '+ this.UAT
     })
   };
 
@@ -22,44 +23,54 @@ export class SellerService {
 
   }
 
-  updateShop(form, seller) {
-    return this.http.put(`${this.baseUrl}seller/` + seller.seller_id, form, this.httpOptions)
+  updateShop(form, seller_id) {
+    return this.http.post<shop>(`${this.baseUrl}seller/` + seller_id, form, this.httpOptions)
   }
 
-  getAllProducts(seller) {
-    var temp = this.http.get<Product>(`${this.baseUrl}seller/` + seller.seller_id + `/products`)
+  getAllProducts(seller_id) { 
+    var temp = this.http.get<Product>(`${this.baseUrl}seller/` + seller_id + `/products`,this.httpOptions)
     console.log("getAllProducts from service: ", temp)
     return temp
   }
 
+
   getAllShops(){
-    return this.http.get<shops>(`${this.baseUrl}sellers/`)
+    return this.http.get<shops>(`${this.baseUrl}sellers/`,this.httpOptions)
+  }
+
+  getShopByProfileId(id) {
+    return this.http.get<shops>(`${this.baseUrl}seller/profile/`+id,this.httpOptions)
   }
 
   getShopCategories() {
-    return this.http.get<shopCategorie>(`${this.baseUrl}shoptypes`)
+    return this.http.get<shopCategorie>(`${this.baseUrl}shoptypes`,this.httpOptions)
   }
 
   getProductCategories() {
-    return this.http.get<productCategorie>(`${this.baseUrl}categories`)
+    return this.http.get<productCategorie>(`${this.baseUrl}categories`,this.httpOptions)
   }
 
-  createProduct(product, seller) {
-    return this.http.post(`${this.baseUrl}seller/` + seller.seller_id + `/product`, product)
+  createProduct(product, seller_id) {
+    return this.http.post(`${this.baseUrl}seller/` + seller_id + `/product`, product,this.httpOptions)
 
   }
 
   deleteProduct(id){
-    return this.http.delete(`${this.baseUrl}seller/product/` + id)
+    return this.http.delete(`${this.baseUrl}seller/product/` + id,this.httpOptions)
   }
 
   updateProduct(id, product, seller) {
-    return this.http.put(`${this.baseUrl}seller/` + seller.seller_id + `/product/` + id, product)
+    return this.http.post(`${this.baseUrl}seller/` + seller.seller_id + `/product/` + id, product,this.httpOptions)
 
   }
 
 }
 
+
+export interface shop {
+  message:null,
+  result:null
+}
 
 export interface Product {
   data: [{

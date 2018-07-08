@@ -11,6 +11,7 @@ export class NavbarComponent implements OnInit {
 
   public loggedIn: boolean
   private mySidebar;
+  private UAT;
 
   constructor(
     private router: Router,
@@ -20,14 +21,24 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.authService.authStatus.subscribe(value => this.loggedIn = value)
     this.mySidebar = document.getElementById("mySidebar");
+    this.UAT = localStorage.getItem('UAT')
 
   }
 
   logout(event: MouseEvent) {
     event.preventDefault()
-    this.authService.removeToken()
-    this.authService.changeAuthStatus(false)
-    this.router.navigateByUrl('/login')
+
+
+    this.authService.logOut().subscribe(
+      response => {
+        console.log("[Response] ",response)
+        this.authService.removeToken()
+        this.authService.changeAuthStatus(false)
+        this.router.navigateByUrl('/login')
+      },error => {
+        console.log("[Error] ",error)
+      })
+
   }
 
   w3_open() {

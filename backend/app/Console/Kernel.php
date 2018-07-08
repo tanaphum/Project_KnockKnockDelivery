@@ -26,6 +26,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call(function () {
+            DB::table('recent_users')->where('order_date' ,'<', date("Y/m/d"))
+                                        ->where('order_status_id', 1)
+                                        ->remove();
+        })->daily();
     }
 
     /**

@@ -9,15 +9,11 @@ class Buyer extends Model
 
     protected $primaryKey = 'buyer_id';
 
-    public $timestamps = false;
-
     protected $fillable = [
-        'buyer_firstname',
-        'buyer_lastname',
-        'telephone_number',
-        'profile_status_id',
-        'user_id'
+        'buyer_address'
     ];
+
+    public $timestamps = false;
 
     public function profile_status()
     {

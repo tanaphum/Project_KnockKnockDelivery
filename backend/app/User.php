@@ -5,6 +5,7 @@ namespace App;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Profile;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -17,7 +18,12 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstname',
+        'lastname',
+        'identity_no',
+        'telephone_number',
+        'email',
+        'password',
     ];
 
     /**
@@ -48,13 +54,21 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-    
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
     }
-    
+
     public function profiles(){
         return $this->hasMany('App\Profile');
+    }
+
+    public static function getUserByProfileId($profile_id)
+    {
+        $profile = Profile::where('profile_id', $profile_id)->first();
+        $user = User::where('user_id', $profile->user_id)->first();
+
+        return $user;
     }
 }

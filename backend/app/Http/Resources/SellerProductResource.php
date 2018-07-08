@@ -14,20 +14,23 @@ class SellerProductResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [ 
+        return [
             'product_id' => $this->product_id,
             'product_name' => $this->product_name,
             'product_description' => $this->product_description,
             'product_price' => $this->product_price,
             'unit_in_stock' => $this->unit_in_stock,
-            'category' => [
-                'category_id' => $this->category->category_id,
-                'category_name' => $this->category->category_name               
+            'product_category' => [
+                'product_category_id' => $this->product_category->product_category_id,
+                'product_category_name' => $this->product_category->product_category_name
             ],
             'product_status' => [
                 'product_status_id' => $this->product_status->product_status_id,
                 'product_status_name' => $this->product_status->product_status_name
-            ]
+            ],
+            'product_image_1' => "/storage/product/".$this->product_image_1,
+            'product_image_2' => "/storage/product/".$this->product_image_2,
+            'product_image_3' => "/storage/product/".$this->product_image_3,
         ];
     }
 }

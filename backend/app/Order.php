@@ -9,10 +9,15 @@ class Order extends Model
     public $primaryKey = 'order_id';
 
     protected $fillable = [
+        'receiver_firstname',
+        'receiver_lastname',
+        'receiver_location',
+        'receiver_latitude',
+        'receiver_longitude',
         'order_date',
+        'order_total_price',
+        'service_charge',
         'total',
-        'buyer_location',
-        'order_status_id',
         'seller_id',
         'buyer_id',
     ];
@@ -29,15 +34,15 @@ class Order extends Model
         return $this->belongsTo('App\Buyer', 'buyer_id', 'buyer_id');
     }
 
-    public function deliver()
+    public function shipper()
     {
-        return $this->belongsTo('App\Seller', 'seller_id', 'seller_id');
+        return $this->belongsTo('App\Shipper', 'shipper_id', 'shipper_id');
     }
-    
-    public function orderStatus()
+
+    public function order_status()
     {
         return $this->belongsTo('App\OrderStatus', 'order_status_id', 'order_status_id');
     }
 
-    
+
 }

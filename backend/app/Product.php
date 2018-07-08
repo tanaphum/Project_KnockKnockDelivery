@@ -12,15 +12,16 @@ class Product extends Model
         'product_name',
         'product_description',
         'product_price',
-        'unit_in_stock',
-        'product_available',
+        'product_image_1',
+        'product_image_2',
+        'product_image_3',
         'product_category_id',
-        // 'seller_id'
+        'seller_id',
     ];
 
-    public function category()
+    public function product_category()
     {
-        return $this->belongsTo('App\Category', 'product_category_id', 'category_id');
+        return $this->belongsTo('App\ProductCategory', 'product_category_id', 'product_category_id');
     }
 
     public function seller()

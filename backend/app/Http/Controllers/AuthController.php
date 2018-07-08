@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\SignUpRequest;
 use App\User;
 
 class AuthController extends Controller
@@ -14,7 +13,7 @@ class AuthController extends Controller
 
     public function __construct(User $user)
     {
-        $this->middleware('auth:api', ['except' => ['login', 'signup']]);
+        $this->middleware('auth:api', ['except' => ['login', 'signup', 'logout']]);
         $this->user = $user;
     }
 
@@ -28,14 +27,23 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Email or Password wrong'], 401);
+            return response()->json(['error' => 'Login attempt failed'], 401);
         }
 
         return $this->respondWithToken($token);
     }
 
-    public function signup(SignUpRequest $request)
+    public function signup(Request $request)
     {
+        $this->validate($request, [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'identity_no' => 'required|size:13',
+            'telephone_number' => 'required|min:9|max:10',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|max:20|confirmed'
+        ]);
+
         $this->user->create($request->all());
         return $this->login($request);
     }
@@ -63,6 +71,33 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
+    public function editUser(Request $request, $user_id)
+    {
+        $this->validate($request, [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'identity_no' => 'required|size:13',
+            'telephone_number' => 'required|min:9|max:10',
+        ]);
+
+        $user = $this->user->where('user_id', $user_id)->first();
+        if($user === null)
+        {
+            return response()->json(['message' => 'User not found'],400);
+        }
+
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->identity_no = $request->identity_no;
+        $user->telephone_number = $request->telephone_number;
+
+        $user->save();
+        return response()->json([
+            'message' => 'Successfully',
+            'user' => $user
+        ],200);;
+    }
+
     /**
      * Refresh a token.
      *
@@ -85,7 +120,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
+            'expires_in' => auth()->factory()->getTTL() * 60 * 24,
             'user' => auth()->user()
         ]);
     }

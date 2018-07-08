@@ -57,7 +57,7 @@ class ResetPasswordController extends Controller
     public function failedResponse()
     {
         return response()->json([
-            'error' => 'Email does\'t found on our database'
+            'error' => 'Email does\'t found on our system'
         ], Response::HTTP_NOT_FOUND);
     }
     public function successResponse()

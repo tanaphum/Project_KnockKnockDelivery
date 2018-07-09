@@ -33,13 +33,13 @@
 
     
 
-    <div class="row" id="header-container">
+    <!-- <div class="row" id="header-container">
       <div class="col-2  w3-green" >
         <p>Hello</p>
       </div>
       <div class="col-10 w3-green">
         </div>
-    </div>
+    </div> -->
 
     <div class="w3-container w3-padding w3-light-grey">
       <div *ngFor="let product of products;let i = index" [hidden]="i >= 12">
@@ -52,7 +52,7 @@
                 <h5 class="card-title" id="title">{{product.product_name}}</h5>
                 <p class="card-text" id="description">{{product.product_description}}</p>
                 <h4 class="card-text" id="text">&#3647; {{product.product_price}}</h4>
-                <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Detail</a>
+                <a class="btn btn-primary btn-block" (click)="addToCart(product)">Add to cart</a>
             </div>
           </div>
         </div>

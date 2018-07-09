@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 export class CreateProfileComponent implements OnInit {
 
   private create_profile_id;
+  private bankAcc;
   private user_id;
   private isCreateBuyer: Boolean = false;
   private isCreateSeller: Boolean = false;
@@ -60,13 +61,16 @@ export class CreateProfileComponent implements OnInit {
   buyerForm = {
     buyerName: null,
     location: null,
+    user_id:null
   }
 
   deliverForm = {
     name: null,
     email: null,
     password: null,
-    password_confirmation: null
+    password_confirmation: null,
+    user_id:null,
+    bank_account_id:null
   }
 
 
@@ -77,6 +81,8 @@ export class CreateProfileComponent implements OnInit {
   constructor(    
     private userService: UserService,
     private sellerService: SellerService,
+    private router: Router,
+
     
     
 
@@ -201,6 +207,7 @@ export class CreateProfileComponent implements OnInit {
         console.log("[Response] ",Response)
         this.shopCatagory = Response.data.shop_type;
         this.validateCreateProfile();
+        this.bankAcc = Response.data.bank_account
 
 
       },
@@ -230,14 +237,83 @@ export class CreateProfileComponent implements OnInit {
   }
 
   createSeller() {
-    console.log("[This Seller] ",this.sellerForm)
-    this.sellerForm.user_id = localStorage.getItem("user_id")
-    this.userService.createSeller(this.sellerForm).subscribe(
+    console.log("[This Seller] ", this.sellerForm)
+    let temp = this.sellerForm;
+    this.isShow = !this.isShow
+    temp.user_id = localStorage.getItem("user_id")
+    console.log("[Temp body] ",temp);
+    // this.sellerForm.user_id = localStorage.getItem("user_id")
+    this.userService.createSeller(temp).subscribe(
       data => {
-        console.log("response from create seller",data)
+        console.log("response from create seller", data);
+        alert("Create seller success!!!");
+        this.isShow = !this.isShow
+        this.router.navigateByUrl('/profile')
+
       },
-      error => console.log(error)
+      error => {
+        console.log(error)
+        this.isShow = !this.isShow
+        alert(error.error.message);
+      }
     )
+
+  }
+
+  onBankSelected(event) {
+    console.log("onBankSelected", event)
+    this.deliverForm.bank_account_id = parseInt(event);
+  }
+  createDeliver() {
+    console.log("[This deliver] ", this.deliverForm)
+    this.isShow = !this.isShow
+
+    this.deliverForm.user_id = localStorage.getItem("user_id")
+    this.userService.createDeliver(this.deliverForm).subscribe(
+      data => {
+        console.log("response from create deliver", data)
+        this.isShow = !this.isShow
+        alert("Create deliver success!!!");
+        this.router.navigateByUrl('/profile')
+
+    // console.log("[This Seller] ",this.sellerForm)
+    // this.sellerForm.user_id = localStorage.getItem("user_id")
+    // this.userService.createSeller(this.sellerForm).subscribe(
+    //   data => {
+    //     console.log("response from create seller",data)
+    //   },
+    //   error => {
+    //     console.log(error)
+    //     this.isShow = !this.isShow
+    //     alert(error.error.message);
+    //   }
+    // )
+  },
+    error => {
+      console.log(error)
+      this.isShow = !this.isShow
+      alert(error.error.message);
+    })
+  }
+
+  createBuyer() {
+    console.log("[This Buyer] ", this.buyerForm)
+    let temp = this.buyerForm;
+    this.isShow = !this.isShow
+
+    temp.user_id = localStorage.getItem("user_id")
+    this.userService.createBuyer(temp).subscribe(
+      data => {
+        console.log("response from create buyer", data)
+        alert("Create buyer success!!!");
+        this.isShow = !this.isShow
+        this.router.navigateByUrl('/profile')
+      },
+      error => {
+        console.log(error)
+        this.isShow = !this.isShow
+        alert(error.error.message);
+      })
 
 
   }

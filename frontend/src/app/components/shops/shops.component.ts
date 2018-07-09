@@ -20,6 +20,7 @@ export class ShopsComponent implements OnInit {
   private products;
   private product_catagory;
   private shops;
+  private history_num;
   private isShow: boolean = true;
   private cart_num = 0;
   private baseUrl = 'http://localhost:8000';
@@ -115,7 +116,7 @@ export class ShopsComponent implements OnInit {
 
   goToShop(shop) {
     console.log("onClick goToShop: ",shop)
-    localStorage.setItem("seller_id",this.shop.seller_id)
+    localStorage.setItem("seller_id",shop.seller_id)
     this.router.navigateByUrl('/shop')
 
   }

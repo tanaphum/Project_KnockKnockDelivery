@@ -122,7 +122,7 @@ export class CreateProductComponent implements OnInit {
         product_description: this.form.product_description,
         product_price: parseInt(this.form.product_price),
         product_category_id: parseInt(this.form.selected_catagory),
-        product_image_1:this.image
+        // product_image_1:this.image
       }
 
       let seller_id = this.seller_id;

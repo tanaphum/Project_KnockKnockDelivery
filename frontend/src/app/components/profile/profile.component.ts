@@ -29,6 +29,9 @@ export class ProfileComponent implements OnInit {
   private sellerProfile;
   private buyerProfile;
   private deliverProfile;
+  private sellerApprove: Boolean= true;
+  private buyerApprove: Boolean= true;
+  private deliverApprove: Boolean= true;
 
   constructor(
     private userService: UserService,
@@ -63,18 +66,31 @@ export class ProfileComponent implements OnInit {
                 console.log("[Response seller] ",response.data.seller)
                 this.sellerProfile = response.data.seller
                 this.validSeller = !this.validSeller;
+                if(seller.profile_status_id == 2){
+                  this.sellerApprove = !this.sellerApprove;
+
+                }
+                
               }
               if(buyer != null) {
                 console.log("[Response buyer] ",response.data.buyer)
 
                 this.buyerProfile = response.data.buyer
                 this.validBuyer = !this.validBuyer;
+                if(buyer.profile_status_id == 2){
+                  this.buyerApprove = !this.buyerApprove;
+
+                }
               }
               if(shipper != null ) {
                 console.log("[Response shipper] ",response.data.shipper)
 
                 this.deliverProfile = response.data.shipper
                 this.validDeliver = !this.validDeliver;
+                if(shipper.profile_status_id == 2){
+                  this.deliverApprove = !this.deliverApprove;
+
+                }
               }
              
             
@@ -171,6 +187,8 @@ export class ProfileComponent implements OnInit {
   enterManageShop(sellerProfile) {
     console.log('enterManageShop')
     localStorage.setItem("seller",JSON.stringify(sellerProfile));
+    localStorage.setItem("seller_id",sellerProfile.seller_id);
+
     this.router.navigateByUrl('/manage-shop')
   }
 

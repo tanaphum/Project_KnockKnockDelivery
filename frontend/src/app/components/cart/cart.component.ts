@@ -12,9 +12,17 @@ export class CartComponent implements OnInit {
 
   // private isShow: boolean = false;
   private isCheckOut: boolean = true;
-  private isWarting: boolean = true;
+  private isWating: boolean = true;
+  private isCreateOrder: boolean = true;
 
+  private amount_price =0;
   private cart;
+
+  private order = {
+    location:null,
+  }
+
+  private error;
 
   constructor(
     private router: Router
@@ -31,6 +39,8 @@ export class CartComponent implements OnInit {
         this.cart[index].master_price = element.product_price;
 
       });
+      this.amountPrice();
+
     console.log("Cart : ", this.cart)
   }
 
@@ -74,16 +84,36 @@ export class CartComponent implements OnInit {
 
   calculatePrice(product) {
         this.cart.forEach(element => {
+          
       if(element.product_name == product.product_name) {
 
         element.product_price = element.master_price*element.amount
 
       }
+      this.amountPrice();
+
     });
+  }
+
+  amountPrice(){
+    this.amount_price =0;
+    this.cart.forEach(element => {
+          
+      this.amount_price += parseInt(element.product_price)
+
+
+    });
+
+  }
+
+  createReq() {
+    console.log("createReq")
+    this.isCreateOrder = !this.isCreateOrder
   }
 
   checkOut() {
     console.log("check out")
+    //call api to create order and remove cart here!!!
     this.isCheckOut = !this.isCheckOut;
   }
 

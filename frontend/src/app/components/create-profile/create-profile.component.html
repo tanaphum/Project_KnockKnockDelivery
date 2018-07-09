@@ -27,7 +27,7 @@
                   {{error.location}}
                 </span>
               </div>
-
+<!-- 
               <div class="form-group">
                 <label for="input-lat">Shop Latitude</label>
                 <input type="number" name="lat" class="form-control" id="input-lat" placeholder="Latitude" [(ngModel)]="sellerForm.shop_latitude">
@@ -42,7 +42,7 @@
                 <span class="text-danger" [hidden]="!error.long">
                   {{error.long}}
                 </span>
-              </div>
+              </div> -->
 
               <div class="form-group">
                 <agm-map [zoom]="18" [latitude]="latitude" [longitude]="longtitude" (mapClick)="onChooseLocation($event)" >

@@ -27,6 +27,9 @@
             </div>
           </div>
         </div>
+        <div class="d-flex justify-content-end">
+          <p><b>Amount:&nbsp;&nbsp;{{amount_price}}&nbsp;&#3647;</b></p>
+        </div>
       </div>
       <div class="card-footer d-flex justify-content-between">
         <button class="btn btn-info" (click)="backToShop()">Back to shopping</button>
@@ -35,23 +38,33 @@
     </div>
 
     <div class="w3-display-middle" [hidden]="isCheckOut">
-      <div class="card card-container" [hidden]="!isWarting">
-        <div class="card-header">Waiting shipper</div>
+      <div class="card card-container" [hidden]="!isCreateOrder">
+        <div class="card-header">Create order request</div>
         <div class="card-body">
-          <h2>Waiting...</h2>
+
+            <div class="form-group">
+                <label for="input-description">Location</label>
+                <textarea type="text" name="location" class="form-control" id="input-location" placeholder="Location" [(ngModel)]="order.location"
+                  required></textarea>
+                <!-- <span class="text-danger" [hidden]="!error.location">
+                  {{error.location}}
+                </span> -->
+              </div>
         </div>
+
         <div class="card-footer d-flex justify-content-end">
             <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+            <button class="btn btn-success" (click)="createReq()">Create</button>
         </div>
       </div>
 
-      <div class="card card-container" [hidden]="isWarting">
-        <div class="card-header">Get shipper</div>
+      <div class="card card-container" [hidden]="isCreateOrder">
+        <div class="card-header">Waiting shipper</div>
         <div class="card-body">
-          <h2>Shipper detail</h2>
+          <h2>Please waiting shipper accept</h2>
         </div>
         <div class="card-footer d-flex justify-content-end">
-            <button class="btn btn-success" >Ok</button>
+            <button class="btn btn-success" (click)="backToShop()">Ok</button>
         </div>
       </div>
     </div>

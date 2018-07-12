@@ -78,6 +78,9 @@
   height: 240px;
   animation: spin 2s linear infinite;
 }
+agm-map {
+  height: 250px;
+}
 
 @keyframes spin {
   0% {
@@ -89,3 +92,10 @@
 }
 
 /* END Loading page CSS */
+
+
+#input-receiver_firstname,
+#input-receiver_lastname,
+#input-receiver_location {
+  margin-bottom: 10px;
+}

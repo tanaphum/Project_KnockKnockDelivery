@@ -1,0 +1,22 @@
+<div class="loader-container">
+  <div class="loader"></div>
+</div>
+<div class="w3-row" id="container">
+  <div class="container">
+    <div class="w3-container w3-padding">
+      <div *ngFor="let shop of shops;let i = index" [hidden]="i >= 12">
+        <div class="w3-container w3-quarter">
+          <div class="card">
+            <div class="d-flex justify-content-center">
+              <img class="card-img-top" [src]="baseUrl+shop.shop_logo_image" alt="">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title" id="title">{{shop.shop_name}}</h5>
+              <p class="card-text" id="description">{{shop.shop_location}}</p>
+              <a class="btn btn-primary btn-block" (click)="goToShop(shop)">Go to shop</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

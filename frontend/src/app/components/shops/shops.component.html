@@ -1,5 +1,5 @@
 <div class="loader-container" [hidden]="!isShow">
-  <div class="loader"></div>
+  <div class="loader" ></div>
 </div>
 <div class="w3-row" id="container" [hidden]="isShow">
 
@@ -9,38 +9,35 @@
     </div>
   </div> -->
 
-  <div class="w3-row" id="searchBox">
-    <div class="w3-col m3 w3-center">
-      <p></p>
-    </div>
-    <div class="w3-col m6 w3-center">
-      <div class="input-group mb-6" id="search">
-        <input type="text" class="form-control input-lg" placeholder="Search">
-        <div class="input-group-append">
-          <button class="btn btn-warning" id="search-button">
-            <i class="fa fa-search"></i>
-          </button>
+    <div class="w3-row" id="searchBox">
+      <div class="w3-col m3 w3-center">
+          <p></p>
+      </div>
+      <div class="w3-col m6 w3-center">
+        <div class="input-group mb-6" id="search">
+          <input type="text" class="form-control input-lg" placeholder="Search">
+          <div class="input-group-append">
+            <button class="btn btn-warning" id="search-button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="w3-col m3 w3-center" id="cart" >
-
-      <div class="d-flex justify-content-around">
-        <i class="fa fa-shopping-cart" (click)="goToCart()">
-          <span *ngIf="cart_num!=0" class="cart-num" id="topActionCartNumber">{{cart_num}}</span>
-        </i>
-        <i class="fa fa-history">
-            <span *ngIf="history_num!=0" class="history-num" id="topActionHistoryNumber">{{history_num}}</span>
-        </i>
-
-
+      <div class="w3-col m3 w3-center" id="cart" >
+        <div class="d-flex justify-content-around">
+          <i class="fa fa-shopping-cart w3-padding" (click)="goToCart()">
+              <span *ngIf="cart_num!=0" class="cart-num" id="topActionCartNumber">{{cart_num}}</span>
+          </i>
+          <i class="fa fa-history w3-padding" (click)="goToOrder()">
+              <span *ngIf="history_num!=0" class="history-num" id="topActionHistoryNumber">{{history_num}}</span>
+          </i>
+        </div>
+        
       </div>
+
     </div>
 
-
-  </div>
-
-  <!-- 
+<!--
     <div class="row" id="header-container">
       <div class="col-2" id="catagory_container">
         <p id="catagory" *ngFor="let catagory of product_catagory"> {{catagory.product_category_name}}</p>
@@ -49,7 +46,7 @@
         </div>
     </div> -->
 
-  <!-- 
+<!--
     <div class="w3-container" id="btn-container">
       <div class="w3-quarter w3-padding">
         <button class="btn btn-success btn-block" id="btn-Shop" type="button">Shop</button>
@@ -69,7 +66,7 @@
 
 
 
-  <!-- <div class="w3-container w3-padding w3-light-grey">
+    <!-- <div class="w3-container w3-padding w3-light-grey">
       <div *ngFor="let product of products;let i = index" [hidden]="i >= 12">
         <div class="w3-container w3-quarter">
           <div class="card">
@@ -81,97 +78,97 @@
               <p class="card-text" id="description">{{product.product_description}}</p>
               <h4 class="card-text" id="text">&#3647; {{product.product_price}}</h4>
               <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Detail</a>
-              
+
             </div>
           </div>
         </div>
       </div>
-    </div> 
-    
+    </div>
+
     <div class="w3-padding-32 w3-light-grey">
       <button class="btn btn-outline-info btn-block">See More</button>
     </div> -->
 
 
 
-  <div class="w3-container w3-white" id="before-footer">
-    <div class="w3-container w3-padding">
-      <div *ngFor="let shop of shops;let i = index" [hidden]="i >= 12">
-        <div class="w3-container w3-quarter">
-          <div class="card">
-            <div class="d-flex justify-content-center">
-              <img class="card-img-top" [src]="baseUrl+shop.shop_logo_image" alt="">
-            </div>
-            <div class="card-body">
-              <h5 class="card-title" id="title">{{shop.shop_name}}</h5>
-              <p class="card-text" id="description">{{shop.shop_location}}</p>
-              <!-- <p class="card-text" id="text">{{shop.shop_type.shop_type_name}}</p> -->
-              <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoShopModal" (click)="goToShop(shop)">Go to shop</a>
+    <div class="w3-container w3-white" id="before-footer">
+      <div class="w3-container w3-padding">
+        <div *ngFor="let shop of shops;let i = index" [hidden]="i >= 12">
+          <div class="w3-container w3-quarter">
+            <div class="card">
+                <div class="d-flex justify-content-center">
+                    <img class="card-img-top" [src]="baseUrl+shop.shop_logo_image" alt="" >
+                </div>
+              <div class="card-body">
+                <h5 class="card-title" id="title">{{shop.shop_name}}</h5>
+                <p class="card-text" id="description">{{shop.shop_location}}</p>
+                <!-- <p class="card-text" id="text">{{shop.shop_type.shop_type_name}}</p> -->
+                <a class="btn btn-primary btn-block" (click)="goToShop(shop)">Go to shop</a>
 
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- <div class="w3-padding-32" [hidden]="shops.length < 12">
+      <!-- <div class="w3-padding-32" [hidden]="shops.length < 12">
         <button class="btn btn-outline-info btn-block">See More</button>
       </div> -->
-  </div>
+    </div>
 
-  <!-- Contact Section -->
-  <div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
-    <h3 class="w3-center">CONTACT</h3>
-    <p class="w3-center w3-large">Lets get in touch. Send us a message:</p>
-    <div class="w3-row-padding" style="margin-top:64px">
-      <div class="w3-half">
-        <p>
-          <i class="fa fa-map-marker w3-margin-right"></i> Chiang Mai, TH</p>
-        <p>
-          <i class="fa fa-phone w3-margin-right"></i> Phone: +66 123456789</p>
-        <p>
-          <i class="fa fa-envelope w3-margin-right"> </i> Email: mail@mail.com</p>
-        <br>
-        <form #contactForm=ngForm (ngSubmit)="onSubmit()">
+    <!-- Contact Section -->
+    <div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
+      <h3 class="w3-center">CONTACT</h3>
+      <p class="w3-center w3-large">Lets get in touch. Send us a message:</p>
+      <div class="w3-row-padding" style="margin-top:64px">
+        <div class="w3-half">
           <p>
-            <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
-          </p>
+            <i class="fa fa-map-marker w3-margin-right"></i> Chiang Mai, TH</p>
           <p>
-            <input class="w3-input w3-border" type="text" placeholder="Email" required name="Email">
-          </p>
+            <i class="fa fa-phone w3-margin-right"></i> Phone: +66 123456789</p>
           <p>
-            <input class="w3-input w3-border" type="text" placeholder="Subject" required name="Subject">
-          </p>
-          <p>
-            <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
-          </p>
-          <p>
-            <button class="w3-button w3-black" type="submit">
-              <i class="fa fa-paper-plane"></i> SEND MESSAGE
-            </button>
-          </p>
-        </form>
-      </div>
-      <div class="w3-half">
-        <!-- Add Google Maps -->
-        <!-- <div id="googleMap" class="w3-greyscale-max" style="width:100%;height:510px;"></div> -->
-        <!-- <div #gmap style="width:100%;height:400px"></div> -->
+            <i class="fa fa-envelope w3-margin-right"> </i> Email: mail@mail.com</p>
+          <br>
+          <form #contactForm=ngForm (ngSubmit)="onSubmit()">
+            <p>
+              <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+            </p>
+            <p>
+              <input class="w3-input w3-border" type="text" placeholder="Email" required name="Email">
+            </p>
+            <p>
+              <input class="w3-input w3-border" type="text" placeholder="Subject" required name="Subject">
+            </p>
+            <p>
+              <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
+            </p>
+            <p>
+              <button class="w3-button w3-black" type="submit">
+                <i class="fa fa-paper-plane"></i> SEND MESSAGE
+              </button>
+            </p>
+          </form>
+        </div>
+        <div class="w3-half">
+          <!-- Add Google Maps -->
+          <!-- <div id="googleMap" class="w3-greyscale-max" style="width:100%;height:510px;"></div> -->
+          <!-- <div #gmap style="width:100%;height:400px"></div> -->
 
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Footer -->
-  <footer class="w3-center w3-black w3-padding-64">
-    <div class="w3-xlarge w3-section">
-      <i class="fa fa-facebook-official w3-hover-opacity w3-padding"></i>
-      <i class="fa fa-instagram w3-hover-opacity w3-padding"></i>
-      <i class="fa fa-snapchat w3-hover-opacity w3-padding"></i>
-      <i class="fa fa-pinterest-p w3-hover-opacity w3-padding"></i>
-      <i class="fa fa-twitter w3-hover-opacity w3-padding"></i>
-      <i class="fa fa-linkedin w3-hover-opacity w3-padding"></i>
-    </div>
-    <p> &copy; Collage Of Art Media And Technology</p>
-  </footer>
+    <!-- Footer -->
+    <footer class="w3-center w3-black w3-padding-64">
+      <div class="w3-xlarge w3-section">
+        <i class="fa fa-facebook-official w3-hover-opacity w3-padding"></i>
+        <i class="fa fa-instagram w3-hover-opacity w3-padding"></i>
+        <i class="fa fa-snapchat w3-hover-opacity w3-padding"></i>
+        <i class="fa fa-pinterest-p w3-hover-opacity w3-padding"></i>
+        <i class="fa fa-twitter w3-hover-opacity w3-padding"></i>
+        <i class="fa fa-linkedin w3-hover-opacity w3-padding"></i>
+      </div>
+      <p> &copy; Collage Of Art Media And Technology</p>
+    </footer>
 
 </div>
 
@@ -189,9 +186,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="d-flex justify-content-center">
-          <img class="card-img-top" [src]="baseUrl+form.product_image_1" alt="">
-        </div>
+          <div class="d-flex justify-content-center">
+              <img class="card-img-top" [src]="baseUrl+form.product_image_1" alt="" >
+          </div>
         <p>
           <strong>Product Name: </strong>{{ form.product_name }}</p>
         <p>
@@ -219,9 +216,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="d-flex justify-content-center">
-          <img class="card-img-top" [src]="baseUrl+shop.shop_logo_image" alt="">
-        </div>
+          <div class="d-flex justify-content-center">
+              <img class="card-img-top" [src]="baseUrl+shop.shop_logo_image" alt="" >
+          </div>
         <p>
           <strong>Shop Name: </strong>{{ shop.shop_name }}</p>
         <p>

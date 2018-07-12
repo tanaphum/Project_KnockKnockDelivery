@@ -197,7 +197,7 @@
                     <td>{{ i+1 }}</td>
                     <td>{{ user.id }}</td>
                     <td>{{ user.name }}</td>
-                    <td>{{ user.location }}</td>
+                    <td>{{ user.address }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.status }}</td>
                   <td>
@@ -266,6 +266,8 @@
                         <td>{{ user.bank_account_no }}</td>
                         <td>{{ user.bank_account_name }}</td>
                         <td>{{ user.email }}</td>
+                        <td>{{ user.status }}</td>
+
                       <td>
                         <div class="btn-group">
                           <button type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>

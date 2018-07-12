@@ -105,15 +105,11 @@ export interface Profile {
 
 export interface user {
     data: {
-        seller:{
-            profile_status_id:null
-        },
+        seller:null,
         buyer:{
-            profile_status_id:null
+            buyer_id:null
         },
-        shipper:{
-            profile_status_id:null
-        },
+        shipper:null,
         admin:null
     },
     message:null,

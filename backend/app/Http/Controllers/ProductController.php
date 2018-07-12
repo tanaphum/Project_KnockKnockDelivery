@@ -86,7 +86,7 @@ class ProductController extends Controller
             return response()->json(['message' => 'Seller not found'], 404);
         }
 
-        $product = new Product();
+        $product = new Product;
         $product->product_name = $request->product_name;
         $product->product_description = $request->product_description;
         $product->product_price = $request->product_price;

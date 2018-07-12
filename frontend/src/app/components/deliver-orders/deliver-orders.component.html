@@ -1,0 +1,59 @@
+<div class="loader-container" [hidden]="!isShow">
+  <div class="loader"></div>
+</div>
+<div class="w3-row" id="container" [hidden]="isShow">
+
+
+  <div class="w3-row" id="searchBox">
+    <div class="w3-col m3 w3-center">
+      <p></p>
+    </div>
+    <div class="w3-col m6 w3-center">
+      <div class="input-group mb-6" id="search">
+        <input type="text" class="form-control input-lg" placeholder="Search">
+        <div class="input-group-append">
+          <button class="btn btn-warning" id="search-button">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col m3 w3-center" id="user" data-toggle="modal" data-target="#infoModal" (click)="openProfile()">
+      <i class="fa fa-user"></i>
+    </div>
+  </div>
+
+  <div class="container" id="list-container">
+      <div class="justify-content-center" *ngFor="let order of orders;let i = index">
+        <div class="card">
+          <div class="card-header">
+            <p>
+              <b>Order id {{order.order_id}}</b>
+            </p>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <p><b>Reciever name:</b> {{order.receiver_firstname}} {{order.receiver_lastname}}</p>
+                <p><b>Reciever location:</b> {{order.receiver_location}}</p>
+                <p><b>Shop name:</b> {{order.seller.shop_name}}</p>
+                <p><b>Shop location:</b> {{order.seller.shop_location}}</p>
+                <p><b>Service charge:</b> {{order.service_charge}}</p>
+                <p><b>Total price:</b> {{order.order_total_price}}</p>
+
+                
+              </div>
+              <div class="d-flex align-items-center btn-group">
+                <button class="btn btn-success" (click)="acceptOrder(order)">Accept order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+</div>

@@ -49,7 +49,6 @@ class AdminController extends Controller
         }
 
         return response()->json([
-            'message' => 'Successfully',
             'data' => [
                 'profile_id' => $admin->profile_id,
                 'user' => $admin->user,
@@ -105,14 +104,14 @@ class AdminController extends Controller
 
         if($admin_id < 0)
         {
-            return response()->json('Error', 400);
+            return response()->json(['message' => 'Error'], 400);
         }
 
         $admin = Admin::where('admin_id',$admin_id)->first();
 
         if(!$admin)
         {
-            return response()->json('Buyer not found', 404);
+            return response()->json(['message' => 'Buyer not found'], 404);
         }
 
         $admin->admin_firstname = $request->admin_firstname;
@@ -122,13 +121,7 @@ class AdminController extends Controller
 
         $admin->save();
 
-        return response()->json(
-            [
-                'message' => 'Successfully',
-                'result' => $admin
-            ]
-        );
-
+        return response()->json(['result' => $admin]);
     }
 
     public function adminUpdateStatusUser(Request $request){
@@ -147,7 +140,6 @@ class AdminController extends Controller
             $seller->shop_logo_image = "/storage/seller/".$seller->shop_logo_image;
             return response()->json(
                 [
-                    'message' => 'Successfully',
                     'result' => $seller
                 ]
             );
@@ -161,12 +153,7 @@ class AdminController extends Controller
             $buyer->profile_status_id = $profile_status_id;
             $buyer->save();
 
-            return response()->json(
-                [
-                    'message' => 'Successfully',
-                    'result' => $buyer
-                ]
-            );
+            return response()->json(['result' => $buyer]);
         }
         else if ($role_id == 4){
             $shipper = $this->shipper->where('shipper_id', $id)->first();
@@ -177,12 +164,7 @@ class AdminController extends Controller
             $shipper->profile_status_id = $profile_status_id;
             $shipper->save();
 
-            return response()->json(
-                [
-                    'message' => 'Successfully',
-                    'result' => $shipper
-                ]
-            );
+            return response()->json(['result' => $shipper]);
         }else{
             return response()->json(['message' =>'Bad Request'], 400);
         }

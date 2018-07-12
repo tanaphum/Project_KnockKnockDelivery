@@ -51,6 +51,12 @@ export class SellerService {
   }
 
   createProduct(product, seller_id) {
+    // let header = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'multipart/form-data',
+    //     'Authorization': 'Bearer '+ this.UAT
+    //   })
+    // };
     return this.http.post(`${this.baseUrl}seller/` + seller_id + `/product`, product,this.httpOptions)
 
   }

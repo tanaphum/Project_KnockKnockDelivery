@@ -20,7 +20,6 @@ export class ShopsComponent implements OnInit {
   private products;
   private product_catagory;
   private shops;
-  private history_num;
   private isShow: boolean = true;
   private cart_num = 0;
   private baseUrl = 'http://localhost:8000';
@@ -156,16 +155,21 @@ export class ShopsComponent implements OnInit {
   }
 
   goToCart() {
-    let cart = JSON.parse(localStorage.getItem("cart"));
+    let cart = localStorage.getItem("cart");
 
     console.log("Cart : ",cart)
 
     if(cart == null) {
-      localStorage.setItem("cart","");
+      localStorage.setItem("cart","[]");
     }
 
     this.router.navigateByUrl('/cart')
 
+
+  }
+
+  goToOrder() {
+    this.router.navigateByUrl('/order')
 
   }
 

@@ -265,11 +265,11 @@ export class AdminComponent implements OnInit {
 
           let temp = {
             id: element.buyer_id,
-            location: element.buyer_location,
+            address: element.buyer_address,
             profile_id: element.profile_id,
             status: element.profile_status.profile_status_name,
-            email:element.user.email
-
+            email:element.user.email,
+            name:element.user.firstname
           }
 
           this.display_buyer[index] = temp;
@@ -288,9 +288,10 @@ export class AdminComponent implements OnInit {
             id: element.shipper_id,
             bank_account_no: element.bank_account_no,
             bank_account_name: element.bank_account.bank_account_name,
-            status: element.profile_status.profile_status_name,
+            status: element.status,
             profile_id: element.profile_id,
-            email:element.user.email
+            email:element.user.email,
+            name:element.user.firstname
           }
           this.display_shipper[index] = temp;
 
@@ -307,6 +308,8 @@ export class AdminComponent implements OnInit {
   }
 
   onClickUpdate(user,status) {
+    this.isLoad = !this.isLoad;
+
     let state = localStorage.getItem('adminSelect');
     console.log("[user] ",user)
     console.log("[state] ",state)
@@ -337,45 +340,50 @@ export class AdminComponent implements OnInit {
     .subscribe(response => {
       console.log("[Response] ",response);
       if(response.message == 'Successfully') {
-        if(state == 'userInSystem'){
-          if(!this.isDeliver) {
-            this.display_shipper.forEach(outer => {
-              if(outer.seller_id = response.result.seller_id) {
-                this.masterData.profile_status.forEach(inner => {
-                  if(inner.profile_status_id == response.result.profile_status_id) {
-                    outer.status = inner.profile_status_name
-                  }
-                });
-              }
-            });
-          }
-          else if(!this.isSeller) {
-            this.display_seller.forEach(outer => {
-              if(outer.seller_id = response.result.seller_id) {
-                this.masterData.profile_status.forEach(inner => {
-                  if(inner.profile_status_id == response.result.profile_status_id) {
-                    outer.status = inner.profile_status_name
-                  }
-                });
-              }
-            });
-          }
-          else if(!this.isBuyer) {
-            this.display_buyer.forEach(outer => {
-              if(outer.seller_id = response.result.seller_id) {
-                this.masterData.profile_status.forEach(inner => {
-                  if(inner.profile_status_id == response.result.profile_status_id) {
-                    outer.status = inner.profile_status_name
-                  }
-                });
-              }
-            });
-          }
-        }
-        else if(state == 'holdingUser') {
-
-        }
+        this.isLoad = !this.isLoad;
+        alert("This profile has been approve")
+        location.reload();
       }
+      // if(response.message == 'Successfully') {
+      //   if(state == 'userInSystem'){
+      //     if(!this.isDeliver) {
+      //       this.display_shipper.forEach(outer => {
+      //         if(outer.seller_id = response.result.seller_id) {
+      //           this.masterData.profile_status.forEach(inner => {
+      //             if(inner.profile_status_id == response.result.profile_status_id) {
+      //               outer.status = inner.profile_status_name
+      //             }
+      //           });
+      //         }
+      //       });
+      //     }
+      //     else if(!this.isSeller) {
+      //       this.display_seller.forEach(outer => {
+      //         if(outer.seller_id = response.result.seller_id) {
+      //           this.masterData.profile_status.forEach(inner => {
+      //             if(inner.profile_status_id == response.result.profile_status_id) {
+      //               outer.status = inner.profile_status_name
+      //             }
+      //           });
+      //         }
+      //       });
+      //     }
+      //     else if(!this.isBuyer) {
+      //       this.display_buyer.forEach(outer => {
+      //         if(outer.seller_id = response.result.seller_id) {
+      //           this.masterData.profile_status.forEach(inner => {
+      //             if(inner.profile_status_id == response.result.profile_status_id) {
+      //               outer.status = inner.profile_status_name
+      //             }
+      //           });
+      //         }
+      //       });
+      //     }
+      //   }
+      //   else if(state == 'holdingUser') {
+
+      //   }
+      // }
     },
     error => {
       console.log("[Error] ",error);

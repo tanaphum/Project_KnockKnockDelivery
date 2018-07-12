@@ -122,11 +122,19 @@ export class ShopComponent implements OnInit {
     console.log("Cart : ",cart)
 
     if(cart == null) {
-      localStorage.setItem("cart","");
+      localStorage.setItem("cart","[]");
     }
 
     this.router.navigateByUrl('/cart')
+  }
 
+  goToOrder() {
+    this.router.navigateByUrl('/order')
+
+  }
+
+  goToShops() {
+    this.router.navigateByUrl('/shops')
 
   }
 

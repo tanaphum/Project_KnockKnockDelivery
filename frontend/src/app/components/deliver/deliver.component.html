@@ -24,67 +24,21 @@
       </div>
 
   <div class="container" id="list-container">
-    <div class="justify-content-center">
+    <div class="justify-content-center" *ngFor="let order of orders;let i = index">
 
       <div class="card">
         <div class="card-header">
           <p>
-            <b>Shop name</b>
+            <b>{{order.shop_name}}</b>
           </p>
         </div>
         <div class="card-body">
           <div class="d-flex justify-content-between">
             <div>
-              <p>
-                <b>Order id or Ordername</b>
-              </p>
-              <p>location, description, etc.</p>
+              <p>Shop location: {{order.shop_location}}</p>
             </div>
             <div class="d-flex align-items-center btn-group">
-              <button class="btn btn-info" data-toggle="modal" data-target="#infoOrderModal" (click)="openOrderInfo(shop)">Detail</button>
-              <button class="btn btn-success">Accept</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <p>
-            <b>Shop name</b>
-          </p>
-        </div>
-        <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <div>
-              <p>
-                <b>Order id or Ordername</b>
-              </p>
-              <p>location, description, etc.</p>
-            </div>
-            <div class="d-flex align-items-center btn-group">
-              <button class="btn btn-info" data-toggle="modal" data-target="#infoOrderModal" (click)="openOrderInfo(shop)">Detail</button>
-              <button class="btn btn-success">Accept</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <p>
-            <b>Shop name</b>
-          </p>
-        </div>
-        <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <div>
-              <p>
-                <b>Order id or Ordername</b>
-              </p>
-              <p>location, description, etc.</p>
-            </div>
-            <div class="d-flex align-items-center btn-group">
-              <button class="btn btn-info" data-toggle="modal" data-target="#infoOrderModal" (click)="openOrderInfo(shop)">Detail</button>
-              <button class="btn btn-success">Accept</button>
+              <button class="btn btn-info" (click)="gotoShop(order)">Go to shop</button>
             </div>
           </div>
         </div>

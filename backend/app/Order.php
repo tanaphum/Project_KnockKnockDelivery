@@ -14,15 +14,12 @@ class Order extends Model
         'receiver_location',
         'receiver_latitude',
         'receiver_longitude',
-        'order_date',
         'order_total_price',
         'service_charge',
         'total',
         'seller_id',
         'buyer_id',
     ];
-
-    public $timestamps = false;
 
     public function seller()
     {

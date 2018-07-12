@@ -62,9 +62,9 @@ export class CreateProductComponent implements OnInit {
     console.log("[Event] ",e.target.files[0]);
 
     // this.form.product_image_1 = e.target.files[0]
-    this.image.append('myFile', e.target.files[0])
-    this.form.product_image_1 = this.image;
-    console.log("[this.form.product_image_1] ",this.form.product_image_1);
+    // this.image.append('myFile', e.target.files[0])
+    this.form.product_image_1 = e.target.files[0];
+    // console.log("[this.form.product_image_1] ",this.form.product_image_1);
 
     // let canvas = this.mycanvas.nativeElement;
     // let context = canvas.getContext('2d');
@@ -115,6 +115,13 @@ export class CreateProductComponent implements OnInit {
       this.error['product_price'] = 'product price not more than 1000'
     }
     else {
+      
+      // let tempForm = new FormData();
+      // tempForm.append('product_name',this.form.product_name)
+      // tempForm.append('product_description',this.form.product_description)
+      // tempForm.append('product_price',this.form.product_price)
+      // tempForm.append('product_category_id',this.form.selected_catagory)
+      // tempForm.append('product_image_1',this.form.product_image_1,this.form.product_image_1.name)
 
       let tempForm =
       {

@@ -27,9 +27,10 @@
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-end">
-          <p><b>Amount:&nbsp;&nbsp;{{amount_price}}&nbsp;&#3647;</b></p>
+        <div>
+          <p><b>Totla price:</b> {{totalPrice}} &#3647;</p>
         </div>
+        
       </div>
       <div class="card-footer d-flex justify-content-between">
         <button class="btn btn-info" (click)="backToShop()">Back to shopping</button>
@@ -38,35 +39,50 @@
     </div>
 
     <div class="w3-display-middle" [hidden]="isCheckOut">
-      <div class="card card-container" [hidden]="!isCreateOrder">
-        <div class="card-header">Create order request</div>
+      <div class="card card-container" [hidden]="!isNewOrder">
+        <div class="card-header">Create new order request</div>
         <div class="card-body">
+            <form #createOrderForm=ngForm>
+
+              <!-- <label for="input-firstname">Receiver firstname</label> -->
+              <input type="text" name="receiver_firstname" class="form-control" id="input-receiver_firstname" placeholder="Receiver firstname" [(ngModel)]="orderForm.receiver_firstname"
+              required/>
+
+              <!-- <label for="input-receiver_lastname">Receiver lastname</label> -->
+              <input type="text" name="receiver_lastname" class="form-control" id="input-receiver_lastname" placeholder="Receiver lastname" [(ngModel)]="orderForm.receiver_lastname"
+              required/>
+
+              <!-- <label for="input-receiver_location">Receiver location</label> -->
+              <textarea type="text" name="receiver_location" class="form-control" id="input-receiver_location" placeholder="Receiver location" [(ngModel)]="orderForm.receiver_location"
+              required></textarea>
+            </form>
 
             <div class="form-group">
-                <label for="input-description">Location</label>
-                <textarea type="text" name="location" class="form-control" id="input-location" placeholder="Location" [(ngModel)]="order.location"
-                  required></textarea>
-                <!-- <span class="text-danger" [hidden]="!error.location">
-                  {{error.location}}
-                </span> -->
-              </div>
+                <agm-map [zoom]="18" [latitude]="latitude" [longitude]="longtitude" (mapClick)="onChooseLocation($event)" >
+                  <agm-marker [latitude]="latitude" [longitude]="longtitude"></agm-marker>
+                </agm-map>
+                </div>
+           
         </div>
-
         <div class="card-footer d-flex justify-content-end">
-            <button class="btn btn-danger" (click)="cancel()">Cancel</button>
-            <button class="btn btn-success" (click)="createReq()">Create</button>
+            <button class="btn btn-danger" (click)="cancelOrderRequest()">Cancel</button>
+            <button class="btn btn-success" (click)="createNewOrderRequest()">Create</button>
         </div>
       </div>
 
-      <div class="card card-container" [hidden]="isCreateOrder">
-        <div class="card-header">Waiting shipper</div>
+      <div class="card card-container" [hidden]="isNewOrder">
+        <div class="card-header">Waiting shipper accept</div>
         <div class="card-body">
-          <h2>Please waiting shipper accept</h2>
+          <h2>Waiting...</h2>
         </div>
         <div class="card-footer d-flex justify-content-end">
-            <button class="btn btn-success" (click)="backToShop()">Ok</button>
+            <button class="btn btn-success" (click)="isCreatedOrder()">Ok</button>
         </div>
       </div>
     </div>
+
+
+
+
   </div>
 </div>

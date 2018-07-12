@@ -159,5 +159,4 @@ class SellerController extends Controller
             'result' => $seller,
         ]);
     }
-
 }

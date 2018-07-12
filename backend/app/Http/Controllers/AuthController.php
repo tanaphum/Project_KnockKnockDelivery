@@ -93,7 +93,6 @@ class AuthController extends Controller
 
         $user->save();
         return response()->json([
-            'message' => 'Successfully',
             'user' => $user
         ],200);;
     }

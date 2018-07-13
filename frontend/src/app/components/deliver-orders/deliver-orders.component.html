@@ -40,9 +40,23 @@
                 <p><b>Shop location:</b> {{order.seller.shop_location}}</p>
                 <p><b>Service charge:</b> {{order.service_charge}}</p>
                 <p><b>Total price:</b> {{order.order_total_price}}</p>
-
-                
               </div>
+
+              <agm-map [zoom]="18" >
+                <agm-direction [origin]="dir.origin" [destination]="dir.destination" [renderOptions]="options"></agm-direction>
+                <agm-marker *ngIf="dir" [latitude]="dir.origin.lat" [longitude]="dir.origin.lng">
+                  <agm-info-window #infoWindow>
+                    <strong>{{order.receiver_firstname}} {{order.receiver_lastname}}</strong><br>
+                  </agm-info-window>
+                </agm-marker>
+                <agm-marker *ngIf="dir" [latitude]="dir.destination.lat" [longitude]="dir.destination.lng" >
+                  <agm-info-window #infoWindow>
+                    <strong>{{order.shop_name}}</strong><br>
+                  </agm-info-window>
+                </agm-marker>
+              </agm-map>
+              </div>
+              
               <div class="d-flex align-items-center btn-group">
                 <button class="btn btn-success" (click)="acceptOrder(order)">Accept order</button>
               </div>

@@ -40,10 +40,19 @@ export class LoginComponent implements OnInit {
   }
 
   handleResponse(data) {
-    this.authService.handleToken(data.access_token)
-    this.authService.changeAuthStatus(true)
-    this.authService.setUserProfile(data)
-    this.router.navigateByUrl('/profile')
+    this.authService.setToken(data.access_token)
+    .then(() => {
+      return this.authService.changeAuthStatus(true)
+    })
+    .then(() => {
+      return this.authService.setUserProfile(data)
+    })
+    .then(() => {
+      this.router.navigateByUrl('/profile')
+    })
+    .catch(error => {
+      console.log("[Error] ",error)
+    });
 
   }
 

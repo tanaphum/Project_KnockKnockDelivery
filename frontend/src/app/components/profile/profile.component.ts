@@ -16,6 +16,10 @@ export class ProfileComponent implements OnInit {
   private validSeller: Boolean= true;
   private validBuyer: Boolean= true;
   private validDeliver: Boolean= true;
+
+  private isSellerApprove: Boolean= true;
+  private isBuyerApprove: Boolean= true;
+  private isDeliverApprove: Boolean= true;
   
   private isAdmin:Boolean = false;
   private isShow: Boolean= false;
@@ -63,18 +67,27 @@ export class ProfileComponent implements OnInit {
                 console.log("[Response seller] ",response.data.seller)
                 this.sellerProfile = response.data.seller
                 this.validSeller = !this.validSeller;
+                if(this.sellerProfile.profile_status_id == 1) {
+                  this.isSellerApprove = !this.isSellerApprove
+                }
               }
               if(buyer != null) {
                 console.log("[Response buyer] ",response.data.buyer)
 
                 this.buyerProfile = response.data.buyer
                 this.validBuyer = !this.validBuyer;
+                if(this.buyerProfile.profile_status_id == 1) {
+                  this.isBuyerApprove = !this.isBuyerApprove
+                }
               }
               if(shipper != null ) {
                 console.log("[Response shipper] ",response.data.shipper)
 
                 this.deliverProfile = response.data.shipper
                 this.validDeliver = !this.validDeliver;
+                if(this.deliverProfile.profile_status_id == 1) {
+                  this.isDeliverApprove = !this.isDeliverApprove
+                }
               }
              
             

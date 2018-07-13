@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderComponent implements OnInit {
 
+  private orders = [];
   constructor() { }
 
   ngOnInit() {
+    this.getOrder()
+  }
+
+  getOrder() {
+    this.orders = JSON.parse(localStorage.getItem('orders'));
+    console.log("[orders] ",this.orders)
   }
 
 }

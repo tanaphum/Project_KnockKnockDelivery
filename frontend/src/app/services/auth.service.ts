@@ -52,7 +52,10 @@ export class AuthService {
   }
 
   setToken(token) {
-    localStorage.setItem('UAT', token);
+    return  new Promise(function(resolve, reject) {
+      localStorage.setItem('UAT', token);
+      resolve(true)
+    });
   }
 
   setUserId(data) {
@@ -71,9 +74,6 @@ export class AuthService {
     localStorage.removeItem('user_id');
     localStorage.removeItem('cart');
     localStorage.removeItem('masterData');
-
-    
-
 
 
   }
@@ -102,15 +102,15 @@ export class AuthService {
     return this.isValidToken();
   }
 
-
-
   changeAuthStatus(value: boolean) {
-    this.userLoggedIn.next(value);
+      this.userLoggedIn.next(value);
   }
 
   setUserProfile(data) {
-    console.log(data)
-    localStorage.setItem('user_id', data.user.user_id);
+    return  new Promise(function(resolve, reject) {
+      localStorage.setItem('user_id', data.user.user_id);
+      resolve(true)
+    });
   }
 
   sendPasswordResetLink(data) {

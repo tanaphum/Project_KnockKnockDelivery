@@ -8,6 +8,7 @@ use App\Seller;
 use App\Buyer;
 use App\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class OrderController extends Controller
 {
@@ -75,17 +76,20 @@ class OrderController extends Controller
             ], 400);
         }
 
+
         if (!is_null($order->shipper_id) || $order->shipper_id !== "") {
             $order->shipper_id = $request->shipper_id;
         }
 
         if (!is_null($order->order_status_id) || $order->order_status_id !== "") {
-            $order->order_status_id = $request->shipper_id;
+            $order->order_status_id = $request->order_status_id;
+        }
+
+        if($order->payment_transfer_slip !== null){
+            Storage::delete('public/payment_transfer_slip/'.$order->payment_transfer_slip);
         }
 
         if ($request->hasFile('payment_transfer_slip')) {
-            Storage::delete('public/payment_transfer_slip/' . $shipper->shipper_transfer_slip);
-
             // Get filename with the extension
             $filenameWithExt = $request->file('payment_transfer_slip')->getClientOriginalName();
             // Get just filename
@@ -93,7 +97,7 @@ class OrderController extends Controller
             // Get just ext
             $extension = $request->file('payment_transfer_slip')->getClientOriginalExtension();
             // Filename to store
-            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
             $path = $request->file('payment_transfer_slip')->storeAs('public/payment_transfer_slip', $fileNameToStore);
         } else {
@@ -101,14 +105,15 @@ class OrderController extends Controller
         }
 
         if ($request->hasFile('payment_transfer_slip')) {
-            $order->payment_transfer_slip = $request->payment_transfer_slip;
+            $order->payment_transfer_slip = $fileNameToStore;
         }
 
         $order->save();
 
         if ($request->hasFile('payment_transfer_slip')) {
-            $order->payment_transfer_slip = "storage/payment_transfer_slip/" . $request->payment_transfer_slip;
+            $order->payment_transfer_slip = "/storage/payment_transfer_slip/".$order->payment_transfer_slip;
         }
+
 
         return response()->json(['result' => $order]);
     }

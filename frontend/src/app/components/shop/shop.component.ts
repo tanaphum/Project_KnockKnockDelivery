@@ -21,7 +21,7 @@ export class ShopComponent implements OnInit {
         product_price: null,
         product_image_1:null
     }
-
+    private orders_num = 0;
     private shop = [];
 
 
@@ -37,7 +37,8 @@ export class ShopComponent implements OnInit {
     ngOnInit() {
         this.setCartNum();
         this.setSellerID();
-        
+        this.setOrderNum();
+
     }
 
     setSellerID() {
@@ -101,6 +102,7 @@ export class ShopComponent implements OnInit {
     let cart = JSON.parse(localStorage.getItem("cart"));
     if(cart == null){
       let obj = [];
+      obj['seller_id'] = this.seller_id
       obj.push(product);
       // console.log("product: ",product);
       localStorage.setItem("cart",JSON.stringify(obj));
@@ -136,6 +138,17 @@ export class ShopComponent implements OnInit {
   goToShops() {
     this.router.navigateByUrl('/shops')
 
+  }
+
+  setOrderNum(){
+    let orders = JSON.parse(localStorage.getItem("orders"));
+    console.log("orders: ",orders);
+    if(orders != null) {
+          this.orders_num = orders.length;
+    } 
+    else if(orders == {}) {
+      this.orders_num = 0;
+    }
   }
 
 }

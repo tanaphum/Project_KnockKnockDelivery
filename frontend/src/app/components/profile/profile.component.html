@@ -7,51 +7,75 @@
   </div>
   <div class="card card-container w3-display-middle" *ngIf="!isAdmin">
 
-      <div id="inner">
-          <h4>Knock Knock</h4>
-          <p>Select one menu</p>
-          <div id="menu">
-            <div class="row">
-              <div class="col-12 w3-display-container" id="menu-top" [hidden]="validSeller" (click)="enterManageShop(sellerProfile)">
-                <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1">
-                <div class="w3-padding-large">
-                      <p>Seller</p>
-                </div>
+    <div id="inner">
+      <h4>Knock Knock</h4>
+      <p>Select one menu</p>
+      <div id="menu">
+        <div class="row">
+          <div class="col-12 w3-display-container" id="menu-top" [hidden]="validSeller">
+            <div [hidden]="!isSellerApprove" (click)="enterManageShop(sellerProfile)" class="w3-padding-large">
+              <!-- <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1"> -->
+              <div>
+                <p>Seller</p>
               </div>
-              <div class="col-12 w3-display-container" id="menu-top" [hidden]="!validSeller" (click)="createProfile(2)">
-                <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1">
-                <div class="w3-padding-large">
-                  <p>Create Seller profile</p>
-                </div>
+            </div>
+            <div class="justify-content-around align-items-center" [hidden]="isSellerApprove">
+              <!-- <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1"> -->
+              <div class="w3-padding-large">
+                <p style="color:red">Waiting Admin approve seller profile</p>
               </div>
-              <div class="col-12 w3-display-container" id="menu-center" [hidden]="validBuyer" (click)="enterShops()">
-                <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg2">
-                <div class="w3-padding-large">
-                        <p>Buyer</p>
-                </div>
-              </div>
-              <div class="col-12 w3-display-container" id="menu-top" [hidden]="!validBuyer" (click)="createProfile(3)">
-                <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1">
-                <div class="w3-padding-large">
-                  <p>Create Buyer profile</p>
-                </div>
-              </div>
-              <div class="col-12 w3-display-container" id="menu-button" [hidden]="validDeliver" (click)="enterDeliver()">
-                  <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg3">
-                  <div class="w3-padding-large">
-                          <p>Shipper</p>
-                  </div>
-                </div>
-                <div class="col-12 w3-display-container" id="menu-top" [hidden]="!validDeliver" (click)="createProfile(4)">
-                  <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1">
-                  <div class="w3-padding-large">
-                    <p>Create Shipper profile</p>
-                  </div>
-                </div>
             </div>
           </div>
-  
+          <div class="col-12 w3-display-container" id="menu-top" [hidden]="!validSeller" (click)="createProfile(2)">
+            <!-- <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1"> -->
+            <div class="w3-padding-large">
+              <p>Create Seller profile</p>
+            </div>
+          </div>
+          <div class="col-12 w3-display-container" id="menu-center" [hidden]="validBuyer" (click)="enterShops()">
+            <div  >
+              <!-- <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg2"> -->
+              <div class="w3-padding-large">
+                <p>Buyer</p>
+              </div>
+            </div>
+            <!-- <div [hidden]="isBuyerApprove">
+               <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1"> 
+              <div class="w3-padding-large">
+                <p style="color:red">Waiting Admin approve buyer profile</p>
+              </div>
+            </div> -->
+          </div>
+          <div class="col-12 w3-display-container" id="menu-top" [hidden]="!validBuyer" (click)="createProfile(3)">
+            <!-- <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1"> -->
+            <div class="w3-padding-large">
+              <p>Create Buyer profile</p>
+            </div>
+          </div>
+          <div class="col-12 w3-display-container" id="menu-button" [hidden]="validDeliver" (click)="enterDeliver()">
+            <div  [hidden]="!isDeliverApprove" class="w3-padding-large">
+              <!-- <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg3"> -->
+              <div >
+                <p>Shipper</p>
+              </div>
+            </div>
+            <div  [hidden]="isDeliverApprove" class="w3-padding-large">
+              <!-- <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1"> -->
+              <div >
+                <p style="color:red">Waiting Admin approve shipper profile</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 w3-display-container" id="menu-top" [hidden]="!validDeliver" (click)="createProfile(4)">
+            <!-- <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1"> -->
+            <div class="w3-padding-large">
+              <p>Create Shipper profile</p>
+            </div>
+          </div>
         </div>
+      </div>
+
+    </div>
 
 
 

@@ -29,12 +29,14 @@
         </div>
         <div>
           <p><b>Totla price:</b> {{totalPrice}} &#3647;</p>
+          <p style="color: red"  [hidden]="!isSame">All items must be in the same shop</p>
+          <p style="color: red"  [hidden]="totalPrice<=1000">Total price not more than 1000 Bath</p>
         </div>
         
       </div>
       <div class="card-footer d-flex justify-content-between">
         <button class="btn btn-info" (click)="backToShop()">Back to shopping</button>
-        <button class="btn btn-success" (click)="checkOut()">Check Out</button>
+        <button class="btn btn-success" (click)="checkOut()" [disabled]="isSame || totalPrice > 1000">Check Out</button>
       </div>
     </div>
 

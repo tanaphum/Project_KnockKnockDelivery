@@ -2,9 +2,6 @@ declare var google: any;
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { UserService } from '../../services/user.service';
-
-
-
 import { Router } from '@angular/router';
  
 
@@ -20,6 +17,8 @@ export class CartComponent implements OnInit {
   private isWarting: boolean = true;
   private isSameShop: boolean = true;
   private isNewOrder: boolean = true;
+  private isSame: boolean = false;
+  private isMoreThan: boolean = false;
   private seller_id;
   private buyer_id;
   private totalPrice = 0;
@@ -47,6 +46,7 @@ export class CartComponent implements OnInit {
     this.getCart();
     this.setSellerId();
     this.setBuyerId();
+    this.checkSameShop();
   }
 
   setSellerId() {
@@ -74,6 +74,8 @@ export class CartComponent implements OnInit {
       });
     console.log("Cart : ", this.cart)
     this.calculateTotalPrice();
+    this.checkSameShop();
+
 
   }
 
@@ -108,6 +110,7 @@ export class CartComponent implements OnInit {
         this.cart.splice(i, 1);
         localStorage.setItem("cart", JSON.stringify(this.cart));
         this.getCart();
+
       }
     }
 
@@ -152,7 +155,8 @@ export class CartComponent implements OnInit {
     this.totalPrice = 0;
     this.cart.forEach(element => {
       this.totalPrice += parseInt(element.product_price);
-    });
+    })
+    
   }
 
   checkOut() {
@@ -172,6 +176,9 @@ export class CartComponent implements OnInit {
   }
 
   createNewOrderRequest() {
+    let orders = localStorage.getItem('orders')
+    let result = [];
+    let temp = [];
     let data = {
       receiver_firstname: this.orderForm.receiver_firstname,
       receiver_lastname: this.orderForm.receiver_lastname,
@@ -190,8 +197,18 @@ export class CartComponent implements OnInit {
     this.orderService.createOrder(data)
     .subscribe(Response => {
       console.log("[Response] ",Response);
+      result.push(Response.result)
       this.isNewOrder = !this.isNewOrder
       alert('Create order success')
+      if(orders == null){
+        localStorage.setItem('orders',JSON.stringify(result));
+      }
+      else{
+        temp = JSON.parse(orders)
+        temp.push(result)
+        localStorage.setItem('orders',JSON.stringify(temp));
+
+      }
       this.deleteCart();
       
     },error => {
@@ -211,6 +228,16 @@ export class CartComponent implements OnInit {
 
   deleteCart() {
     localStorage.setItem('cart','[]');
+  }
+
+  checkSameShop() {
+    for(let i=1;i<=this.cart.length ; i++) {
+      console.log("seller.seller_id - 1",this.cart[i-1].seller.seller_id)
+      console.log("seller.seller_id",this.cart[i].seller.seller_id)
+      if(this.cart[i-1].seller.seller_id != this.cart[i].seller.seller_id) {
+        this.isSame = !this.isSame;
+      }
+    }
   }
 
 }

@@ -1,3 +1,4 @@
+declare var google: any;
 import { Component, OnInit } from '@angular/core';
 import { DeliverService } from '../../services/deliver.service';
 import { OrderService } from '../../services/order.service';
@@ -13,6 +14,14 @@ export class DeliverOrdersComponent implements OnInit {
   private orders = [];
   private orderDetail = [];
   private isShow:boolean = true;
+  shop_latitude: any;
+  shop_longtitude: any;
+  receiver_latitude: any;
+  receiver_longitude: any;
+  dir = undefined;
+  options = {
+    suppressMarkers: true,
+  };
 
   constructor(
     private deliverService: DeliverService,
@@ -36,6 +45,18 @@ export class DeliverOrdersComponent implements OnInit {
       this.orders = response.data;
       // this.getOrderDetail(this.orders)
       this.isShow = !this.isShow
+
+      this.orders.forEach(element => {
+        this.shop_latitude= element.shop_latitude;
+        this.shop_longtitude=element.shop_longitude;
+        this.receiver_latitude=element.receiver_latitude;
+        this.receiver_longitude=element.receiver_longitude;
+        })
+
+      this.dir = {
+            origin: { lat: +this.shop_latitude, lng: +this.shop_longtitude },
+            destination: { lat: +this.receiver_latitude, lng:  +this.receiver_longitude }
+          }
 
     },error => {
       console.log("[error] ",error)
@@ -76,7 +97,7 @@ export class DeliverOrdersComponent implements OnInit {
       console.log("[response] ",response)
       this.isShow = !this.isShow
       alert('Sucess accept this order')
-      localStorage.setItem('order',order)
+      localStorage.setItem('order',JSON.stringify(order))
 
     }
     ,error => {

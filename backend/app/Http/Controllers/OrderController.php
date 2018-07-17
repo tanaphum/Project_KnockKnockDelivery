@@ -7,6 +7,7 @@ use App\Order;
 use App\Seller;
 use App\Buyer;
 use App\OrderDetail;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -66,7 +67,7 @@ class OrderController extends Controller
     public function updateOrder(Request $request, $order_id)
     {
         $this->validate($request, [
-            'order_status_id' => 'required',
+            'order_status_id' => 'required'
         ]);
 
         $order = $this->order->where('order_id', $order_id)->first();
@@ -167,18 +168,21 @@ class OrderController extends Controller
                         'shop_name' => $order->seller->shop_name,
                         'shop_location' => $order->seller->shop_location,
                         'shop_latitude' => $order->seller->shop_latitude,
-                        'shop_longitude' => $order->seller->shop_longitude
+                        'shop_longitude' => $order->seller->shop_longitude,
+                        'user' => User::getUserByProfileId($order->seller->profile_id)
                     ],
                     'buyer' => [
                         'buyer_id' => $order->buyer->buyer_id,
+                        'user' => User::getUserByProfileId($order->buyer->profile_id)
                     ],
                     'shipper' => [
-                        'shipper_id' => $order->shipper->shipper||null,
+                        'shipper_id' => $order->shipper->shipper_id,
                         'bank_account' => [
-                            'bank_account_id' => $order->shipper->bank_account->bank_account_id||null,
-                            'bank_account_name' => $order->shipper->bank_account->bank_account_name||null
-                        ] || null,
-                        'bank_account_no' => $order->shipper->bank_account_no || null,
+                            'bank_account_id' => $order->shipper->bank_account->bank_account_id,
+                            'bank_account_name' => $order->shipper->bank_account->bank_account_name
+                        ],
+                        'bank_account_no' => $order->shipper->bank_account_no,
+                        'user' => User::getUserByProfileId($order->shipper->profile_id)
                     ],
                     'order_details' => OrderDetail::getOrderDetailsByOrderId($order->order_id)
                 ]
@@ -201,10 +205,12 @@ class OrderController extends Controller
                         'shop_name' => $order->seller->shop_name,
                         'shop_location' => $order->seller->shop_location,
                         'shop_latitude' => $order->seller->shop_latitude,
-                        'shop_longitude' => $order->seller->shop_longitude
+                        'shop_longitude' => $order->seller->shop_longitude,
+                        'user' => User::getUserByProfileId($order->seller->profile_id)
                     ],
                     'buyer' => [
                         'buyer_id' => $order->buyer->buyer_id,
+                        'user' => User::getUserByProfileId($order->buyer->profile_id)
                     ],
                     'shipper' => null,
                     'order_details' => OrderDetail::getOrderDetailsByOrderId($order->order_id)

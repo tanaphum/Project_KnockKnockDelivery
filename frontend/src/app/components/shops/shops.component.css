@@ -64,6 +64,12 @@
   
 }
 
+.card {
+  max-height: 400px;
+  height: 400px;
+
+}
+
 img {
   max-width: 250px;
   max-height: 200px;
@@ -160,7 +166,7 @@ img {
   color: #fff;
   top: 85px;
   /* font-weight: 400; */
-  right: 60px; 
+  right: 140px; 
   /* left: px; */
   text-align: center;
   border: 3px solid #f36e36;
@@ -178,7 +184,7 @@ img {
     color: #fff;
     top: 85px;
     /* font-weight: 400; */
-    right: 225px; 
+    right: 250px; 
     /* left: px; */
     text-align: center;
     border: 3px solid #f36e36;

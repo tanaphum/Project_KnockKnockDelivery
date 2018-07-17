@@ -27,6 +27,21 @@ export class BuyerService {
   getProductCategories() {
     return this.http.get<productCategory>(`${this.baseUrl}categories`,this.httpOptions)
   }
+
+  getBuyerByProfileId(uid) {
+    return this.http.get<profile>(`${this.baseUrl}buyer/profile/${uid}`,this.httpOptions)
+
+  }
+
+  updateBuyer(form,uid) {
+    return this.http.put(`${this.baseUrl}buyer/${uid}`,form,this.httpOptions)
+
+  }
+
+  getOrderByBuyerId(id) {
+    return this.http.get<Product>(`${this.baseUrl}order/buyer/${id}/histories`,this.httpOptions)
+
+  }
 }
 
 export interface Product {
@@ -40,6 +55,18 @@ export interface Product {
     category: {
       category_id: null,
       category_name: null
+    }
+  }]
+}
+
+export interface profile {
+  data: [{
+    buyer_address: null,
+    buyer_id: null,
+    profile_id: null,
+    profile_status: {
+      profile_status_id: null,
+      profile_status_name: null
     }
   }]
 }

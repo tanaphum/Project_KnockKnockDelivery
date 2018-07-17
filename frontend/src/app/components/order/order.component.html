@@ -1,28 +1,118 @@
-<div class="loader-container">
+<div class="loader-container" [hidden]="!isShow">
   <div class="loader"></div>
 </div>
-<div class="w3-row" id="container">
+<div class="w3-row" id="container" [hidden]="isShow">
   <div class="container">
-    <div class="w3-container w3-padding">
+    <div class="w3-container w3-padding" [hidden]="isEmpty">
       <div *ngFor="let order of orders;let i = index">
         <div class="w3-container w3-quarter">
           <div class="card">
-              <div class="card-header">
-                  <p>
-                    <b>{{order.order_id}}</b>
-                  </p>
-                </div>
+            <div class="card-header">
+              <p>
+                <b>Order</b>
+              </p>
+            </div>
             <!-- <div class="d-flex justify-content-center">
               <img class="card-img-top" [src]="baseUrl+shop.shop_logo_image" alt="">
             </div> -->
             <div class="card-body">
-              <h5 class="card-title">{{order.receiver_firstname}} {{order.receiver_lastname}}</h5>
-              <p class="card-text">{{order.receiver_location}}</p>
-              <p class="card-text">{{order.service_charge}}</p>
-              <p class="card-text">{{order.order_total_price}}</p>
+              <!-- <p class="card-text"><b>Reciever name:</b> {{order.receiver_firstname}} {{order.receiver_lastname}}</p> -->
+              <p class="card-text">
+                <b>Order id:</b> {{order.order_id}}</p>
+              <!-- <p class="card-text"><b>Recieveer address:</b> {{order.receiver_location}}</p> -->
+              <!-- <p class="card-text"><b>Service charge:</b> {{order.service_charge}}</p> -->
+              <!-- <p class="card-text"><b>Total price:</b> {{order.order_total_price}}</p> -->
+              <p class="card-text">
+                <b>Update at:</b> {{order.updated_at}}</p>
+              <p class="card-text">
+                <b>Status:</b> {{order.order_status.order_status_name}}</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-outline-info btn-block" data-toggle="modal" data-target="#seeMoreModal" (click)="seeMore(order)">See More</button>
+                <button class="btn btn-outline-success btn-block" data-toggle="modal" data-target="#UploadModal">Upload transfer</button>
+                <button class="btn btn-outline-warning btn-block" data-toggle="modal" data-target="#QRCodeModal">Open QR Code</button>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="w3-display-middle" [hidden]="!isEmpty">
+      <h1>No order</h1>
+    </div>
   </div>
+
+
+  
+<!-- //////////////////////////////////// See more Modal /////////////////////////////////////////// -->
+
+<div class="modal fade" id="seeMoreModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p><b>Order id:</b> {{seeMore_form.order_id}}</p>
+          <p><b>Receiver name:</b> {{seeMore_form.receiver_firstname}} {{seeMore_form.receiver_lastname}}</p>
+          <p><b>Retriever address:</b> {{seeMore_form.receiver_location}}</p>
+          <p><b>Service charge:</b> {{seeMore_form.service_charge}}</p>
+          <p><b>Total price:</b> {{seeMore_form.order_total_price}}</p>
+          <p><b>Updated at:</b> {{seeMore_form.updated_at}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+ 
+<!-- //////////////////////////////////// Upload transFer Modal /////////////////////////////////////////// -->
+
+<div class="modal fade" id="UploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Upload transfer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" data-dismisss="modal">Upload</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+   
+<!-- //////////////////////////////////// QR code Modal /////////////////////////////////////////// -->
+
+<div class="modal fade" id="QRCodeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">QR code</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

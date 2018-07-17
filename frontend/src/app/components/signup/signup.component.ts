@@ -32,30 +32,36 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log("onSubmit signup: ");
-    console.log("this.form.password.lenght: ",this.form.password.lenght);
-    console.log("this.form.password_confirmation.lenght: ",this.form.password_confirmation.lenght)
+    // console.log("this.form.password.lenght: ",this.form.password.lenght);
+    // console.log("this.form.password_confirmation.lenght: ",this.form.password_confirmation.lenght)
 
-    this.isShow = !this.isShow;   
-    if(this.form.password.length < 8 || this.form.password_confirmation.length < 8){
-      this.isShow = !this.isShow;   
-      this.error['password'] = 'Password and confirm password must contain more than 8 character long';
+    if (this.form.firstname != null || this.form.lastname != null || this.form.identity_no != null || this.form.telephone_number != null || this.form.email != null || this.form.password != null || this.form.password_confirmation != null) {
+      this.isShow = !this.isShow;
+      if (this.form.password.length < 8 || this.form.password_confirmation.length < 8) {
+        this.isShow = !this.isShow;
+        this.error['password'] = 'Password and confirm password must contain more than 8 character long';
+      }
+      else if (this.form.password != this.form.password_confirmation) {
+        this.isShow = !this.isShow;
+        this.error['password'] = 'Password and confirm password not match';
+      }
+      else if (this.form.identity_no.length < 13) {
+        this.isShow = !this.isShow;
+        this.error['identity_no'] = 'Identity no must more than 13 digit';
+      }
+      else {
+        this.authService.signup(this.form).subscribe(
+          data => this.handleResponse(data),
+          error => this.handleError(error)
+        )
+      }
     }
-    else if(this.form.password != this.form.password_confirmation){
-      this.isShow = !this.isShow;   
-      this.error['password'] = 'Password and confirm password not match';
+    else {
+      alert("All input required")
     }
-    else if(this.form.identity_no.length<13) {
-      this.isShow = !this.isShow;   
-      this.error['identity_no'] = 'Identity no must more than 13 digit';
-    }
-    else{
-      this.authService.signup(this.form).subscribe(
-        data => this.handleResponse(data),
-        error => this.handleError(error)
-      )
-    }
+
 
   }
 
@@ -64,13 +70,13 @@ export class SignupComponent implements OnInit {
     this.authService.changeAuthStatus(true)
     this.authService.setUserId(data.user.user_id)
     this.router.navigateByUrl('/profile')
-    this.isShow = !this.isShow;   
+    this.isShow = !this.isShow;
 
   }
 
-  handleError(error){
-    this.error = error.error.errors;  
-    this.isShow = !this.isShow;   
+  handleError(error) {
+    this.error = error.error.errors;
+    this.isShow = !this.isShow;
 
   }
 

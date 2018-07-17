@@ -30,6 +30,7 @@ export class OrderService {
     return this.http.get<orders>(`${this.baseUrl}order/seller/`+sid+`/order-list`, this.httpOptions)
   }
 
+
   getOrderDetail(oid) {
     return this.http.get<orders>(`${this.baseUrl}order/`+oid, this.httpOptions)
   }
@@ -45,5 +46,5 @@ export interface order {
 }
 
 export interface orders {
-  data:null
+  data:[{}]
 }

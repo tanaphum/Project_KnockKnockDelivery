@@ -34,6 +34,10 @@ export class DeliverService {
     return this.http.post(`${this.baseUrl}shipper/`+id,body,this.httpOptions)
   }
 
+  getOrderByDeliverId(id) {
+    return this.http.get<profile>(`${this.baseUrl}order/shipper/${id}/histories`,this.httpOptions)
+  }
+
 
 }
 

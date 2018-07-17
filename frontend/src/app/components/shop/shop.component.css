@@ -152,6 +152,10 @@
     cursor: pointer;
   
   }
+
+  #noProduct{
+    height: 50vh;
+  }
   
   
   .history-num{
@@ -160,7 +164,7 @@
     color: #fff;
     top: 85px;
     /* font-weight: 400; */
-    right: 60px; 
+    right: 145px; 
     /* left: px; */
     text-align: center;
     border: 3px solid #f36e36;
@@ -177,7 +181,7 @@
     color: #fff;
     top: 85px;
     /* font-weight: 400; */
-    right: 225px; 
+    right: 250px; 
     /* left: px; */
     text-align: center;
     border: 3px solid #f36e36;

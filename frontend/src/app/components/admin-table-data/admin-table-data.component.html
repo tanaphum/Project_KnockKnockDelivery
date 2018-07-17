@@ -1,0 +1,203 @@
+<table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='history'">
+    <thead>
+      <tr *ngFor="let header of headers">
+        <th>No.</th>
+        <th>{{header.order_id}}</th>
+        <th>{{header.order_status.order_status_name}}</th>
+        <th>{{header.updated_at}}</th>
+        
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of data;let  i = index">
+        <td>{{i+1}}</td>
+        <td>{{order.order_id}} </td>
+        <td>{{order.order_status.order_status_name}} </td>
+        <td>{{order.updated_at}} </td>
+        <td>
+          <div class="btn-group">
+            <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Info</button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="openEdit(product)">Edit</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="openDelete(product)">Delete</button> -->
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <!-- Modal -->
+  
+  <div>
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Product Information</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img  class="card-img-top" [src]="product_image" alt="">
+            <p>
+              <strong>Product ID: </strong>{{ product_id }}</p>
+            <p>
+              <strong>Product Name: </strong>{{ product_name }}</p>
+            <p>
+              <strong>Product Description: </strong>{{ product_description }}</p>
+            <p>
+              <strong>Product Price: </strong>{{ product_price }}</p>
+            <p>
+              <strong>Product Catagory: </strong>{{ selected_catagory }}</p>
+            <!-- <p>
+              <strong>Product in stock: </strong>{{ unit_in_stock }}</p> -->
+            <!-- <p><strong>Product ID: </strong>{{ product_available }}</p> -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+  
+            <img  class="card-img-top" [src]="product_image" alt="">
+  
+            <form #editProductForm=ngForm>
+              <div class="form-group">
+                <label for="input-id">Product id</label>
+                <input [disabled]="isClick" type="number" name="id" class="form-control" id="input-id" placeholder="Product Name" [(ngModel)]="product_id" disabled/>
+              </div>
+  
+              <div class="form-group">
+                <label for="input-name">Product name</label>
+                <input [disabled]="isClick" type="text" name="name" class="form-control" id="input-name" placeholder="Product name" [(ngModel)]="product_name"
+                  required/>
+              </div>
+  
+              <div class="form-group">
+                  <label for="input-price">Product Price</label>
+                  <input [disabled]="isClick" type="text" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="product_price"
+                    required>
+                </div>
+  <!-- 
+              <div class="form-group">
+                <label for="input-price">Product Amount Unit</label>
+                <input [disabled]="isClick" type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="unit_in_stock"
+                  required>
+              </div> -->
+  
+              <div class="form-group">
+                <label for="selectCatagory">Product Catagory</label>
+                <select [disabled]="isClick" class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory"
+                  (ngModelChange)="onCatagorySelected($event)" required>
+                  <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.product_category_id">{{item.product_category_name}}</option>
+                </select>
+              </div>
+  
+              <div class="form-group">
+                <label for="input-description">Product Description</label>
+                <textarea [disabled]="isClick" type="text" name="description" class="form-control" id="input-description" placeholder="Product Description" [(ngModel)]="product_description"
+                  required></textarea>
+              </div>
+            </form>
+            <div *ngIf="isEdit">
+              <p style="color:Green">Product has been edit</p>
+            </div>
+            <div *ngIf="error">
+              <p style="color:red">error</p>
+            </div>
+            <div *ngIf="isClick" class="w3-display-middle">
+              <p class="loading">Saving</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button *ngIf="isEdit" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
+            <button *ngIf="!isEdit" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button *ngIf="!isEdit" type="button" class="btn btn-warning" (click)="onEdit()" [disabled]="isClick">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Delete {{ product_name }} ??</p>
+            <div *ngIf="isDelete">
+              <p style="color:red">Product has been delete</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button *ngIf="isDelete" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
+            <button *ngIf="!isDelete" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button *ngIf="!isDelete" type="button" class="btn btn-danger" (click)="onDelete(product_id)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

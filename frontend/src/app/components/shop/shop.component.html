@@ -11,10 +11,11 @@
 
   <div class="w3-row" id="searchBox">
     <div class="w3-col m3 w3-center">
-      <div class="d-flex justify-content-center align-items-center">
+      <!-- <div class="d-flex justify-content-center align-items-center">
         <i class="fa fa-arrow-circle-left fa-2x w3-padding" (click)="goToShops()">
         </i>
-      </div>
+      </div> -->
+      <p></p>
     </div>
     <div class="w3-col m6 w3-center">
       <div class="input-group mb-6" id="search">
@@ -34,24 +35,41 @@
         <i class="fa fa-history w3-padding" (click)="goToOrder()">
           <span *ngIf="orders_num!=0" class="history-num" id="topActionHistoryNumber">{{orders_num}}</span>
         </i>
+        <i class="fa fa-user w3-padding" data-toggle="modal" data-target="#editBuyerModal" (click)="openEditBuyer()"></i>
       </div>
-
     </div>
-
   </div>
 
 
 
-  <!-- <div class="row" id="header-container">
-      <div class="col-2  w3-green" >
-        <p>Hello</p>
+  <div class="row w3-container w3-padding" id="header-container">
+      <div class="col-1">
+        <p> </p>
       </div>
-      <div class="col-10 w3-green">
-        </div>
-    </div> -->
+      <div class="col-2">
+          <div class="d-flex justify-content-center">
+              <img [src]="baseUrl+seller.shop_logo_image" alt="">
+            </div>        </div>
+      <div class="col-3">
+          <p><b>Shop name: </b>{{seller.shop_name}}</p>
+          <p><b>Shop address: </b>{{seller.shop_location}}</p>
+          <p><b>Seller name: </b>{{seller.user.firstname}} {{seller.user.lastname}}</p>
+          <p><b>Seller email: </b>{{seller.user.email}}</p>
+          <p><b>Seller phone number: </b>{{seller.user.telephone_number}}</p>
 
-  <div class="w3-container w3-padding w3-light-grey">
-    <div *ngFor="let product of products;let i = index" [hidden]="i >= 12">
+
+      </div>
+      <div class="col-4">
+          <h2>Google map here!!!</h2>
+
+      </div>
+      <div class="col-2">
+        </div>
+
+  </div>
+
+  <div class="w3-container w3-padding w3-light-grey"  [hidden]="!isEmpty">
+    <div *ngFor="let product of products;let i = index">
       <div class="w3-container w3-quarter">
         <div class="card">
           <div class="card-img-top d-flex justify-content-center">
@@ -67,8 +85,13 @@
       </div>
     </div>
   </div>
-  <div class="w3-padding-32 w3-light-grey">
+  <!-- <div class="w3-padding-32 w3-light-grey">
     <button class="btn btn-outline-info btn-block">See More</button>
+  </div> -->
+  <div class="w3-container w3-padding w3-light-grey" id="noProduct" [hidden]="isEmpty">
+    <div class="d-flex justify-content-center align-items-center">
+        <h2>No product in this shop</h2>
+    </div>
   </div>
 
 
@@ -96,6 +119,32 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-success" data-dismiss="modal" (click)="addToCart(form)">Add to cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- //////////////////////////////////// Edit buyer Modal /////////////////////////////////////////// -->
+
+  <div class="modal fade" id="editBuyerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit buyer</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="input-localtion">Address</label>
+            <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="Address" [(ngModel)]="buyer_profile.buyer_address"
+              required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ganger" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="onEditBuyer()">Edit</button>
         </div>
       </div>
     </div>

@@ -42,6 +42,15 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.getMasterData();
+    this.clearProfile();
+
+  }
+
+  clearProfile() {
+    localStorage.removeItem('buyer')
+    localStorage.removeItem('buyer_id')
+    localStorage.removeItem('seller_id')
+    localStorage.removeItem('deliver')
 
   }
 
@@ -189,13 +198,15 @@ export class ProfileComponent implements OnInit {
     this.router.navigateByUrl('/manage-shop')
   }
 
-  enterShops() {
+  enterShops(buyerProfile) {
+    localStorage.setItem("buyer",JSON.stringify(buyerProfile));
+    localStorage.setItem("buyer_id",JSON.stringify(buyerProfile.buyer_id));
     this.router.navigateByUrl('/shops')
 
   }
 
   enterDeliver() {
-    localStorage.setItem('seller_id',this.deliverProfile.profile_id)
+    localStorage.setItem('deliver',JSON.stringify(this.deliverProfile))
     this.router.navigateByUrl('/deliver')
   }
 

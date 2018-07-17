@@ -11,6 +11,11 @@
     border:1px solid gray;
     background-color: white;
 }
+agm-map {
+  height: 350px;
+  width:600px;
+  justify-content: center;
+}
 
 
 .success {

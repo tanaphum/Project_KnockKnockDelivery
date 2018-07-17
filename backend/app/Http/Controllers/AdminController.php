@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\Order;
 use App\User;
 use App\Seller;
 use App\Buyer;
@@ -24,8 +25,9 @@ class AdminController extends Controller
     private $buyer;
     private $shipper;
     private $profile;
+    private $order;
 
-    public function __construct(Admin $admin, User $user, Seller $seller , Buyer $buyer, Shipper $shipper,Profile $profile)
+    public function __construct(Admin $admin, User $user, Seller $seller , Buyer $buyer, Shipper $shipper,Profile $profile, Order $order)
     {
         $this->admin = $admin;
         $this->user = $user;
@@ -33,6 +35,7 @@ class AdminController extends Controller
         $this->buyer = $buyer;
         $this->shipper = $shipper;
         $this->profile = $profile;
+        $this->order = $order;
     }
 
     public function getAdminByUserId($user_id)
@@ -169,6 +172,20 @@ class AdminController extends Controller
             return response()->json(['message' =>'Bad Request'], 400);
         }
 
+    }
+
+    public function cancelOrder($order_id)
+    {
+        $order = $this->order->where('order_id', $order_id)->first();
+        if($order === null)
+        {
+            return response()->json(['message'=> 'Order not found']);
+        }
+
+        $order->order_status_id = 9;
+        $order->save();
+
+        return response()->json(['result' => $order]);
     }
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\User;
 
 class SellerResource extends JsonResource
 {
@@ -25,7 +26,8 @@ class SellerResource extends JsonResource
                 'profile_status_id' => $this->profile_status->profile_status_id,
                 'profile_status_name' => $this->profile_status->profile_status_name
             ],
-            'profile_id' => $this->profile_id
+            'profile_id' => $this->profile_id,
+            'user' => User::getUserByProfileId($this->profile_id)
         ];
     }
 }

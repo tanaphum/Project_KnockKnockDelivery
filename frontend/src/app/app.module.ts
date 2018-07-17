@@ -35,6 +35,7 @@ import { AgmDirectionModule } from 'agm-direction'
 import { GoogleMapsAPIWrapper } from '@agm/core';
 import { OrderComponent } from './components/order/order.component';
 import { DeliverOrdersComponent } from './components/deliver-orders/deliver-orders.component';
+import { AdminTableDataComponent } from './components/admin-table-data/admin-table-data.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { DeliverOrdersComponent } from './components/deliver-orders/deliver-orde
     CartComponent,
     DeliverComponent,
     OrderComponent,
-    DeliverOrdersComponent
+    DeliverOrdersComponent,
+    AdminTableDataComponent
   ],
   imports: [
     BrowserModule,

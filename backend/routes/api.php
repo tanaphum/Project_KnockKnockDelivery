@@ -10,7 +10,7 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::put('user/{user_id}','AuthController@editUser');
     Route::post('me', 'AuthController@me');
-
+    Route::put('editUser', 'AuthController@editUser');
 });
 
 Route::post('auth/sendPasswordResetLink', 'ResetPasswordController@sendEmail');
@@ -40,6 +40,8 @@ Route::group([
     Route::post('seller/{seller_id}/product', 'ProductController@createProduct');
     Route::post('seller/{seller_id}/product/{product_id}', 'ProductController@updateProduct');
     Route::delete('seller/product/{product_id}', 'ProductController@deleteProduct');
+
+    Route::get('shops/product-category/{product_category_id}', 'SellerController@getSellerByProductCategoryId');
 });
 
 Route::group([
@@ -65,6 +67,7 @@ Route::group([
     Route::post('search/users', 'AdminController@searchUsers');
     // Route::put('admin/{admin_id}', 'AdminController@updateAdmin');
     Route::post('admin/updatestatus', 'AdminController@adminUpdateStatusUser');
+    Route::put('admin/cancel-order/{order_id}', 'AdminController@cancelOrder');
 });
 
 

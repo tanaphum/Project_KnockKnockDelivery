@@ -45,6 +45,11 @@ export class AdminService {
 
   }
 
+  getAllOrderHistory() {
+    return  this.http.get<history>(`${this.baseUrl}admin/order/histories`,this.httpOptions)
+
+  }
+
 }
 
 export interface users {
@@ -76,5 +81,10 @@ export interface updateUser {
       profile_status_id:null
 
     }
+
+}
+
+export interface history {
+  data:[{}]
 
 }

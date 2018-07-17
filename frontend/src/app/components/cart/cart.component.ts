@@ -177,6 +177,9 @@ export class CartComponent implements OnInit {
 
   createNewOrderRequest() {
     let orders = localStorage.getItem('orders')
+    let seller_id = localStorage.getItem('seller_id')
+    let buyer_id = localStorage.getItem('buyer_id')
+
     let result = [];
     let temp = [];
     let data = {
@@ -187,8 +190,8 @@ export class CartComponent implements OnInit {
       receiver_longitude: this.orderForm.receiver_longitude,
       order_total_price: this.totalPrice,
       service_charge: "40",
-      seller_id: this.seller_id,
-      buyer_id: this.buyer_id
+      seller_id: seller_id,
+      buyer_id: buyer_id
     }
 
     console.log("[data] ",data)
@@ -202,6 +205,7 @@ export class CartComponent implements OnInit {
       alert('Create order success')
       if(orders == null){
         localStorage.setItem('orders',JSON.stringify(result));
+        localStorage.removeItem('cart')
       }
       else{
         temp = JSON.parse(orders)

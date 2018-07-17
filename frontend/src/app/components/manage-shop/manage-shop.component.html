@@ -79,8 +79,9 @@
   </div>
 
   <div *ngIf="isShopHistory">
-    <p>isShopHistory</p>
-
+      <div class="w3-row-padding w3-container">
+        <app-admin-table-data [_headers]="headers_history" [_type]="type" [data_history]="history"></app-admin-table-data>
+      </div>
   </div>
 
   <div *ngIf="isEditShop">

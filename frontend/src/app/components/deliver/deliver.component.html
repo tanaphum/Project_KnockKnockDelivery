@@ -1,27 +1,32 @@
 <div class="loader-container" [hidden]="!isShow">
-  <div class="loader" ></div>
+  <div class="loader"></div>
 </div>
 <div class="w3-row" id="container" [hidden]="isShow">
 
-    <div class="w3-row" id="searchBox">
-        <div class="w3-col m3 w3-center">
-            <p></p>
+  <div class="w3-row" id="searchBox">
+    <div class="w3-col m3 w3-center">
+      <p></p>
+    </div>
+    <div class="w3-col m6 w3-center">
+      <div class="input-group mb-6" id="search">
+        <input type="text" class="form-control input-lg" placeholder="Search">
+        <div class="input-group-append">
+          <button class="btn btn-warning" id="search-button">
+            <i class="fa fa-search"></i>
+          </button>
         </div>
-        <div class="w3-col m6 w3-center">
-          <div class="input-group mb-6" id="search">
-            <input type="text" class="form-control input-lg" placeholder="Search">
-            <div class="input-group-append">
-              <button class="btn btn-warning" id="search-button">
-                <i class="fa fa-search"></i>
-              </button>
-            </div>          
-          </div>
-        </div>
-        <div class="w3-col m3 w3-center" id="user" data-toggle="modal" data-target="#infoModal"  (click)="openProfile()">
-          <i class="fa fa-user"></i>
-        </div>
-
       </div>
+    </div>
+    <div class="w3-col m3 w3-center" id="user">
+        <div class="d-flex justify-content-around">
+          <i class="fa fa-user"  data-toggle="modal" data-target="#infoModal" (click)="openProfile()"></i>
+          <i class="fa fa-history" data-toggle="modal" data-target="#recieveOrderModal" (click)="openAcceptOrder()">
+              <span *ngIf="orders_num!=0" class="history-num" >{{orders_num}}</span>
+          </i>
+        </div>
+    </div>
+
+  </div>
 
   <div class="container" id="list-container">
     <div class="justify-content-center" *ngFor="let order of orders;let i = index">
@@ -55,32 +60,31 @@
 <!-- //////////////////////////////////// Order Modal /////////////////////////////////////////// -->
 
 <div class="modal fade" id="infoOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Order Information</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <img class="card-img-top" src="assets/img/mac-image.jpg" alt="">
-            <p>Order No.</p>
-            <p>Product name</p>
-            <p>Location</p>
-            <p>Buyer</p>
-            <p>Seller</p>
-        </div>
-        <div class="modal-footer d-flex justify-content-between">
-          <button type="button" class="btn btn-danger" data-dismiss="modal" >Back</button>
-          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="acceptOrder()">Accept</button>
-        </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Order Information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img class="card-img-top" src="assets/img/mac-image.jpg" alt="">
+        <p>Order No.</p>
+        <p>Product name</p>
+        <p>Location</p>
+        <p>Buyer</p>
+        <p>Seller</p>
+      </div>
+      <div class="modal-footer d-flex justify-content-between">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Back</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="acceptOrder()">Accept</button>
       </div>
     </div>
   </div>
+</div>
 
 
-  
 <!-- //////////////////////////////////// Profile Modal /////////////////////////////////////////// -->
 
 <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -93,35 +97,35 @@
           </button>
         </div>
         <div class="modal-body">
-
-                <div class="form-group">
-                  <label for="selectBank">Select bank account</label>
-                  <select [disabled]="isClick" class="form-control" name="selectBank" id="selectBank" [(ngModel)]="dafault_bank" #selectBank="ngModel" (ngModelChange)="onBankSelected($event)"
-                    required>
-                    <option value="" disabled selected>Select bank account</option>
-                    <option [disabled]="isUpdate" *ngFor="let bank of bankAcc" [value]="bank.bank_account_id">{{bank.bank_account_name}}</option>
-                  </select>
-                </div>
-            
-                <div class="form-group">
-                  <label for="input-bank_account_no">Bank account no</label>
-                  <input [disabled]="isUpdate" type="text" name="bank_account_no" class="form-control" id="input-bank_account_no" placeholder="Bank account no" [(ngModel)]="form.bank_account_no"
-                    required/>
-                  <!-- <span class="text-danger" [hidden]="!error.bank_account_no">
-                    {{error.bank_account_no}}
-                  </span> -->
-                </div>
-
-                <div class="form-group">
-                  <label for="input-shipper_transfer_slip">Shipper transfer slip</label>
-                  <br>
-                  <input [disabled]="isUpdate" type='file' id="img" (change)="preview($event)" accept="image/*" />
-                  <br>
-                  <br>
-            
-                  <!-- <canvas id="previewImg" #mycanvas></canvas> -->
-                </div>
-             
+  
+          <div class="form-group">
+            <label for="selectBank">Select bank account</label>
+            <select [disabled]="isClick" class="form-control" name="selectBank" id="selectBank" [(ngModel)]="dafault_bank" #selectBank="ngModel"
+              (ngModelChange)="onBankSelected($event)" required>
+              <option value="" disabled selected>Select bank account</option>
+              <option [disabled]="isUpdate" *ngFor="let bank of bankAcc" [value]="bank.bank_account_id">{{bank.bank_account_name}}</option>
+            </select>
+          </div>
+  
+          <div class="form-group">
+            <label for="input-bank_account_no">Bank account no</label>
+            <input [disabled]="isUpdate" type="text" name="bank_account_no" class="form-control" id="input-bank_account_no" placeholder="Bank account no"
+              [(ngModel)]="form.bank_account_no" required/>
+            <!-- <span class="text-danger" [hidden]="!error.bank_account_no">
+                      {{error.bank_account_no}}
+                    </span> -->
+          </div>
+  
+          <div class="form-group">
+            <label for="input-shipper_transfer_slip">Shipper transfer slip</label>
+            <br>
+            <input [disabled]="isUpdate" type='file' id="img" (change)="preview($event)" accept="image/*" />
+            <br>
+            <br>
+  
+            <!-- <canvas id="previewImg" #mycanvas></canvas> -->
+          </div>
+  
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
@@ -130,3 +134,28 @@
       </div>
     </div>
   </div>
+  
+
+
+<!-- //////////////////////////////////// Order Modal /////////////////////////////////////////// -->
+
+<div class="modal fade" id="recieveOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Recieve order</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+  
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ganger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

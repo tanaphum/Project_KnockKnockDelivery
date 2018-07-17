@@ -65,7 +65,7 @@ class BuyerController extends Controller
 
         $buyer = new Buyer;
         $buyer->buyer_address = $request->buyer_address;
-        $buyer->profile_status_id = 1;
+        $buyer->profile_status_id = 2;
         $buyer->profile_id = $profile->profile_id;
 
         $saveBuyer = $buyer->save();

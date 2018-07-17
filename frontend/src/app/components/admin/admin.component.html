@@ -25,7 +25,7 @@
             </div>
             <div class="col-12" id="menu-button">
                 <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg2">
-                <div>
+                <div (click)="OrderHistory()">
                   <p class="w3-display-middle">Order history</p>
                 </div>
               </div>
@@ -36,9 +36,9 @@
   </div>
 
 
-  <!-- User in system -->
   <div [hidden]="!isMenu">
-    <div [hidden]="!isHolding">
+    <!-- User In system -->
+    <div [hidden]="!isUserIn">
       <div class="w3-container" id="holding-container">
         <h1>
           <b>User in system</b>
@@ -56,7 +56,8 @@
         </div>
         <div id="dataTable">
           <div [hidden]="isBuyer">
-            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+            
+            <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -85,7 +86,8 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
+
           </div>
           <div [hidden]="isSeller">
             <table datatable class="row-border hover">
@@ -154,13 +156,8 @@
         </div>
       </div>
     </div>
-
-
-
-
-
     <!-- Holding User -->
-    <div [hidden]="isHolding">
+    <div [hidden]="!isHolding">
       <div class="w3-container" id="system-container">
         <h1>
           <b>Holding user</b>
@@ -177,10 +174,8 @@
           </div>
         </div>
         <div id="dataTable">
-
-
           <div [hidden]="isBuyer">
-            <table datatable [dtOptions]="dtOptions" class="row-border hover">
+             <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
                 <tr>
                     <th>No.</th>
@@ -208,12 +203,13 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> 
+            
+            <!-- <app-admin-table-data *ngIf="!isBuyer" [_headers]="headers_buyer"></app-admin-table-data> -->
+
           </div>
-
-
           <div [hidden]="isSeller">
-              <table datatable [dtOptions]="dtOptions" class="row-border hover">
+               <table datatable [dtOptions]="dtOptions" class="row-border hover">
                   <thead>
                     <tr>
                         <th>No.</th>
@@ -242,10 +238,12 @@
                     </tr>
                   </tbody>
                 </table>
+                
+            <!-- <app-admin-table-data *ngIf="!isSeller" [_headers]="headers_seller"></app-admin-table-data> -->
 
           </div>
           <div [hidden]="isDeliver">
-              <table datatable [dtOptions]="dtOptions" class="row-border hover">
+              <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
                   <thead>
                     <tr>
                         <th>No.</th>
@@ -276,12 +274,30 @@
                       </td>
                     </tr>
                   </tbody>
-                </table>
+                </table> -->
+
+            <app-admin-table-data *ngIf="!isDeliver" [_headers]="headers_deliver"></app-admin-table-data>
+          
           </div>
         </div>
       </div>
     </div>
+    <!-- Order history -->
+    <div [hidden]="!isHistory">
+        <div class="w3-container" id="order-history">
+            <h1>
+              <b>Order history</b>
+            </h1>      
+            <app-admin-table-data *ngIf="ready" [_headers]="headers_history" [_type]="type" [data_history]="data_history"></app-admin-table-data>
+        </div>
+    </div>
+
   </div>
+
+  
+
+
+
 </div>
 
 

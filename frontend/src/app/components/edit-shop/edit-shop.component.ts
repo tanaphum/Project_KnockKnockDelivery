@@ -17,7 +17,9 @@ export class EditShopComponent implements OnInit {
     shop_description: null,
     shop_location: null,
     shop_img: null,
-    selected_catagory: null
+    selected_catagory: null,
+    shop_latitude: null,
+    shop_longitude: null
   }
 
   private isClick: boolean = false;
@@ -31,6 +33,9 @@ export class EditShopComponent implements OnInit {
   title: string = 'My first AGM project';
   latitude: any;
   longtitude: any;
+  options = {
+    suppressMarkers: true,
+  };
 
 
   @Output() reloadPage = new EventEmitter();
@@ -45,7 +50,9 @@ export class EditShopComponent implements OnInit {
     private sellerService: SellerService,
     private router: Router,
 
-  ) { }
+  ) {
+    this.getGeoLocation()
+   }
 
   ngOnInit() {
     this.seller = JSON.parse(localStorage.getItem("seller_id"));
@@ -62,12 +69,20 @@ export class EditShopComponent implements OnInit {
         navigator.geolocation.getCurrentPosition(position=> {
           this.latitude = position.coords.latitude;
           this.longtitude = position.coords.longitude;
-          
-          
+          this.form.shop_latitude = position.coords.latitude;
+          this.form.shop_longitude = position.coords.longitude;
+
           }, error => {
             console.log(error);
           }, options);
     }
+  }
+
+  onChooseLocation(event) {
+    this.latitude = event.coords.lat;
+    this.longtitude = event.coords.lng;
+    this.form.shop_latitude = event.coords.lat;
+    this.form.shop_longitude = event.coords.lng;
   }
 
   // getShopCatagory() {
@@ -99,6 +114,8 @@ export class EditShopComponent implements OnInit {
     this.form.shop_name = this.seller.shop_name;
     this.form.seller_name = this.seller.seller_name;
     this.form.shop_location = this.seller.shop_location;
+    this.form.shop_latitude = this.seller.shop_latitude;
+    this.form.shop_longitude = this.seller.shop_longitude;
 
   }
 
@@ -136,8 +153,8 @@ export class EditShopComponent implements OnInit {
     let temp = {
       shop_name: this.form.shop_name,
       shop_location: this.form.shop_location,
-      shop_latitude:1234,
-      shop_longitude:1234,
+      shop_latitude:this.form.shop_latitude,
+      shop_longitude:this.form.shop_longitude,
       shop_logo_image:null,
     }
     console.log("onSubmit", temp)

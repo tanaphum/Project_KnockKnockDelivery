@@ -19,12 +19,22 @@ export class ManageShopComponent implements OnInit {
 
     private seller;
     private products;
+    private history;
+    private type;
+    
     private availableProducts=[];
     private outOfStockProducts=[];
     private masterData;
 
     private catagory;
-
+    private headers_history = [{
+        order_id:'Order id',
+        order_status: {
+        order_status_id:'Order status id',
+        order_status_name:'Order status'
+        },
+        updated_at: 'Updated at'
+    }]
     dtOptions: DataTables.Settings = {};
 
     constructor(
@@ -34,7 +44,6 @@ export class ManageShopComponent implements OnInit {
     ngOnInit() {
         this.onSetUpPage();
         this.getAllProducts();
-        
     }
 
 
@@ -45,13 +54,25 @@ export class ManageShopComponent implements OnInit {
 
     }
 
+    getAllHistory() {
+        this.seller = JSON.parse(localStorage.getItem("seller_id"));
+        this.sellerService.getOrderHistory(this.seller).subscribe(
+            response => {      
+                this.history = response.data       
+                console.log("[response] ",this.products)
+                this.isLoad = !this.isLoad;
+
+            },
+            error => console.log(error)
+        )
+    }
+
     getAllProducts() {
         this.seller = JSON.parse(localStorage.getItem("seller_id"));
         this.sellerService.getAllProducts(this.seller).subscribe(
             response => {
                 this.products = response.data;
                 // console.log("response from getAllProducts: ", response.data)
-                this.isLoad = !this.isLoad;
                 this.getProductCategories();
                 
                 
@@ -67,6 +88,8 @@ export class ManageShopComponent implements OnInit {
         this.masterData = JSON.parse(localStorage.getItem('masterData'))
         this.catagory = this.masterData.product_category;
         console.log("this.catagory: ", this.catagory)
+        this.getAllHistory();
+
         // this.setIsAvailableProduct();
         
 
@@ -163,7 +186,7 @@ export class ManageShopComponent implements OnInit {
         this.isEditShop = false;
         this.isNorti = false;  
         this.isShopHistory = true;
-
+        this.type = 'history'
 
     }
 

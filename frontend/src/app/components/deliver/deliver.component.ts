@@ -26,6 +26,8 @@ export class DeliverComponent implements OnInit {
   private error;
   private orders = [];
   private bankAcc;
+  private orders_num = 0;
+
   @ViewChild("mycanvas") mycanvas;
 
   constructor(
@@ -39,6 +41,7 @@ export class DeliverComponent implements OnInit {
     this.getProfile();
     this.setBankAccount();
     this.getAllOrder();
+    this.setOrderNum();
   }
 
   openOrderInfo() {
@@ -78,7 +81,7 @@ export class DeliverComponent implements OnInit {
   }
 
   getProfile() {
-    let id = localStorage.getItem('seller_id');
+    let id = JSON.parse(localStorage.getItem('deliver')).profile_id
     this.deliverService.getDeliverByProfileId(id)
     .subscribe(
       response => {
@@ -132,7 +135,6 @@ export class DeliverComponent implements OnInit {
     .subscribe(response => {
       console.log("[Response] ",response.data)
       this.orders = response.data
-      this.isShow = !this.isShow
 
     },error => {
       console.log("[Error] ",error)
@@ -144,6 +146,35 @@ export class DeliverComponent implements OnInit {
     localStorage.setItem('seller_order_id',seller.seller_id)
     this.router.navigateByUrl('/deliver-order')
 
+  }
+
+  openAcceptOrder() {
+    this.router.navigateByUrl('/order')
+  }
+
+  getOrderByDeliverId() {
+    let id = JSON.parse(localStorage.getItem('deliver')).shipper_id
+    this.deliverService.getOrderByDeliverId(id).subscribe(response => {
+    console.log("[response] ",response)
+    },error => {
+      console.log("[error] ",error)
+
+    })
+  }
+
+  setOrderNum(){
+
+    let id = JSON.parse(localStorage.getItem('deliver')).shipper_id
+    this.deliverService.getOrderByDeliverId(id)
+    .subscribe(response => {
+      console.log("[response] ", response)
+      this.orders_num = response.data.length
+      this.isShow = !this.isShow
+
+      , error => {
+        console.log('error',error);
+      }
+    })
   }
 
 }

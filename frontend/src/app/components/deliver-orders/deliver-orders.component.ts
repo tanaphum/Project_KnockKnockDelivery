@@ -1,8 +1,8 @@
 declare var google: any;
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { DeliverService } from '../../services/deliver.service';
 import { OrderService } from '../../services/order.service';
-import { ElementSchemaRegistry } from '@angular/compiler';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-deliver-orders',
@@ -11,6 +11,8 @@ import { ElementSchemaRegistry } from '@angular/compiler';
 })
 export class DeliverOrdersComponent implements OnInit {
 
+  private haveOrder: boolean = false;
+  private orders_num = 0;
   private orders = [];
   private orderDetail = [];
   private isShow:boolean = true;
@@ -22,15 +24,93 @@ export class DeliverOrdersComponent implements OnInit {
   options = {
     suppressMarkers: true,
   };
+  
+  private deliver_profile;
+  private isUpdate:boolean = false;
+  private form = {
+    bank_account_id:null,
+    bank_account_no:null,
+    profile_status_id:null,
+    shipper_transfer_slip:null,
+    selected_bank:null
+
+  }
+  private dafault_bank;
+  private error;
+  private bankAcc;
+  @ViewChild("mycanvas") mycanvas;
 
   constructor(
     private deliverService: DeliverService,
     private orderService: OrderService,
+    private router: Router
+
   ) { }
 
   ngOnInit() {
     this.getShopOrders()
+    this.getProfile();
+    this.setBankAccount();
+    this.setOrderNum();
+  }
+
+  getAcceptOrder() {
+    let accept_order = localStorage.getItem('accept_order');
+    console.log("[Accept order] ",accept_order);
+    if(accept_order != null) {
+
+  }
+}
+  
+  setBankAccount() {
+    this.bankAcc = JSON.parse(localStorage.getItem('masterData')).bank_account;
+  }
+
+  setOrderNum(){
     
+    let id = JSON.parse(localStorage.getItem('deliver')).shipper_id
+    this.deliverService.getOrderByDeliverId(id)
+    .subscribe(
+      response => {
+        console.log("[response] ",response.data)
+        this.orders_num = response.data.length
+        this.haveOrder = !this.haveOrder
+
+        this.isShow = !this.isShow
+
+      },
+      error => {
+        console.log("[response] ",error)
+
+      }
+    )
+  }
+
+  getProfile() {
+    let id = JSON.parse(localStorage.getItem('deliver')).profile_id
+    this.deliverService.getDeliverByProfileId(id)
+    .subscribe(
+      response => {
+        console.log("[response] ",response)
+        this.deliver_profile = response.data[0]
+        this.form.bank_account_id = response.data[0].bank_account.bank_account_id;
+        this.form.bank_account_no = response.data[0].bank_account_no;
+        this.form.profile_status_id = response.data[0].profile_status.profile_status_id;
+
+        this.bankAcc.forEach((element, idx) => {
+          if (element.bank_account_id == this.form.bank_account_id) {
+            this.dafault_bank = idx + 1;
+            this.form.selected_bank = idx + 1;
+          }    
+        });
+
+
+      },
+      error => {
+        console.log("[response] ",error)
+
+      }
+    )
   }
 
   getShopOrders() {
@@ -44,19 +124,22 @@ export class DeliverOrdersComponent implements OnInit {
       console.log("[response] ",response)
       this.orders = response.data;
       // this.getOrderDetail(this.orders)
-      this.isShow = !this.isShow
 
       this.orders.forEach(element => {
-        this.shop_latitude= element.shop_latitude;
-        this.shop_longtitude=element.shop_longitude;
-        this.receiver_latitude=element.receiver_latitude;
-        this.receiver_longitude=element.receiver_longitude;
+        element["shop_latitude"] = +element.seller.shop_latitude;
+        element["shop_longtitude"] = +element.seller.shop_longitude;
+        element["direction"] = {
+          origin: {
+            lat: +element.seller.shop_latitude,
+            lng: +element.seller.shop_longitude
+          },
+          destination: {
+            lat: +element.receiver_latitude,
+            lng: +element.receiver_longitude
+          }
+        };
         })
 
-      this.dir = {
-            origin: { lat: +this.shop_latitude, lng: +this.shop_longtitude },
-            destination: { lat: +this.receiver_latitude, lng:  +this.receiver_longitude }
-          }
 
     },error => {
       console.log("[error] ",error)
@@ -87,24 +170,32 @@ export class DeliverOrdersComponent implements OnInit {
   }
 
   acceptOrder(order) {
+    let shipper_id = JSON.parse(localStorage.getItem('deliver')).shipper_id
+
     console.log("[Accept Order] ",order)
     this.isShow = !this.isShow
     let body = {
-      order_status_id: 2
+      order_status_id: 2,
+      shipper_id:shipper_id
     }
     this.orderService.updateOrder(order.order_id,body)
     .subscribe(response => {
       console.log("[response] ",response)
       this.isShow = !this.isShow
       alert('Sucess accept this order')
-      localStorage.setItem('order',JSON.stringify(order))
-
+      localStorage.setItem('accept_order',JSON.stringify(order))
+      this.router.navigateByUrl('/deliver')
     }
     ,error => {
       console.log("[error] ",error)
       alert('Fail to accept this order')
 
     });
+  }
+
+  openAcceptOrder() {
+    this.router.navigateByUrl('/order')
+
   }
 
 

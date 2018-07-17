@@ -70,6 +70,11 @@ export class SellerService {
 
   }
 
+  getOrderHistory(id) {
+    return this.http.get<Product>(`${this.baseUrl}order/seller/${id}/histories`,this.httpOptions)
+
+  }
+
 }
 
 

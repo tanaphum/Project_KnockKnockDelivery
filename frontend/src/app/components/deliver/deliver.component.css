@@ -92,4 +92,20 @@
 
 
 
-
+.history-num{
+  position: absolute;
+  background: #f36e36;
+  color: #fff;
+  top: 75px;
+  /* font-weight: 400; */
+  right:60px; 
+  /* left: px; */
+  text-align: center;
+  border: 3px solid #f36e36;
+  font-size: 14px;
+  min-width: 20px;
+  /* line-height: 14px; */
+  border-radius: 50%;
+  display: inline-block;
+}
+  

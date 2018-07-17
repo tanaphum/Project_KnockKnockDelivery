@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Http\Resources\SellerResource as SellerResource;
@@ -14,12 +15,14 @@ class SellerController extends Controller
     private $profile;
     private $seller;
     private $user;
+    private $product;
 
-    public function __construct(Seller $seller, Profile $profile, User $user)
+    public function __construct(Seller $seller, Profile $profile, User $user, Product $product)
     {
         $this->seller = $seller;
         $this->profile = $profile;
         $this->user = $user;
+        $this->product = $product;
     }
 
     public function getSellers()
@@ -158,5 +161,18 @@ class SellerController extends Controller
             'message' => 'Successfully',
             'result' => $seller,
         ]);
+    }
+
+    public function getSellerByProductCategoryId($product_category_id)
+    {
+        $products = $this->product->where('product_category_id', $product_category_id)->get();
+        $product_sellers = array();
+        foreach($products as $index => $item){
+            $seller_id = $item->seller_id;
+            $product_sellers[$index] = $seller_id;
+        }
+
+        $sellers = $this->seller->whereIn('seller_id', $product_sellers)->get();
+        return response()->json(['data' => $sellers]);
     }
 }

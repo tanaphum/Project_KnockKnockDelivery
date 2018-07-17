@@ -29,6 +29,32 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  // middleware(url, data, headers, method) {
+  //   const _this = this;
+  //   return {
+  //     subscribe: (cbSuccess, cbError) => {
+  //       _this.http.post(`${this.baseUrl}/${url}`, data, headers)
+  //         .subscribe(cbSuccess, error => {
+
+  //           _this.refresh()
+  //             .subscribe(
+  //               token => {
+  //                 //SET TOKEN
+  //                 _this.http.post(`${this.baseUrl}/${url}`, data, headers).subscribe(cbSuccess, cbError);
+  //               }, 
+  //               cbError
+  //             );
+
+  //           cbError(error);
+  //         }
+  //       );
+  //     }
+  //   }
+  // }
+
+  // xservice(data) {
+  //   return this.middleware('/fetchxxx', { foo:'bar'}, {}, 'POST');   
+  // }
 
   signup(data) {
     return this.http.post(`${this.baseUrl}/signup`, data)
@@ -67,13 +93,20 @@ export class AuthService {
   }
 
   removeToken() {
-    localStorage.removeItem('UAT');
-    localStorage.removeItem('product_catagory');
-    localStorage.removeItem('seller');
-    localStorage.removeItem('shop_catagory');
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('cart');
-    localStorage.removeItem('masterData');
+    // localStorage.removeItem('UAT');
+    // localStorage.removeItem('product_catagory');
+    // localStorage.removeItem('seller');
+    // localStorage.removeItem('shop_catagory');
+    // localStorage.removeItem('user_id');
+    // localStorage.removeItem('cart');
+    // localStorage.removeItem('masterData');
+    // localStorage.removeItem('accept_order');
+    // localStorage.removeItem('adminSelect');
+    // localStorage.removeItem('orders');
+    // localStorage.removeItem('seller_id');
+    // localStorage.removeItem('seller_order_id');
+    localStorage.clear();
+
 
 
   }

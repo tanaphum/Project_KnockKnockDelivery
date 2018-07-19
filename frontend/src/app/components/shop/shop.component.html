@@ -60,8 +60,13 @@
 
       </div>
       <div class="col-4">
-          <h2>Google map here!!!</h2>
-
+          <agm-map [zoom]="14" [latitude]="shop_latitude" [longitude]="shop_longtitude">
+            <agm-marker [latitude]="shop_latitude" [longitude]="shop_longtitude" [label]="labelOptionShop">
+              <agm-info-window [maxWidth]="200" #infoWindow>
+                <strong>{{address.formatted_address}}</strong><br>
+              </agm-info-window>
+            </agm-marker>
+          </agm-map>
       </div>
       <div class="col-2">
         </div>

@@ -55,17 +55,18 @@
             </div>
 
             <div class="col-5">
-              <agm-map [zoom] = "15"  [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" >
-                <agm-direction [origin]="order.direction.origin" [destination]="order.direction.destination" [renderOptions]="options"></agm-direction>
-                <agm-marker  [latitude]="order.direction.destination.lat" [longitude]="order.direction.destination.lng">
+              <agm-map [minZoom]="11" [maxZoom]="18" [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" >
+                <agm-direction [origin]="order.direction.origin" [destination]="order.direction.destination" 
+                [renderOptions]="options" ></agm-direction>
+                <agm-marker  [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" [label]="labelOptionShop">
                   <agm-info-window #infoWindow>
-                    <strong>{{order.receiver_firstname}} {{order.receiver_lastname}}</strong><br>
+                    <strong>{{order.seller.shop_name}}</strong><br>
                   </agm-info-window>
                 </agm-marker>
-                <agm-marker  [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude">
+                <agm-marker  [latitude]="order.direction.destination.lat" [longitude]="order.direction.destination.lng" 
+                [label]="labelOptionReceiver">
                   <agm-info-window #infoWindow>
-                    <strong>{{order.shop_name}}</strong><br>
-                    <strong>{{order.seller.shop_name}}</strong><br>
+                    <strong>{{order.receiver_firstname}} {{order.receiver_lastname}}</strong><br>
                   </agm-info-window>
                 </agm-marker>
               </agm-map>

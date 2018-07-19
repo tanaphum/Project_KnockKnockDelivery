@@ -64,7 +64,7 @@ class OrderController extends Controller
         return response()->json(['result' => $order]);
     }
 
-    public function updateOrder(Request $request, $order_id)
+    public function updateStatusOrder(Request $request, $order_id)
     {
         $this->validate($request, [
             'order_status_id' => 'required'
@@ -77,7 +77,6 @@ class OrderController extends Controller
             ], 400);
         }
 
-
         if (!is_null($order->shipper_id) || $order->shipper_id !== "") {
             $order->shipper_id = $request->shipper_id;
         }
@@ -85,6 +84,22 @@ class OrderController extends Controller
         if (!is_null($order->order_status_id) || $order->order_status_id !== "") {
             $order->order_status_id = $request->order_status_id;
         }
+
+        $order->save();
+
+        return response()->json(['result' => $order]);
+    }
+
+    public function uploadPaymentTransferSlip(Request $request, $order_id)
+    {
+        $order = $this->order->where('order_id', $order_id)->first();
+        if ($order === null) {
+            return response()->json([
+                'message' => 'order not found',
+            ], 400);
+        }
+
+        $order->order_status_id = 4;
 
         if($order->payment_transfer_slip !== null){
             Storage::delete('public/payment_transfer_slip/'.$order->payment_transfer_slip);
@@ -114,7 +129,6 @@ class OrderController extends Controller
         if ($request->hasFile('payment_transfer_slip')) {
             $order->payment_transfer_slip = "/storage/payment_transfer_slip/".$order->payment_transfer_slip;
         }
-
 
         return response()->json(['result' => $order]);
     }

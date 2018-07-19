@@ -75,12 +75,23 @@ export class SellerService {
 
   }
 
+  getGoogleMapAddress(lat,lng) {
+    return this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${lat},${lng}&key=AIzaSyCxcKTh1HnMR-RN3vHZ0NSyDCT_TByefpk`)
+  }
+
 }
 
 
 export interface shop {
   message:null,
   result:null
+}
+
+export interface address{
+  results: [{
+    address_components: null,
+    formatted_address: null
+  }]
 }
 
 export interface Product {

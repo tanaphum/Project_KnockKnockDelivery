@@ -13,6 +13,7 @@ export class TableDataComponent implements OnInit {
 
   @Input() products: Object;
   @Output() reloadPage = new EventEmitter();
+  @Output() isLoad = new EventEmitter();
 
   private isDelete;
   private isEdit;
@@ -137,6 +138,8 @@ export class TableDataComponent implements OnInit {
       response => { 
         console.log("response onDelete: ", response);
         this.isDelete = true;
+        alert('Product has been delete')
+
       },
       error => console.log("error: ", error)
 

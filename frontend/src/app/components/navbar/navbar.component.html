@@ -24,7 +24,7 @@
         <a routerLink="/aboutus" routerLinkActive="active" class="w3-bar-item w3-button">ABOUT US</a> -->
         <a routerLink="/login" class="w3-bar-item w3-button" *ngIf="router.url !== '/login' && !loggedIn"><i class="fa fa-user"></i>  Sign In</a>
         <a class="w3-bar-item w3-button" href="/profile" *ngIf="loggedIn">Profile</a>
-        <a class="w3-bar-item w3-button" href="/" (click)="logout($event)" *ngIf="loggedIn">Log out</a>
+        <a class="w3-bar-item w3-button" (click)="logout($event)" *ngIf="loggedIn">Log out</a>
   
       </div>
       <!-- Hide right-floated links on small screens and replace them with a menu icon -->

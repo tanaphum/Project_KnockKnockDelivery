@@ -20,6 +20,7 @@ export class ManageShopComponent implements OnInit {
     private seller;
     private products;
     private history;
+    private noti =[];
     private type;
     
     private availableProducts=[];
@@ -44,6 +45,7 @@ export class ManageShopComponent implements OnInit {
     ngOnInit() {
         this.onSetUpPage();
         this.getAllProducts();
+
     }
 
 
@@ -55,16 +57,29 @@ export class ManageShopComponent implements OnInit {
     }
 
     getAllHistory() {
-        this.seller = JSON.parse(localStorage.getItem("seller_id"));
-        this.sellerService.getOrderHistory(this.seller).subscribe(
+        this.seller = JSON.parse(localStorage.getItem("seller"));
+        console.log("[seller] ",this.seller);
+        this.sellerService.getOrderHistory(this.seller.seller_id).subscribe(
             response => {      
                 this.history = response.data       
                 console.log("[response] ",this.products)
+                this.filterHistory()
                 this.isLoad = !this.isLoad;
-
             },
             error => console.log(error)
         )
+    }
+
+    filterHistory() {
+        this.history.forEach(element => {                
+            console.log('[this.history] ',element);
+            if(element.order_status.order_status_id != 6) {
+                this.noti.push(element)
+                console.log('[Noti] ',this.noti);
+                
+            }
+            // this.noti = 
+        });
     }
 
     getAllProducts() {
@@ -130,6 +145,11 @@ export class ManageShopComponent implements OnInit {
         }
     }
 
+    loading() {
+        console.log("[loading]");
+        this.isLoad = !this.isLoad;
+    }
+
 
     onSelectAllProducts() {
         this.isAllProducts = true;
@@ -140,30 +160,6 @@ export class ManageShopComponent implements OnInit {
         this.isEditShop = false;
         this.isNorti = false;  
         this.ngOnInit();
-    }
-
-    onSelectAvailableProducts() {
-        this.isAllProducts = false;
-        this.isOutOfStockProducts = false;
-        this.isAddProduct = false;
-        this.isShopHistory = false;
-        this.isEditShop = false;
-        this.isNorti = false;  
-        this.isAvailableProducts = true;
-
-
-    }
-
-    onSelectOutOfStockProduct() {
-        this.isAllProducts = false;
-        this.isAvailableProducts = false;
-        this.isAddProduct = false;
-        this.isShopHistory = false;
-        this.isEditShop = false;
-        this.isNorti = false;  
-        this.isOutOfStockProducts = true;
-
-
     }
 
     onSelectAddProduct() {
@@ -179,13 +175,13 @@ export class ManageShopComponent implements OnInit {
     }
 
     onSelectShopHistory() {
+        this.isShopHistory = true;
         this.isAllProducts = false;
         this.isAvailableProducts = false;
         this.isOutOfStockProducts = false;
         this.isAddProduct = false;
         this.isEditShop = false;
         this.isNorti = false;  
-        this.isShopHistory = true;
         this.type = 'history'
 
     }

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class ShopsComponent implements OnInit {
 
+  private keyWord = '';
   private products;
   private product_catagory;
   private shops;
@@ -28,6 +29,8 @@ export class ShopsComponent implements OnInit {
       profile_status_name:''
     }
   }
+  latitude = 18.800738;
+  longtitude = 98.950392;
 
 
 
@@ -243,6 +246,22 @@ export class ShopsComponent implements OnInit {
       console.log("[response] onEditBuyer: ",response)
     }
     ,error => {console.log("[error] onEditBuyer: ",error)})
+  }
+
+  searchShop() {
+    console.log("[Key word] ",this.keyWord);
+    this.isShow = !this.isShow
+    this.shops = [];
+    this.SellerService.searchShopName(this.keyWord)
+    .subscribe(response => {
+      console.log("[response] searchShop",response);
+      this.shops = response.data
+      this.isShow = !this.isShow
+
+    },error => {
+      console.log("[error] searchShop",error);
+
+    })
   }
 
 }

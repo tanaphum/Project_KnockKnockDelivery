@@ -15,9 +15,9 @@
     </div>
     <div class="w3-col m6 w3-center">
       <div class="input-group mb-6" id="search">
-        <input type="text" class="form-control input-lg" placeholder="Search">
+        <input type="text" class="form-control input-lg rounded-0" placeholder="Search" [(ngModel)]="keyWord">
         <div class="input-group-append">
-          <button class="btn btn-warning" id="search-button">
+          <button class="btn btn-warning rounded-0" id="search-button" (click)="searchShop()">
             <i class="fa fa-search"></i>
           </button>
         </div>
@@ -107,7 +107,7 @@
 
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary btn-block" (click)="goToShop(shop)">Go to shop</a>
+                <a class="btn btn-primary btn-block rounded-0" (click)="goToShop(shop)">Go to shop</a>
             </div>
           </div>
         </div>
@@ -143,16 +143,16 @@
             <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
           </p>
           <p>
-            <button class="w3-button w3-black" type="submit">
+            <button class="w3-button w3-black rounded-0" type="submit">
               <i class="fa fa-paper-plane"></i> SEND MESSAGE
             </button>
           </p>
         </form>
       </div>
       <div class="w3-half">
-        <!-- Add Google Maps -->
-        <!-- <div id="googleMap" class="w3-greyscale-max" style="width:100%;height:510px;"></div> -->
-        <!-- <div #gmap style="width:100%;height:400px"></div> -->
+          <agm-map [zoom]="16" [latitude]="latitude" [longitude]="longtitude">
+            <agm-marker [latitude]="latitude" [longitude]="longtitude"></agm-marker>
+          </agm-map>
 
       </div>
     </div>
@@ -198,7 +198,7 @@
           <strong>Product Price: </strong>{{ form.product_price }}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="addToCart(form)">Add to cart</button>
+        <button type="button" class="btn btn-success rounded-0" data-dismiss="modal" (click)="addToCart(form)">Add to cart</button>
       </div>
     </div>
   </div>
@@ -207,7 +207,7 @@
 
 <!-- //////////////////////////////////// Shop Modal /////////////////////////////////////////// -->
 
-<div class="modal fade" id="infoShopModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade rounded-0" id="infoShopModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -226,7 +226,7 @@
           <strong>Shop Location: </strong>{{ shop.shop_location }}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal" (click)="goToShop(shop)">To to shop</button>
+        <button type="button" class="btn btn-success rounded-0" data-dismiss="modal" (click)="goToShop(shop)">To to shop</button>
       </div>
     </div>
   </div>
@@ -235,7 +235,7 @@
 
 <!-- //////////////////////////////////// Edit buyer Modal /////////////////////////////////////////// -->
 
-<div class="modal fade" id="editBuyerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade rounded-0" id="editBuyerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -254,8 +254,8 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-ganger" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="onEditBuyer()">Edit</button>
+        <button type="button" class="btn btn-ganger rounded-0" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-warning rounded-0" data-dismiss="modal" (click)="onEditBuyer()">Edit</button>
       </div>
     </div>
   </div>

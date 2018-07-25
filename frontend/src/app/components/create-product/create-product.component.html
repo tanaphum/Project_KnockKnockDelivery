@@ -59,12 +59,13 @@
     <div class="form-group">
       <label for="input-price">Product Image</label>
       <br>
-      <input [disabled]="isClick"type='file' id="img" (change)="preview($event)" accept="image/*" #fileInput/>
+      <input [disabled]="isClick"type='file' id="img" (change)="preview($event.target.files)" accept="image/*" #fileInput/>
       <br>
       <br>
-
+      <img [hidden]="imageUrl==null" [src]="imageUrl" style="width:50%;height: 50%;">
       <!-- <canvas id="previewImg" #mycanvas></canvas> -->
     </div>
+    <br>
 
     <div *ngIf="isClick">
       <p class="loading">Saving</p>
@@ -76,11 +77,11 @@
 
     <div class="row">
       <div class="col">
-        <button type="submit" class="btn btn-success btn-block" [disabled]="isClick">Create</button>
+        <button type="submit" class="btn btn-success btn-block rounded-0" [disabled]="isClick">Create</button>
 
       </div>
       <div class="col">
-        <button class="btn btn-danger btn-block" (click)="onClear()">Clear</button>
+        <button class="btn btn-danger btn-block rounded-0" (click)="onClear()">Clear</button>
 
       </div>
     </div>

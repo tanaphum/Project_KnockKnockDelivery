@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './/app-routing.module';
+import { QRCodeModule } from 'angularx-qrcode';
+import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
+import { NgQrScannerModule } from 'angular2-qrscanner';
+
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -36,6 +40,11 @@ import { GoogleMapsAPIWrapper } from '@agm/core';
 import { OrderComponent } from './components/order/order.component';
 import { DeliverOrdersComponent } from './components/deliver-orders/deliver-orders.component';
 import { AdminTableDataComponent } from './components/admin-table-data/admin-table-data.component';
+import { ScannerComponent } from './components/scanner/scanner.component';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
+import { QRcodeComponent } from './components/qrcode/qrcode.component';
+import { QrcodeResultComponent } from './components/qrcode-result/qrcode-result.component';
+import { TableHistoryComponent } from './components/table-history/table-history.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +68,12 @@ import { AdminTableDataComponent } from './components/admin-table-data/admin-tab
     DeliverComponent,
     OrderComponent,
     DeliverOrdersComponent,
-    AdminTableDataComponent
+    AdminTableDataComponent,
+    ScannerComponent,
+    OrderDetailComponent,
+    QRcodeComponent,
+    QrcodeResultComponent,
+    TableHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -71,9 +85,14 @@ import { AdminTableDataComponent } from './components/admin-table-data/admin-tab
     BrowserAnimationsModule,
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBxWHu3Ev8Dh8V2gQxzU_dTl9CwWv9P3R8'
+      apiKey: 'AIzaSyBxWHu3Ev8Dh8V2gQxzU_dTl9CwWv9P3R8',
+      libraries: ['geometry']
     }),
     AgmDirectionModule,
+    QRCodeModule,
+    NgQRCodeReaderModule,
+    NgQrScannerModule
+
   ],
   providers: [
     AuthService,

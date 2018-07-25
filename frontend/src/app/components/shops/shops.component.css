@@ -114,6 +114,11 @@ img {
   color:#F67224;
 }
 
+agm-map {
+  height: 350px;
+  width: 500px;
+}
+
 
 #btn-container {
   padding-top: 20px;

@@ -5,7 +5,7 @@
   <div *ngIf="isAdmin">
     <app-admin></app-admin>
   </div>
-  <div class="card card-container w3-display-middle" *ngIf="!isAdmin">
+  <div class="card card-container w3-display-middle rounded-0" *ngIf="!isAdmin">
 
     <div id="inner">
       <h4>Knock Knock</h4>
@@ -52,8 +52,8 @@
               <p>Create Buyer profile</p>
             </div>
           </div>
-          <div class="col-12 w3-display-container" id="menu-button" [hidden]="validDeliver" (click)="enterDeliver()">
-            <div  [hidden]="!isDeliverApprove" class="w3-padding-large">
+          <div class="col-12 w3-display-container" id="menu-button" [hidden]="validDeliver">
+            <div  [hidden]="!isDeliverApprove" class="w3-padding-large"  (click)="enterDeliver()">
               <!-- <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg3"> -->
               <div >
                 <p>Shipper</p>

@@ -6,7 +6,7 @@ import { SellerService } from '../../services/seller.service';
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.css']
+  styleUrls: ['./create-product.component.css'],
 })
 export class CreateProductComponent implements OnInit {
 
@@ -30,7 +30,7 @@ export class CreateProductComponent implements OnInit {
   private masterData;
   private bankAcc;
   private image = new FormData();
-
+  private imageUrl = null;
   fileToUpload: File = null;
 
   context: CanvasRenderingContext2D;
@@ -58,12 +58,17 @@ export class CreateProductComponent implements OnInit {
     // )
   }
 
-  preview(e: any): void {
-    console.log("[Event] ",e.target.files[0]);
-
+  preview(file: FileList): void {
+    this.form.product_image_1 = file.item(0)
+    console.log("[fileUpload] ",this.form.product_image_1);
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.imageUrl = event.target.result
+    }
+    reader.readAsDataURL(this.form.product_image_1)
     // this.form.product_image_1 = e.target.files[0]
     // this.image.append('myFile', e.target.files[0])
-    this.form.product_image_1 = e.target.files[0];
+    // this.form.product_image_1 = e.target.files[0];
     // console.log("[this.form.product_image_1] ",this.form.product_image_1);
 
     // let canvas = this.mycanvas.nativeElement;
@@ -121,7 +126,7 @@ export class CreateProductComponent implements OnInit {
       // tempForm.append('product_description',this.form.product_description)
       // tempForm.append('product_price',this.form.product_price)
       // tempForm.append('product_category_id',this.form.selected_catagory)
-      // tempForm.append('product_image_1',this.form.product_image_1,this.form.product_image_1.name)
+      // tempForm.append('product_image_1',this.form.product_image_1)
 
       let tempForm =
       {
@@ -129,11 +134,11 @@ export class CreateProductComponent implements OnInit {
         product_description: this.form.product_description,
         product_price: parseInt(this.form.product_price),
         product_category_id: parseInt(this.form.selected_catagory),
-        // product_image_1:this.image
+        product_image_1: this.form.product_image_1
       }
 
       let seller_id = this.seller_id;
-      console.log("tempForm: ", tempForm)
+      // console.log("tempForm: ", tempForm)
 
 
       this.sellerService.createProduct(tempForm, seller_id).subscribe(

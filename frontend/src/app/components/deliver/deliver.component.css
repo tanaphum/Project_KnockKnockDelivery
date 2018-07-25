@@ -108,4 +108,10 @@
   border-radius: 50%;
   display: inline-block;
 }
+#imagePriview {
+  height: 200px;
+  width: 280px;
+  border:1px solid gray;
+  background-color: white;
+}
   

@@ -1,10 +1,10 @@
-<div class="loader-container">
+<div class="loader-container" [hidden]="isShow"> 
   <div class="loader" ></div>
 </div>
-<div class="w3-row" id="container" >
+<div class="w3-row" id="container" [hidden]="!isShow">
   <div class="container">
 
-    <div class="card card-container w3-display-middle" [hidden]="!isCheckOut">
+    <div class="card card-container w3-display-middle rounded-0"  [hidden]="!isCheckOut">
       <div class="card-header">Cart</div>
       <div class="card-body">
         <div class="row" id="inner" *ngFor="let product of cart;let i = index">
@@ -19,10 +19,10 @@
             <div>
               <p>
                 <span>
-                  <button class="btn btn-default" (click)="decrease(product)" [disabled]="product.amount == 1">-</button>
+                  <button class="btn btn-default rounded-0" (click)="decrease(product)" [disabled]="product.amount == 1">-</button>
                   {{product.amount}}
                 </span>
-                <button class="btn btn-default" (click)="increase(product)">+</button>
+                <button class="btn btn-default rounded-0" (click)="increase(product)">+</button>
               </p>
             </div>
           </div>
@@ -35,13 +35,13 @@
         
       </div>
       <div class="card-footer d-flex justify-content-between">
-        <button class="btn btn-info" (click)="backToShop()">Back to shopping</button>
-        <button class="btn btn-success" (click)="checkOut()" [disabled]="isSame || totalPrice > 1000">Check Out</button>
+        <button class="btn btn-info rounded-0" (click)="backToShop()">Back to shopping</button>
+        <button class="btn btn-success rounded-0" (click)="checkOut()" [disabled]="isSame || totalPrice > 1000 || cart.length == 0">Check Out</button>
       </div>
     </div>
 
     <div class="w3-display-middle" [hidden]="isCheckOut">
-      <div class="card card-container" [hidden]="!isNewOrder">
+      <div class="card card-container rounded-0" [hidden]="!isNewOrder">
         <div class="card-header">Create new order request</div>
         <div class="card-body">
             <form #createOrderForm=ngForm>
@@ -67,18 +67,18 @@
            
         </div>
         <div class="card-footer d-flex justify-content-end">
-            <button class="btn btn-danger" (click)="cancelOrderRequest()">Cancel</button>
-            <button class="btn btn-success" (click)="createNewOrderRequest()">Create</button>
+            <button class="btn btn-danger rounded-0" (click)="cancelOrderRequest()">Cancel</button>
+            <button class="btn btn-success rounded-0" (click)="createNewOrderRequest()">Create</button>
         </div>
       </div>
 
       <div class="card card-container" [hidden]="isNewOrder">
-        <div class="card-header">Waiting shipper accept</div>
+        <div class="card-header">Created order</div>
         <div class="card-body">
-          <h2>Waiting...</h2>
+          <h2>Waiting shipper accept order</h2>
         </div>
         <div class="card-footer d-flex justify-content-end">
-            <button class="btn btn-success" (click)="isCreatedOrder()">Ok</button>
+            <button class="btn btn-success rounded-0" (click)="isCreatedOrder()">Ok</button>
         </div>
       </div>
     </div>

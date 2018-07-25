@@ -51,13 +51,32 @@ export class SellerService {
   }
 
   createProduct(product, seller_id) {
-    // let header = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'multipart/form-data',
-    //     'Authorization': 'Bearer '+ this.UAT
-    //   })
-    // };
-    return this.http.post(`${this.baseUrl}seller/` + seller_id + `/product`, product,this.httpOptions)
+    let header = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+ this.UAT,
+        'Accept':"application/json, text/plain, */*",
+
+      })
+    };
+    
+    // Display the key/value pairs
+    // for (var pair of product.entries()) {
+    //   console.log('[product] '+ pair[0]+ ', ' + pair[1]); 
+    // } 
+
+    let formData = new FormData();
+    formData.append('product_name',product.product_name);
+    formData.append('product_price',product.product_price)
+    formData.append('product_category_id',product.product_category_id)
+    formData.append('product_description',product.product_description)
+    formData.append('product_image_1',product.product_image_1)
+
+
+    console.log("tempForm: ", formData.getAll('product_category_id'))
+    
+    
+
+    return this.http.post(`${this.baseUrl}seller/` + seller_id + `/product`, formData,header)
 
   }
 
@@ -77,6 +96,14 @@ export class SellerService {
 
   getGoogleMapAddress(lat,lng) {
     return this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${lat},${lng}&key=AIzaSyCxcKTh1HnMR-RN3vHZ0NSyDCT_TByefpk`)
+  }
+
+  searchShopName(keyWord) {
+    let body = {
+      search_data: keyWord
+    }
+    return this.http.post<shops>(`${this.baseUrl}seller/search/shop-name/`, body,this.httpOptions)
+
   }
 
 }

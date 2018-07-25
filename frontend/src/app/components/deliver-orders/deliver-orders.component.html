@@ -10,9 +10,9 @@
     </div>
     <div class="w3-col m6 w3-center">
       <div class="input-group mb-6" id="search">
-        <input type="text" class="form-control input-lg" placeholder="Search">
+        <input type="text" class="form-control input-lg" placeholder="Search" [(ngModel)]="keyWord">
         <div class="input-group-append">
-          <button class="btn btn-warning" id="search-button">
+          <button class="btn btn-warning" id="search-button" (click)="searchShop()">
             <i class="fa fa-search"></i>
           </button>
         </div>
@@ -55,7 +55,7 @@
             </div>
 
             <div class="col-5">
-              <agm-map [minZoom]="11" [maxZoom]="18" [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" >
+              <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" >
                 <agm-direction [origin]="order.direction.origin" [destination]="order.direction.destination" 
                 [renderOptions]="options" ></agm-direction>
                 <agm-marker  [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" [label]="labelOptionShop">

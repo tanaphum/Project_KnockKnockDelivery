@@ -1,0 +1,10 @@
+<div class="container" id="container">
+  <div fxLayout="column" fxFlexAlign="center">
+    <div fxFlex="60" fxFill>
+      <ng2-qrcode-reader (result)="render($event)" [qrr-show]="showQRCode" [qrr-value]="value" [qrr-type]="elementType"></ng2-qrcode-reader>
+    </div>
+    <p>Result</p>
+    <div #result fxFlex="20" fxFill>
+    </div>
+  </div>
+</div>

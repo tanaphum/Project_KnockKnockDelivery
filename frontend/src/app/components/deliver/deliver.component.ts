@@ -14,11 +14,12 @@ export class DeliverComponent implements OnInit {
   private deliver_profile;
   private isShow:boolean = true;
   private isUpdate:boolean = false;
+  private keyWord = '';
   private form = {
     bank_account_id:null,
     bank_account_no:null,
     profile_status_id:null,
-    shipper_transfer_slip:null,
+    shipper_transfer_slip_Image:null,
     selected_bank:null
 
   }
@@ -27,6 +28,7 @@ export class DeliverComponent implements OnInit {
   private orders = [];
   private bankAcc;
   private orders_num = 0;
+  private imageUrlTransfer = null;
 
   @ViewChild("mycanvas") mycanvas;
 
@@ -57,27 +59,14 @@ export class DeliverComponent implements OnInit {
     this.bankAcc = JSON.parse(localStorage.getItem('masterData')).bank_account;
   }
 
-  preview(e: any): void {
-    let canvas = this.mycanvas.nativeElement;
-    let context = canvas.getContext('2d');
-    context.clearRect(0, 0, 300, 300);
-
-    //Show render image to canvas
-    var render = new FileReader();
-    render.onload = function (event) {
-      var img = new Image();
-      img.onload = function () {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        context.drawImage(img, 0, 0)
-        // context.drawImage(img,0,0,400,400)
-
-      }
-      // img.src = event.target.result;
-    };
-    render.readAsDataURL(e.target.files[0]);
-
-
+  previewShipperTransferImage(file: FileList): void {
+    this.form.shipper_transfer_slip_Image = file.item(0)
+    console.log("[fileUpload] ",this.form.shipper_transfer_slip_Image);
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.imageUrlTransfer = event.target.result
+    }
+    reader.readAsDataURL(this.form.shipper_transfer_slip_Image)
   }
 
   getProfile() {
@@ -117,7 +106,7 @@ export class DeliverComponent implements OnInit {
     let form = {
       bank_account_id:this.form.bank_account_id,
       bank_account_no:this.form.bank_account_no,
-      shipper_transfer_slip:null,
+      shipper_transfer_slip_Image:this.form.shipper_transfer_slip_Image,
       // profile_status_id:this.form.profile_status_id
     }
     this.deliverService.updateDeliver(form,id)
@@ -174,6 +163,24 @@ export class DeliverComponent implements OnInit {
       , error => {
         console.log('error',error);
       }
+    })
+  }
+
+
+  searchShop() {
+    console.log("[Key word] ",this.keyWord);
+    this.isShow = !this.isShow
+    this.orders = [];
+    this.orderService.searchSellerHaveOrders(this.keyWord)
+    .subscribe(response => {
+      console.log("[response] searchShop",response.data);
+      this.orders = response.data
+      this.isShow = !this.isShow
+
+
+    },error => {
+      console.log("[error] searchShop",error);
+
     })
   }
 

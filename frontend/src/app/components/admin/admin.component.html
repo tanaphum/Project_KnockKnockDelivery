@@ -5,27 +5,27 @@
 
   <!-- Menu  -->
   <div class="container" [hidden]="isMenu">
-    <div class="card-container w3-display-middle">
+    <div class="card-container w3-display-middle rounded-0">
       <div id="inner">
         <h4>Admin session</h4>
         <p>Select one menu</p>
         <div id="menu">
           <div class="row">
-            <div class="col-12" id="menu-top">
+            <div class="col-12" id="menu-top" (click)="userInSystem()">
               <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg1">
-              <div (click)="userInSystem()">
+              <div >
                 <p class="w3-display-middle">User in system</p>
               </div>
             </div>
-            <div class="col-12" id="menu-button">
+            <div class="col-12" id="menu-button" (click)="holdingUser()">
               <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg2">
-              <div (click)="holdingUser()">
+              <div >
                 <p class="w3-display-middle">Holding user</p>
               </div>
             </div>
-            <div class="col-12" id="menu-button">
+            <div class="col-12" id="menu-button" (click)="OrderHistory()">
                 <img src="http://i.pravatar.cc/60" alt="Avatar" id="roundImg2">
-                <div (click)="OrderHistory()">
+                <div >
                   <p class="w3-display-middle">Order history</p>
                 </div>
               </div>
@@ -56,7 +56,7 @@
         </div>
         <div id="dataTable">
           <div [hidden]="isBuyer">
-            
+
             <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
                 <tr>
@@ -87,10 +87,11 @@
                 </tr>
               </tbody>
             </table> -->
+            <app-admin-table-data *ngIf="!isBuyer" [_type]="type" [_data]="userInsystem['buyer']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
 
           </div>
           <div [hidden]="isSeller">
-            <table datatable class="row-border hover">
+            <!-- <table datatable class="row-border hover">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -119,10 +120,12 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
+            <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="userInsystem['seller']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
+
           </div>
           <div [hidden]="isDeliver">
-            <table datatable class="row-border hover">
+            <!-- <table datatable class="row-border hover">
               <thead>
                 <tr>
                   <th>No.</th>
@@ -151,11 +154,14 @@
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table> -->
+            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="userInsystem['deliver']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
+
           </div>
         </div>
       </div>
     </div>
+
     <!-- Holding User -->
     <div [hidden]="!isHolding">
       <div class="w3-container" id="system-container">
@@ -175,7 +181,7 @@
         </div>
         <div id="dataTable">
           <div [hidden]="isBuyer">
-             <table datatable [dtOptions]="dtOptions" class="row-border hover">
+             <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
               <thead>
                 <tr>
                     <th>No.</th>
@@ -203,13 +209,13 @@
                   </td>
                 </tr>
               </tbody>
-            </table> 
-            
-            <!-- <app-admin-table-data *ngIf="!isBuyer" [_headers]="headers_buyer"></app-admin-table-data> -->
+            </table> -->
+
+            <app-admin-table-data *ngIf="!isBuyer" [_type]="type" [_data]="holdingUsers['buyer']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
 
           </div>
           <div [hidden]="isSeller">
-               <table datatable [dtOptions]="dtOptions" class="row-border hover">
+               <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
                   <thead>
                     <tr>
                         <th>No.</th>
@@ -237,9 +243,9 @@
                       </td>
                     </tr>
                   </tbody>
-                </table>
-                
-            <!-- <app-admin-table-data *ngIf="!isSeller" [_headers]="headers_seller"></app-admin-table-data> -->
+                </table> -->
+
+            <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="holdingUsers['seller']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
 
           </div>
           <div [hidden]="isDeliver">
@@ -276,8 +282,8 @@
                   </tbody>
                 </table> -->
 
-            <app-admin-table-data *ngIf="!isDeliver" [_headers]="headers_deliver"></app-admin-table-data>
-          
+            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="holdingUsers['deliver']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
+
           </div>
         </div>
       </div>
@@ -287,14 +293,14 @@
         <div class="w3-container" id="order-history">
             <h1>
               <b>Order history</b>
-            </h1>      
-            <app-admin-table-data *ngIf="ready" [_headers]="headers_history" [_type]="type" [data_history]="data_history"></app-admin-table-data>
+            </h1>
+            <app-table-history *ngIf="ready" [_headers]="headers_history" [_type]="type" [_data]="_data" ></app-table-history>
         </div>
     </div>
 
   </div>
 
-  
+
 
 
 

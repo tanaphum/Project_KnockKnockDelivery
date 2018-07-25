@@ -1,0 +1,86 @@
+  <div class="loader-container" [hidden]="!isShow">
+    <div class="loader" ></div>
+  </div>
+<div  [hidden]="isShow" >
+  <table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='history'">
+    <thead>
+      <tr *ngFor="let header of headers">
+        <th>No.</th>
+        <th>{{header.order_id}}</th>
+        <th>{{header.order_status.order_status_name}}</th>
+        <th>{{header.updated_at}}</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of data;let  i = index">
+        <td>{{i+1}}</td>
+        <td>{{order.order_id}} </td>
+        <td>{{order.order_status.order_status_name}} </td>
+        <td>{{order.updated_at}} </td>
+        <td>
+          <div class="btn-group">
+            <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#orderInfo" (click)="openOrderInfo(order)">Info</button>
+            <button type="button" class="btn btn-warning rounded-0" data-toggle="modal" data-target="#qrcodeModel" (click)="openQRCode(order)">Open QR Code</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div *ngIf="isOpenQRCode" class="modal fade" id="qrcodeModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">QR Code</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img [src]="baseUrl+imageUrl.data.qrcode_seller">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="isOrderInfo" class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Order info</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>
+            <strong>Oeder ID: </strong>{{order.order_id}}</p>
+          <p>
+            <strong>Reciever name :</strong>{{order.receiver_firstname}} {{order.receiver_lastname}}</p>
+          <p>
+            <strong>Buyer name : </strong>{{order.buyer.user.firstname}} {{order.buyer.user.lastname}}</p>
+          <p>
+            <strong>Buyer phone no. : </strong>{{order.buyer.user.telephone_number}}</p>
+          <p>
+            <strong>Shipper name : </strong>{{order.shipper.user.firstname}} {{order.shipper.user.lastname}}</p>
+          <p>
+            <strong>Shipper phone no. : </strong>{{order.shipper.user.telephone_number}}</p>
+          <p>
+            <strong>Service charge : </strong>{{order.service_charge}}</p>
+          <p>
+            <strong>Total price : </strong>{{order.order_total_price}}</p>
+          <p>
+            <strong>Update at : </strong>{{order.updated_at}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>

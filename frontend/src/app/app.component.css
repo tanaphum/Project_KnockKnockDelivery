@@ -3,3 +3,9 @@ app-navbar{
 
 }
 
+cart,
+modal,
+btn{
+    border-radius: 0;
+}
+

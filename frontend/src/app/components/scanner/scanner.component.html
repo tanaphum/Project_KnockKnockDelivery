@@ -1,0 +1,13 @@
+<div class="container" id="container">
+  <qr-scanner
+  [debug]="false"
+  [canvasWidth]="1080" 
+  [canvasHeight]="720" 
+  [stopAfterScan]="true" 
+  [updateTime]="500">
+</qr-scanner>  
+
+<button class="btn btn-outline-warning btn-block" (click)="scan_seller()">Scan@seller</button>
+<button class="btn btn-outline-warning btn-block" (click)="scan_buyer()">Scan@buyer</button>
+
+</div>

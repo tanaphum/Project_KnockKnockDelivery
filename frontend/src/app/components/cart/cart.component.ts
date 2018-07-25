@@ -19,6 +19,7 @@ export class CartComponent implements OnInit {
   private isNewOrder: boolean = true;
   private isSame: boolean = false;
   private isMoreThan: boolean = false;
+  private isShow:boolean = true;
   private seller_id;
   private buyer_id;
   private totalPrice = 0;
@@ -160,7 +161,7 @@ export class CartComponent implements OnInit {
   }
 
   checkOut() {
-    console.log("check out")
+    console.log("check out",this.cart)
     this.isCheckOut = !this.isCheckOut;
   }
 
@@ -176,6 +177,7 @@ export class CartComponent implements OnInit {
   }
 
   createNewOrderRequest() {
+    this.isShow = ! this.isShow;
     let orders = localStorage.getItem('orders')
     let seller_id = localStorage.getItem('seller_id')
     let buyer_id = localStorage.getItem('buyer_id')
@@ -202,6 +204,8 @@ export class CartComponent implements OnInit {
       console.log("[Response] ",Response);
       result.push(Response.result)
       this.isNewOrder = !this.isNewOrder
+      this.isShow = ! this.isShow;
+
       alert('Create order success')
       if(orders == null){
         localStorage.setItem('orders',JSON.stringify(result));
@@ -213,13 +217,42 @@ export class CartComponent implements OnInit {
         localStorage.setItem('orders',JSON.stringify(temp));
 
       }
-      this.deleteCart();
+      this.prepareOrderDetail(Response.result);
       
     },error => {
       console.error("error");
     })
     
 
+  }
+
+  prepareOrderDetail(newOrder) {
+    let order_id = newOrder.order_id
+    let body = [];
+    this.cart.forEach((element,idx) => {
+      body.push({
+        order_id: order_id,
+        product_id: element.product_id,
+        unit_of_product:element.amount
+      })
+      if(idx === this.cart.length-1) {
+        this.createNewOrderDetailRequest(body)
+      }
+    });
+  }
+
+  createNewOrderDetailRequest(body) {
+    console.log('[init] createNewOrderDetailRequest: ',body);
+
+    this.orderService.createOrderDetail(body)
+    .subscribe(response => {
+      console.log('[response] ',response);
+      this.deleteCart();
+
+    },error => {
+      console.log('[error] ',error);
+
+    })
   }
 
   isCreatedOrder() {

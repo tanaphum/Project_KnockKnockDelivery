@@ -2,8 +2,6 @@ declare var google: any;
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { SellerService } from '../../services/seller.service';
-
-
 import { Router } from '@angular/router';
 
 
@@ -24,6 +22,8 @@ export class CreateProfileComponent implements OnInit {
   private isCreateDeliver: Boolean = false;
   private isShow: boolean = true;
   private bankAcc;
+  private imageUrl = null;
+  private imageUrlTransfer = null;
   latitude: any;
   longtitude: any;
   dir = undefined;
@@ -65,7 +65,9 @@ export class CreateProfileComponent implements OnInit {
     password: null,
     password_confirmation: null,
     user_id:null,
-    bank_account_id:null
+    bank_account_id:null,
+    shipper_transfer_slip_Image: null,
+    bank_account_no: null
   }
 
 
@@ -80,62 +82,11 @@ export class CreateProfileComponent implements OnInit {
   ) {
     this.getGeoLocation();
     this.setBankAccount();
-    // this.getDirection();
-    // this.initMap();
    }
 
   ngOnInit() {
     this.fetchMasterType();
   }
-
-  //  initMap() {
-  //   var uluru = {lat: -25.363, lng: 131.044};
-  //   var map = new google.maps.Map(document.getElementById('map'), {
-  //     zoom: 4,
-  //     center: uluru
-  //   });
-
-  //   var contentString = '<div id="content">'+
-  //       '<div id="siteNotice">'+
-  //       '</div>'+
-  //       '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-  //       '<div id="bodyContent">'+
-  //       '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-  //       'sandstone rock formation in the southern part of the '+
-  //       'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-  //       'south west of the nearest large town, Alice Springs; 450&#160;km '+
-  //       '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-  //       'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-  //       'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-  //       'Aboriginal people of the area. It has many springs, waterholes, '+
-  //       'rock caves and ancient paintings. Uluru is listed as a World '+
-  //       'Heritage Site.</p>'+
-  //       '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-  //       'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-  //       '(last visited June 22, 2009).</p>'+
-  //       '</div>'+
-  //       '</div>';
-
-  //   var infowindow = new google.maps.InfoWindow({
-  //     content: contentString
-  //   });
-
-  //   var marker = new google.maps.Marker({
-  //     position: uluru,
-  //     map: map,
-  //     title: 'Uluru (Ayers Rock)'
-  //   });
-  //   marker.addListener('click', function() {
-  //     infowindow.open(map, marker);
-  //   });
-  //   infowindow.open(map, marker);
-  // }
-  // public getDirection() {
-  //   this.dir = {
-  //     origin: { lat: 18.752179139651357, lng: 98.97422075271606 },
-  //     destination: { lat: 18.762179139651357, lng:  98.97522075271606 }
-  //   }
-  // }
 
 
   getGeoLocation(){
@@ -210,17 +161,25 @@ export class CreateProfileComponent implements OnInit {
 
   }
 
-  // readImageUrl(event:any) {
-  //   if (event.target.files && event.target.files[0]) {
-  //     var reader = new FileReader();
+  preview(file: FileList): void {
+    this.sellerForm.shop_logo_image = file.item(0)
+    console.log("[fileUpload] ",this.sellerForm.shop_logo_image);
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.imageUrl = event.target.result
+    }
+    reader.readAsDataURL(this.sellerForm.shop_logo_image)
+  }
 
-  //     reader.onload = (event:any) => {
-  //       this.sellerForm.shopImg = event.target.result;
-  //     }
-
-  //     reader.readAsDataURL(event.target.files[0]);
-  //   }
-  // }
+  previewShipperTransferImage(file: FileList): void {
+    this.deliverForm.shipper_transfer_slip_Image = file.item(0)
+    console.log("[fileUpload] ",this.deliverForm.shipper_transfer_slip_Image);
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.imageUrlTransfer = event.target.result
+    }
+    reader.readAsDataURL(this.deliverForm.shipper_transfer_slip_Image)
+  }
 
   onCatagorySelected(event) {
     console.log("onCatagorySelected", event)

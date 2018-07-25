@@ -38,7 +38,9 @@ class SellerController extends Controller
             return response()->json('Bad Request', 400);
         }
 
-        $seller = $this->seller->with('profile_status')->where('profile_id', $profile_id)->get();
+        $seller = $this->seller->with('profile_status')->where('profile_id', $profile_id)
+                                                       ->where('profile_status_id', 2)
+                                                       ->get();
         if ($seller->isEmpty()) {
             return response()->json(['message' => 'Seller not found'], 404);
         }
@@ -172,7 +174,25 @@ class SellerController extends Controller
             $product_sellers[$index] = $seller_id;
         }
 
-        $sellers = $this->seller->whereIn('seller_id', $product_sellers)->get();
+        $sellers = $this->seller->whereIn('seller_id', $product_sellers)
+                                ->where('profile_status_id', 2)
+                                ->get();
+
+        return response()->json(['data' => $sellers]);
+    }
+
+    public function searchShopName(Request $request)
+    {
+        $search = $request->search_data;
+        $sellers = $this->seller->where('shop_name','LIKE',"%{$search}%")
+                                ->where('profile_status_id', 2)
+                                ->get();
+
+        foreach ($sellers as $item)
+        {
+            $item->shop_logo_image = "/storage/seller/".$item->shop_logo_image;
+        }
+
         return response()->json(['data' => $sellers]);
     }
 }

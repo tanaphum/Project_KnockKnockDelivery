@@ -15,6 +15,7 @@ export class DeliverOrdersComponent implements OnInit {
   private orders_num = 0;
   private orders = [];
   private orderDetail = [];
+  private keyWord = '';
   private isShow:boolean = true;
   shop_latitude: any;
   shop_longtitude: any;
@@ -24,6 +25,7 @@ export class DeliverOrdersComponent implements OnInit {
   options = {
     suppressMarkers: true,
   };
+  distance: any;
 
   labelOptionShop = {
     color: '#fff',
@@ -131,6 +133,12 @@ export class DeliverOrdersComponent implements OnInit {
     )
   }
 
+  calculateDistance(lat1, lng1, lat2, lng2) {
+    const nyc = new google.maps.LatLng(lat1, lng1);
+    const london = new google.maps.LatLng(lat2,lng2);
+    this.distance = (google.maps.geometry.spherical.computeDistanceBetween(nyc, london)/1000)*1.609344;
+  }
+
   getShopOrders() {
     let id = localStorage.getItem('seller_order_id');
     // return new Promise(function(resolve, reject) {
@@ -156,6 +164,10 @@ export class DeliverOrdersComponent implements OnInit {
             lng: +element.receiver_longitude
           }
         };
+        this.calculateDistance(+element.seller.shop_latitude,+element.seller.shop_longitude,
+          +element.receiver_latitude,+element.receiver_longitude);
+          element["distance"] = this.distance;
+          element["serviceCharge"] = this.distance;
         })
 
 
@@ -214,6 +226,43 @@ export class DeliverOrdersComponent implements OnInit {
   openAcceptOrder() {
     this.router.navigateByUrl('/order')
 
+  }
+
+  searchShop() {
+    console.log("[Key word] ",this.keyWord);
+    this.isShow = !this.isShow
+    this.orders = [];
+    this.orderService.searchSellerHaveOrders(this.keyWord)
+    .subscribe(response => {
+      console.log("[response] searchShop",response.data);
+      this.orders = response.data
+
+      this.orders.forEach((element,index) => {
+        element["shop_latitude"] = +element.seller.shop_latitude;
+        element["shop_longtitude"] = +element.seller.shop_longitude;
+        element["direction"] = {
+          origin: {
+            lat: +element.seller.shop_latitude,
+            lng: +element.seller.shop_longitude
+          },
+          destination: {
+            lat: +element.receiver_latitude,
+            lng: +element.receiver_longitude
+          }
+        };
+        console.log('[index]',index);
+        console.log('[this.orders.length]',this.orders.length);
+
+        
+        if(index == this.orders.length) {
+          this.isShow = !this.isShow
+        }
+      })
+
+    },error => {
+      console.log("[error] searchShop",error);
+
+    })
   }
 
 

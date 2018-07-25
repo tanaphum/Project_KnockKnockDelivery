@@ -1,5 +1,5 @@
 import { AuthService } from './../../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+
+  @Output() isShow = new EventEmitter();
 
   public loggedIn: boolean
   private mySidebar;
@@ -28,6 +30,7 @@ export class NavbarComponent implements OnInit {
   logout(event: MouseEvent) {
     event.preventDefault()
 
+    this.isShow.emit(true)
 
     this.authService.logOut().subscribe(
       response => {
@@ -35,6 +38,7 @@ export class NavbarComponent implements OnInit {
         this.authService.removeToken()
         this.authService.changeAuthStatus(false)
         this.router.navigateByUrl('/login')
+
       },error => {
         console.log("[Error] ",error)
       })

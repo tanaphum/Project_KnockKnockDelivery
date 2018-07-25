@@ -47,69 +47,21 @@
                 <agm-map [zoom]="18" [latitude]="latitude" [longitude]="longtitude" (mapClick)="onChooseLocation($event)" >
                   <agm-marker [latitude]="latitude" [longitude]="longtitude"></agm-marker>
                 </agm-map>
-
-                <!-- <agm-map [zoom]="18" >
-                  <agm-direction [origin]="dir.origin" [destination]="dir.destination" [renderOptions]="options"></agm-direction>
-                  <agm-marker *ngIf="dir" [latitude]="dir.origin.lat" [longitude]="dir.origin.lng">
-                    <agm-info-window #infoWindow>
-                      <strong>{{sellerForm.shop_latitude}}</strong><br>
-                    </agm-info-window>
-                  </agm-marker>
-                  <agm-marker *ngIf="dir" [latitude]="dir.destination.lat" [longitude]="dir.destination.lng" >
-                    <agm-info-window #infoWindow>
-                      <strong>{{sellerForm.shop_latitude}}</strong><br>
-                    </agm-info-window>
-                  </agm-marker>
-                </agm-map>
-                <agm-map [zoom]="18" [latitude]="latitude" [longitude]="longtitude" >
-                  <agm-marker [latitude]="latitude" [longitude]="longtitude">
-                    <agm-info-window #infoWindow>
-                      <strong>Shop Location</strong><br>
-                    </agm-info-window>
-                  </agm-marker>
-                </agm-map> -->
               </div>
 
-              <!--<div class="form-group">
-                <agm-map [zoom]="18" [latitude]="latitude" [longitude]="longtitude" (mapClick)="onChooseLocation($event)" >
-                  <agm-marker [latitude]="latitude" [longitude]="longtitude"></agm-marker>
-                </agm-map>
-
-                 <agm-map [zoom]="18" >
-                  <agm-direction [origin]="dir.origin" [destination]="dir.destination" [renderOptions]="options"></agm-direction>
-                  <agm-marker *ngIf="dir" [latitude]="dir.origin.lat" [longitude]="dir.origin.lng">
-                    <agm-info-window #infoWindow>
-                      <strong>{{sellerForm.shop_latitude}}</strong><br>
-                    </agm-info-window>
-                  </agm-marker>
-                  <agm-marker *ngIf="dir" [latitude]="dir.destination.lat" [longitude]="dir.destination.lng" >
-                    <agm-info-window #infoWindow>
-                      <strong>{{sellerForm.shop_latitude}}</strong><br>
-                    </agm-info-window>
-                  </agm-marker>
-                </agm-map>
-                <agm-map [zoom]="18" [latitude]="latitude" [longitude]="longtitude" >
-                  <agm-marker [latitude]="latitude" [longitude]="longtitude">
-                    <agm-info-window #infoWindow>
-                      <strong>Shop Location</strong><br>
-                    </agm-info-window>
-                  </agm-marker>
-                </agm-map> 
-              </div>-->
-
-              <!-- <div class="form-group">
+              <div class="form-group">
                 <label for="input-image">Shop Image</label><br>
-                <input  type="file" name="shop-image"  id="input-image" (change)="readImageUrl($event)" [(ngModel)]="sellerForm.shopImg"
-                accept="image/*" required>
-                <span class="text-danger" [hidden]="!error.shopImg">
-                  {{error.shopImg}}
+                <input  name="shop-image"  type='file' id="img" (change)="preview($event.target.files)" accept="image/*" required>
+                <span class="text-danger" [hidden]="!error.shop_logo_image">
+                  {{error.shop_logo_image}}
                 </span>
                 <div>
-                <img id="imagePriview" [src]="sellerForm.shopImg" />
+                <img [hidden]="imageUrl===null" id="imagePriview" [src]="imageUrl" />
               </div>
-              </div> -->
+              </div>
+              <br>
 
-              <button type="submit" class="btn btn-block btn-success">Create</button>
+              <button type="submit" class="btn btn-block btn-success rounded-0">Create</button>
             </form>
           </div>
         </div>
@@ -134,7 +86,7 @@
               </div>
 
 
-              <button type="submit" class="btn btn-block btn-success">Create</button>
+              <button type="submit" class="btn btn-block btn-success rounded-0">Create</button>
             </form>
           </div>
         </div>
@@ -169,14 +121,14 @@
                 <div class="form-group">
                     <label for="input-shipper_transfer_slip">Shipper transfer slip</label>
                     <br>
-                    <input [disabled]="isClick"type='file' id="img" (change)="preview($event)" accept="image/*" />
+                    <input  name="shipper-transfer-slip-image"  type='file' id="img" (change)="previewShipperTransferImage($event.target.files)" accept="image/*" required>
                     <br>
                     <br>
 
-                    <!-- <canvas id="previewImg" #mycanvas></canvas> -->
+                    <img [hidden]="imageUrlTransfer===null" id="imagePriview" [src]="imageUrlTransfer" />
                   </div>
-
-              <button type="submit" id="rotate" class="btn btn-block btn-success">Create</button>
+                  <br>
+              <button type="submit" id="rotate" class="btn btn-block btn-success rounded-0">Create</button>
             </form>
           </div>
         </div>

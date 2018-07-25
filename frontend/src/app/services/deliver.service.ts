@@ -31,7 +31,19 @@ export class DeliverService {
   }
 
   updateDeliver(body,id) {
-    return this.http.post(`${this.baseUrl}shipper/`+id,body,this.httpOptions)
+    let header = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+ this.UAT,
+        'Accept':"application/json, text/plain, */*",
+
+      })
+    };
+    let formData = new FormData();
+    formData.append('bank_account_id',body.bank_account_id);
+    formData.append('bank_account_no',body.bank_account_no)
+    formData.append('shipper_transfer_slip',body.shipper_transfer_slip_Image)
+
+    return this.http.post(`${this.baseUrl}shipper/`+id,body,header)
   }
 
   getOrderByDeliverId(id) {

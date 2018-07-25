@@ -44,26 +44,39 @@ export class UserService {
     }
 
     createSeller(seller) {
-        var seller_form = {
-            user_id: seller.user_id,
-            shop_name: seller.shop_name,
-            shop_longitude: seller.shop_longitude,
-            shop_latitude: seller.shop_latitude,
-            shop_location: seller.shop_location,
-            status_id: seller.user_id
-        }
-        return this.http.post(`${this.baseUrl}seller`, seller_form,this.httpOptions)
+        let header = {
+            headers: new HttpHeaders({
+              'Authorization': 'Bearer '+ this.UAT,
+              'Accept':"application/json, text/plain, */*",
+      
+            })
+          };
+    let formData = new FormData();
+    formData.append('shop_name',seller.shop_name);
+    formData.append('shop_location',seller.shop_location)
+    formData.append('shop_latitude',seller.shop_latitude)
+    formData.append('shop_longitude',seller.shop_longitude)
+    formData.append('user_id',seller.user_id)
+    formData.append('shop_logo_image',seller.shop_logo_image)
+        
+        return this.http.post(`${this.baseUrl}seller`, formData, header)
     }
 
     createDeliver(deliver) {
-        var deliver_form = {
-            bank_account_id: deliver.bank_account_id,
-            bank_account_no: deliver.bank_account_no,
-            shipper_transfer_slip: null,
-            user_id: deliver.user_id,
+        let header = {
+            headers: new HttpHeaders({
+              'Authorization': 'Bearer '+ this.UAT,
+              'Accept':"application/json, text/plain, */*",
+      
+            })
+          };
+    let formData = new FormData();
+    formData.append('bank_account_id',deliver.bank_account_id);
+    formData.append('bank_account_no',deliver.bank_account_no)
+    formData.append('shipper_transfer_slip',deliver.shipper_transfer_slip_Image)
+    formData.append('user_id',deliver.user_id)
 
-        }
-        return this.http.post(`${this.baseUrl}shipper`, deliver_form,this.httpOptions)
+        return this.http.post(`${this.baseUrl}shipper`, formData,header)
     }
 
     createBuyer(buyer) {

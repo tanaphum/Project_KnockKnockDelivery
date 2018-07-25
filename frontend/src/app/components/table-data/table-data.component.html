@@ -22,9 +22,9 @@
       <td>{{ product.product_status.product_status_name }}</td>
       <td>
         <div class="btn-group">
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Info</button>
-          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="openEdit(product)">Edit</button>
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="openDelete(product)">Delete</button>
+          <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Info</button>
+          <button type="button" class="btn btn-warning rounded-0" data-toggle="modal" data-target="#EditModal" (click)="openEdit(product)">Edit</button>
+          <button type="button" class="btn btn-danger rounded-0" data-toggle="modal" data-target="#deleteModal" (click)="openDelete(product)">Delete</button>
         </div>
       </td>
     </tr>
@@ -60,7 +60,7 @@
           <!-- <p><strong>Product ID: </strong>{{ product_available }}</p> -->
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -128,9 +128,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button *ngIf="isEdit" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
-          <button *ngIf="!isEdit" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button *ngIf="!isEdit" type="button" class="btn btn-warning" (click)="onEdit()" [disabled]="isClick">Save changes</button>
+          <button *ngIf="isEdit" type="button" class="btn btn-secondary rounded-0" (click)="onClose()" data-dismiss="modal">Close</button>
+          <button *ngIf="!isEdit" type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Cancel</button>
+          <button *ngIf="!isEdit" type="button" class="btn btn-warning rounded-0" (click)="onEdit()" [disabled]="isClick">Save changes</button>
         </div>
       </div>
     </div>
@@ -152,9 +152,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button *ngIf="isDelete" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
-          <button *ngIf="!isDelete" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button *ngIf="!isDelete" type="button" class="btn btn-danger" (click)="onDelete(product_id)">Delete</button>
+          <button *ngIf="isDelete" type="button" class="btn btn-secondary rounded-0" (click)="onClose()" data-dismiss="modal">Close</button>
+          <button *ngIf="!isDelete" type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Cancel</button>
+          <button *ngIf="!isDelete" type="button" class="btn btn-danger rounded-0" (click)="onDelete(product_id)">Delete</button>
         </div>
       </div>
     </div>

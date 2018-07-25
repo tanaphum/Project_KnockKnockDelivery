@@ -35,6 +35,7 @@ Route::group([
     Route::get('seller/profile/{profile_id}', 'SellerController@getSellerByProfileId');
     Route::post('seller', 'SellerController@createSeller');
     Route::post('seller/{seller_id}', 'SellerController@updateSeller');
+    Route::post('seller/search/shop-name', 'SellerController@searchShopName');
 
     Route::get('seller/{seller_id}/products', 'ProductController@getProductsBySellerId');
     Route::post('seller/{seller_id}/product', 'ProductController@createProduct');
@@ -42,6 +43,7 @@ Route::group([
     Route::delete('seller/product/{product_id}', 'ProductController@deleteProduct');
 
     Route::get('shops/product-category/{product_category_id}', 'SellerController@getSellerByProductCategoryId');
+
 });
 
 Route::group([
@@ -82,6 +84,7 @@ Route::group([
    'middleware' => ['auth:api','CORS'],
 ], function ($router) {
     Route::get('order/sellers', 'OrderController@getListSellersHaveOrders');
+    Route::post('order/search/shop-name', 'OrderController@searchListSellersHaveOrders');
     Route::get('order/seller/{seller_id}/order-list', 'OrderController@getListOrdersBySellerId');
     Route::get('order/{order_id}', 'OrderController@getOrderByOrderId');
     Route::put('order/{order_id}', 'OrderController@updateStatusOrder');
@@ -96,9 +99,10 @@ Route::group([
 });
 
 Route::group([
-//    'middleware' => ['auth:api','CORS'],
+   'middleware' => ['auth:api','CORS'],
 ],function ($router){
-    // Route::get('orderQRcode', 'OrderQRcodeController@testQRcode');
+    Route::get('qrcode/seller/order/{order_id}', 'OrderQRcodeController@getDataQRCodeByOrderId');
+    Route::get('qrcode/buyer/order/{order_id}', 'OrderQRcodeController@getDataQRCodeByOrderId');
     Route::put('orderQRcode/order/{order_id}/shipper-accept', 'OrderQRcodeController@shipperAcceptOrder');
     Route::get('orderQRcode/seller/order/{order_id}', 'OrderQRcodeController@getQRcodeSellerByOrderId');
     Route::get('orderQRcode/buyer/order/{order_id}', 'OrderQRcodeController@getQRcodeBuyerByOrderId');

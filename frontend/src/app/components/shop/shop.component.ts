@@ -54,7 +54,6 @@ export class ShopComponent implements OnInit {
     constructor(
         private BuyerService: BuyerService,
         private SellerService: SellerService,
-
         private router: Router
     ) { }
 

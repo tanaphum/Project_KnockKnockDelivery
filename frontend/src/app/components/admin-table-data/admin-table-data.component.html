@@ -1,11 +1,15 @@
-<table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='history'">
+<div class="loader-container" [hidden]="isShow">
+  <div class="loader"></div>
+</div>
+<div [hidden]="!isShow">
+  <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='history'">
     <thead>
       <tr *ngFor="let header of headers">
         <th>No.</th>
         <th>{{header.order_id}}</th>
         <th>{{header.order_status.order_status_name}}</th>
         <th>{{header.updated_at}}</th>
-        
+
         <th> </th>
       </tr>
     </thead>
@@ -17,9 +21,100 @@
         <td>{{order.updated_at}} </td>
         <td>
           <div class="btn-group">
-            <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Info</button>
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#EditModal" (click)="openEdit(product)">Edit</button>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="openDelete(product)">Delete</button> -->
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#orderInfo" (click)="openOrderInfo(order)">Info</button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#qrcodeModel" (click)="openQRCode(order)">Open QR Code</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table> -->
+
+  <table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='buyer'">
+    <thead>
+      <tr>
+          <th>No.</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user  of data;let  i = index">
+        <td>{{ i+1 }}</td>
+        <td>{{user.buyer_id}}</td>
+        <td>{{user.user.firstname}} {{user.user.lastname}}</td>
+        <td>{{user.buyer_address}}</td>
+        <td>{{user.user.email}}</td>
+        <td>{{user.profile_status.profile_status_name}}</td>
+        <td>
+          <div class="btn-group">
+            <button type="button" class="btn btn-success rounded-0" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.buyer_id,2)">Approve</button>
+            <button type="button" class="btn btn-danger rounded-0" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='seller'">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>ID</th>
+        <th>Shop Name</th>
+        <th>Location</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user  of data;let  i = index">
+        <td>{{ i+1 }}</td>
+        <td>{{ user.seller_id }}</td>
+        <td>{{ user.shop_name }}</td>
+        <td>{{ user.shop_location }}</td>
+        <td>{{ user.user.email }}</td>
+        <td>{{ user.profile_status.profile_status_name }}</td>
+        <td>
+          <div class="btn-group">
+            <button type="button" class="btn btn-success rounded-0" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.seller_id,2)">Approve</button>
+            <button type="button" class="btn btn-danger rounded-0" (click)="onClickUpdate(user.seller_id,3)">Reject</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table datatable [dtOptions]="dtOptions" class="row-border hover" *ngIf="_type==='deliver'">
+    <thead>
+      <tr>
+          <th>No.</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Bank Account No</th>
+          <th>Bank Account Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of data;let  i = index">
+        <td>{{ i+1 }}</td>
+        <td>{{ user.shipper_id }}</td>
+        <td>{{ user.user.firstname}} {{ user.user.lastname}}</td>
+        <td>{{ user.bank_account_no }}</td>
+        <td>{{ user.bank_account.bank_account_name }}</td>
+        <td>{{ user.user.email }}</td>
+        <td>{{ user.profile_status.profile_status_name }}</td>
+        <td>
+          <div class="btn-group">
+            <button type="button" class="btn btn-success rounded-0" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.shipper_id,2)">Approve</button>
+            <button type="button" class="btn btn-danger rounded-0" (click)="onClickUpdate(user.shipper_id,3)">Reject</button>
           </div>
         </td>
       </tr>
@@ -28,176 +123,196 @@
 
 
 
-  
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <!-- Modal -->
-  
-  <div>
-    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Product Information</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <img  class="card-img-top" [src]="product_image" alt="">
-            <p>
-              <strong>Product ID: </strong>{{ product_id }}</p>
-            <p>
-              <strong>Product Name: </strong>{{ product_name }}</p>
-            <p>
-              <strong>Product Description: </strong>{{ product_description }}</p>
-            <p>
-              <strong>Product Price: </strong>{{ product_price }}</p>
-            <p>
-              <strong>Product Catagory: </strong>{{ selected_catagory }}</p>
-            <!-- <p>
-              <strong>Product in stock: </strong>{{ unit_in_stock }}</p> -->
-            <!-- <p><strong>Product ID: </strong>{{ product_available }}</p> -->
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <div [hidden]="_type!=null">
+      <!-- ////////////////////////////////// infoModal ///////////////////////////////////////-->
+      <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Product Information</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <img  class="card-img-top" [src]="product_image" alt="">
+              <p>
+                <strong>Product ID: </strong>{{ product_id }}</p>
+              <p>
+                <strong>Product Name: </strong>{{ product_name }}</p>
+              <p>
+                <strong>Product Description: </strong>{{ product_description }}</p>
+              <p>
+                <strong>Product Price: </strong>{{ product_price }}</p>
+              <p>
+                <strong>Product Catagory: </strong>{{ selected_catagory }}</p>
+              <!-- <p>
+                <strong>Product in stock: </strong>{{ unit_in_stock }}</p> -->
+              <!-- <p><strong>Product ID: </strong>{{ product_available }}</p> -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   
-    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
+      <!-- ////////////////////////////////// EditModal ///////////////////////////////////////-->
+      <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
   
-            <img  class="card-img-top" [src]="product_image" alt="">
+              <img  class="card-img-top" [src]="product_image" alt="">
   
-            <form #editProductForm=ngForm>
-              <div class="form-group">
-                <label for="input-id">Product id</label>
-                <input [disabled]="isClick" type="number" name="id" class="form-control" id="input-id" placeholder="Product Name" [(ngModel)]="product_id" disabled/>
-              </div>
-  
-              <div class="form-group">
-                <label for="input-name">Product name</label>
-                <input [disabled]="isClick" type="text" name="name" class="form-control" id="input-name" placeholder="Product name" [(ngModel)]="product_name"
-                  required/>
-              </div>
-  
-              <div class="form-group">
-                  <label for="input-price">Product Price</label>
-                  <input [disabled]="isClick" type="text" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="product_price"
-                    required>
+              <form #editProductForm=ngForm>
+                <div class="form-group">
+                  <label for="input-id">Product id</label>
+                  <input [disabled]="isClick" type="number" name="id" class="form-control" id="input-id" placeholder="Product Name" [(ngModel)]="product_id" disabled/>
                 </div>
-  <!-- 
-              <div class="form-group">
-                <label for="input-price">Product Amount Unit</label>
-                <input [disabled]="isClick" type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="unit_in_stock"
-                  required>
-              </div> -->
   
-              <div class="form-group">
-                <label for="selectCatagory">Product Catagory</label>
-                <select [disabled]="isClick" class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory"
-                  (ngModelChange)="onCatagorySelected($event)" required>
-                  <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.product_category_id">{{item.product_category_name}}</option>
-                </select>
-              </div>
+                <div class="form-group">
+                  <label for="input-name">Product name</label>
+                  <input [disabled]="isClick" type="text" name="name" class="form-control" id="input-name" placeholder="Product name" [(ngModel)]="product_name"
+                    required/>
+                </div>
   
-              <div class="form-group">
-                <label for="input-description">Product Description</label>
-                <textarea [disabled]="isClick" type="text" name="description" class="form-control" id="input-description" placeholder="Product Description" [(ngModel)]="product_description"
-                  required></textarea>
+                <div class="form-group">
+                    <label for="input-price">Product Price</label>
+                    <input [disabled]="isClick" type="text" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="product_price"
+                      required>
+                  </div>
+    <!--
+                <div class="form-group">
+                  <label for="input-price">Product Amount Unit</label>
+                  <input [disabled]="isClick" type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="unit_in_stock"
+                    required>
+                </div> -->
+  
+                <div class="form-group">
+                  <label for="selectCatagory">Product Catagory</label>
+                  <select [disabled]="isClick" class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory"
+                    (ngModelChange)="onCatagorySelected($event)" required>
+                    <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.product_category_id">{{item.product_category_name}}</option>
+                  </select>
+                </div>
+  
+                <div class="form-group">
+                  <label for="input-description">Product Description</label>
+                  <textarea [disabled]="isClick" type="text" name="description" class="form-control" id="input-description" placeholder="Product Description" [(ngModel)]="product_description"
+                    required></textarea>
+                </div>
+              </form>
+              <div *ngIf="isEdit">
+                <p style="color:Green">Product has been edit</p>
               </div>
-            </form>
-            <div *ngIf="isEdit">
-              <p style="color:Green">Product has been edit</p>
+              <div *ngIf="error">
+                <p style="color:red">error</p>
+              </div>
+              <div *ngIf="isClick" class="w3-display-middle">
+                <p class="loading">Saving</p>
+              </div>
             </div>
-            <div *ngIf="error">
-              <p style="color:red">error</p>
+            <div class="modal-footer">
+              <button *ngIf="isEdit" type="button" class="btn btn-secondary rounded-0" (click)="onClose()" data-dismiss="modal">Close</button>
+              <button *ngIf="!isEdit" type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Cancel</button>
+              <button *ngIf="!isEdit" type="button" class="btn btn-warning rounded-0" (click)="onEdit()" [disabled]="isClick">Save changes</button>
             </div>
-            <div *ngIf="isClick" class="w3-display-middle">
-              <p class="loading">Saving</p>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button *ngIf="isEdit" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
-            <button *ngIf="!isEdit" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button *ngIf="!isEdit" type="button" class="btn btn-warning" (click)="onEdit()" [disabled]="isClick">Save changes</button>
           </div>
         </div>
       </div>
-    </div>
   
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Delete {{ product_name }} ??</p>
-            <div *ngIf="isDelete">
-              <p style="color:red">Product has been delete</p>
+    <!-- ////////////////////////////////// deleteModal ///////////////////////////////////////-->
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button *ngIf="isDelete" type="button" class="btn btn-secondary" (click)="onClose()" data-dismiss="modal">Close</button>
-            <button *ngIf="!isDelete" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button *ngIf="!isDelete" type="button" class="btn btn-danger" (click)="onDelete(product_id)">Delete</button>
+            <div class="modal-body">
+              <!-- <p>Delete {{ product_name }} ??</p> -->
+              <div *ngIf="isDelete">
+                <p style="color:red">Product has been delete</p>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button *ngIf="isDelete" type="button" class="btn btn-secondary rounded-0" (click)="onClose()" data-dismiss="modal">Close</button>
+              <button *ngIf="!isDelete" type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Cancel</button>
+              <button *ngIf="!isDelete" type="button" class="btn btn-danger rounded-0" (click)="onDelete(product_id)">Delete</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   </div>
   
+  
+  <!-- <div [hidden]="_type==null">
+      <div class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content"> 
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Order info</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>
+                <strong>Oeder ID: </strong>{{order.order_id}}</p>
+              <p>
+                <strong>Reciever name :</strong>{{order.receiver_firstname}} {{order.receiver_lastname}}</p>
+              <p>
+                <strong>Buyer name : </strong>{{order.buyer.user.firstname}} {{order.buyer.user.lastname}}</p>
+              <p>
+                <strong>Buyer  phone no. : </strong>{{order.buyer.user.telephone_number}}</p>
+              <p>
+                <strong>Shipper name : </strong>{{order.shipper.user.firstname}} {{order.shipper.user.lastname}}</p>
+              <p>
+                <strong>Shipper phone no. : </strong>{{order.shipper.user.telephone_number}}</p>
+              <p>
+                <strong>Service charge : </strong>{{order.service_charge}}</p>
+              <p>
+                <strong>Total price : </strong>{{order.order_total_price}}</p>
+              <p>
+                <strong>Update at : </strong>{{order.updated_at}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="modal fade" id="qrcodeModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">QR Code</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <img [src]="baseUrl+imageUrl.data.qrcode_seller" >
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  </div> -->
+  
+
+</div>
+

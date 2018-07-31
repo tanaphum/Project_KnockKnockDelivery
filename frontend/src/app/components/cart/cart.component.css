@@ -99,3 +99,23 @@ agm-map {
 #input-receiver_location {
   margin-bottom: 10px;
 }
+
+img {
+  max-width: 100px;
+  max-height: 70px;
+}
+
+@media screen and (max-width: 375px) {
+  .card {
+    max-width: 350px;
+  }
+  img {
+    max-width: 70px;
+    max-height: 70px;
+  }
+  #image {
+    max-width: 70px;
+    max-height: 70px;
+  }
+  
+}

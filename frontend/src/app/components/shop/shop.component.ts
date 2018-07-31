@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BuyerService } from '../../services/buyer.service';
 import { SellerService, address } from '../../services/seller.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
     selector: 'app-shop',
@@ -13,9 +15,10 @@ export class ShopComponent implements OnInit {
     private baseUrl = 'http://localhost:8000';
     private products;
     private isShow: boolean = true;
-    private isEmpty: boolean = true;
+    private isEmpty: boolean = false;
     private cart_num = 0;
     private seller = [];
+    private user;
     private seller_id;
     private form = {
         product_name: null,
@@ -25,7 +28,7 @@ export class ShopComponent implements OnInit {
     }
     private orders_num = 0;
     private shop = [];
-    private buyer_profile ={
+    private buyer_profile = {
       buyer_address:'',
       buyer_id:'',
       profile_id:'',
@@ -33,6 +36,12 @@ export class ShopComponent implements OnInit {
         profile_status_id:'',
         profile_status_name:''
       }
+    }
+    user_form = {
+      firstname: 'Hello',
+      lastname: '',
+      identity_no: '',
+      telephone_number: '',
     }
     shop_latitude: any;
     shop_longtitude: any;
@@ -54,14 +63,16 @@ export class ShopComponent implements OnInit {
     constructor(
         private BuyerService: BuyerService,
         private SellerService: SellerService,
-        private router: Router
+        private router: Router,
+        private authService: AuthService,
+
     ) { }
 
     ngOnInit() {
         this.setCartNum();
         this.setSellerID();
         this.setOrderNum();
-
+        this.getUserProfile();
     }
 
     setSellerID() {
@@ -74,10 +85,10 @@ export class ShopComponent implements OnInit {
       console.log("Seller id = ",this.seller_id)
       this.SellerService.getAllProducts(this.seller_id)
       .subscribe(response => {
-        console.log("[Response] ",response.data);
+        console.log("[Response] getAllProduct",response.data);
         this.products = response.data;
-        if(this.products.lenght > 0){
-          this.isEmpty = !this.isEmpty
+        if(this.products.length > 0){
+          this.isEmpty = true
         }
         this.getBuyerProfile();
         this.showgetGoogleMapAddress(this.shop_latitude, this.shop_longtitude);
@@ -94,14 +105,6 @@ export class ShopComponent implements OnInit {
       this.seller = JSON.parse(localStorage.getItem('shop'))
       this.shop_latitude = +this.seller["shop_latitude"]
       this.shop_longtitude = +this.seller["shop_longitude"]
-
-
-
-      // this.seller.forEach(element => {
-      //   element["shop_latitude"] = +element.shop_latitude;
-      //   element["shop_longtitude"] = +element.shop_longitude;
-      //   })
-
 
     }
 
@@ -155,6 +158,10 @@ export class ShopComponent implements OnInit {
 
   addToCart(product) {
     console.log("addToCart: ",product)
+
+    product.seller.shop_latitude = this.shop_latitude
+    product.seller.shop_longtitude = this.shop_longtitude
+
     let cart = JSON.parse(localStorage.getItem("cart"));
     if(cart == null){
       let obj = [];
@@ -227,12 +234,49 @@ export class ShopComponent implements OnInit {
       buyer_address: this.buyer_profile.buyer_address,
       profile_status_id: 1
     }
-
+    this.updateProfile();
     this.BuyerService.updateBuyer(temp,id)
     .subscribe(response => {
       console.log("[response] onEditBuyer: ",response)
     }
     ,error => {console.log("[error] onEditBuyer: ",error)})
   }
+
+
+  getUserProfile() {
+    let id = localStorage.getItem('user_id')
+    this.authService.me()
+    .subscribe(response => {
+      console.log('[response] getUserProfile: ',response);
+      this.user = response
+
+      this.user_form.firstname = this.user.firstname;
+      this.user_form.lastname = this.user.lastname;
+      this.user_form.identity_no = this.user.identity_no;
+      this.user_form.telephone_number = this.user.telephone_number;
+    },error => {
+      console.log('[response] getUserProfile: ',error);
+
+    }) 
+  }
+
+  updateProfile() {
+    let id = localStorage.getItem('user_id')
+    return new Promise((resolve,reject) => {
+      this.authService.editUser(id,this.user_form)
+      .subscribe(response => {
+        console.log('[response] updateProfile: ',response);
+        resolve(response)
+        
+      }, error => {
+        console.log('[error] updateProfile: ',error);
+        reject(error)
+
+  
+      })
+    })
+
+  }
+
 
 }

@@ -96,12 +96,16 @@
                 <input [disabled]="isClick" type="text" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="product_price"
                   required>
               </div>
-<!-- 
-            <div class="form-group">
-              <label for="input-price">Product Amount Unit</label>
-              <input [disabled]="isClick" type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="unit_in_stock"
-                required>
-            </div> -->
+
+
+              <div class="form-group">
+                <label for="selectStatus">Product status</label>
+                <select [disabled]="isClick" class="form-control" name="selectStatus" id="selectCatagory" #selectStatus="ngModel" [(ngModel)]="selected_status"
+                  required>
+                  <option value="" disabled selected>Select a Status</option>
+                  <option [disabled]="isClick" *ngFor="let item of status" [value]="item.product_status_id">{{item.product_status_name}}</option>
+                </select>
+              </div>
 
             <div class="form-group">
               <label for="selectCatagory">Product Catagory</label>

@@ -21,7 +21,7 @@ export class CreateProductComponent implements OnInit {
     product_catagory: null,
     selected_catagory: null,
     product_description: null,
-    product_image_1:null
+    product_image_1:null,
   }
   private dafault_catagory: Number;
   private catagory;
@@ -47,6 +47,7 @@ export class CreateProductComponent implements OnInit {
     console.log("[Seller id] ", this.seller_id);
     this.masterData = JSON.parse(localStorage.getItem('masterData'))
     this.catagory = this.masterData.product_category;
+
     // this.sellerService.getShopCategories().subscribe(
     //   response => {
     //     console.log("response from catagory: ",response)
@@ -66,30 +67,6 @@ export class CreateProductComponent implements OnInit {
       this.imageUrl = event.target.result
     }
     reader.readAsDataURL(this.form.product_image_1)
-    // this.form.product_image_1 = e.target.files[0]
-    // this.image.append('myFile', e.target.files[0])
-    // this.form.product_image_1 = e.target.files[0];
-    // console.log("[this.form.product_image_1] ",this.form.product_image_1);
-
-    // let canvas = this.mycanvas.nativeElement;
-    // let context = canvas.getContext('2d');
-    // context.clearRect(0, 0, 300, 300);
-
-    // //Show render image to canvas
-    // var render = new FileReader();
-    // render.onload = function (event) {
-    //   var img = new Image();
-    //   img.onload = function () {
-    //     canvas.width = img.width;
-    //     canvas.height = img.height;
-    //     context.drawImage(img, 0, 0)
-    //     context.drawImage(img,0,0,400,400)
-
-    //   }
-    //   img.src = event.target.result;
-    // };
-    // render.readAsDataURL(e.target.files[0]);
-
 
   }
 
@@ -120,13 +97,6 @@ export class CreateProductComponent implements OnInit {
       this.error['product_price'] = 'product price not more than 1000'
     }
     else {
-      
-      // let tempForm = new FormData();
-      // tempForm.append('product_name',this.form.product_name)
-      // tempForm.append('product_description',this.form.product_description)
-      // tempForm.append('product_price',this.form.product_price)
-      // tempForm.append('product_category_id',this.form.selected_catagory)
-      // tempForm.append('product_image_1',this.form.product_image_1)
 
       let tempForm =
       {
@@ -145,7 +115,8 @@ export class CreateProductComponent implements OnInit {
         response => {
           console.log("response onCreate: ", response)
           this.isClick = !this.isClick;
-          this.isCreate = !this.isCreate;
+          // this.isCreate = !this.isCreate;
+          alert('Product has been create')
           this.onClear();
         },
         error => {
@@ -166,6 +137,7 @@ export class CreateProductComponent implements OnInit {
     this.form.product_description = '';
     this.form.product_image_1 = '';
     this.form.selected_catagory = '';
+    this.imageUrl = null
     this.error = [];
 
   }

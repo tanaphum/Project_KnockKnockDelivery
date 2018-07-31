@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild,Input, Output,  EventEmitter } from '@angular/core';
 import { SellerService } from '../../services/seller.service';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 
 
@@ -22,11 +24,19 @@ export class EditShopComponent implements OnInit {
     shop_longitude: null
   }
 
+  private user_form = {
+    firstname: null,
+    lastname: null,
+    identity_no: null,
+    telephone_number: null,
+  }
+
   private isClick: boolean = false;
   private isEdit: boolean = false;
   private dafault_catagory: Number;
   private catagory;
   private seller;
+  private user;
   private masterData;
   private error: boolean = false;
   private errorMessage;
@@ -48,6 +58,8 @@ export class EditShopComponent implements OnInit {
 
   constructor(
     private sellerService: SellerService,
+    private authService: AuthService,
+    private userService: UserService,
     private router: Router,
 
   ) {
@@ -55,9 +67,8 @@ export class EditShopComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.seller = JSON.parse(localStorage.getItem("seller_id"));
-    // this.getShopCatagory();
-
+    // this.seller = JSON.parse(localStorage.getItem("seller_id"));
+    this.getUserProfile()
 
   }
   getGeoLocation(){
@@ -85,38 +96,22 @@ export class EditShopComponent implements OnInit {
     this.form.shop_longitude = event.coords.lng;
   }
 
-  // getShopCatagory() {
-  //   // this.catagory = JSON.parse(localStorage.getItem("shop_catagory"));
-  //   // this.masterData = JSON.parse(localStorage.getItem('masterData'))
-  //   // this.catagory = this.masterData.product_category;
-  //   // this.catagory.forEach((element, idx) => {
-  //   //   if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
-  //   //     this.dafault_catagory = idx + 1;
-  //   //     this.form.selected_catagory = idx + 1;
-  //   //     this.setUpPage()
-  //   //   }
-
-  //   // });
-  //   this.masterData = JSON.parse(localStorage.getItem('masterData'))
-  //   this.catagory = this.masterData.product_category;
-  //   this.catagory.forEach((element, idx) => {
-  //     if (element.shop_type_id == this.seller.shop_type.shop_type_id) {
-  //       this.dafault_catagory = idx + 1;
-  //       this.form.selected_catagory = idx + 1;
-  //       this.setUpPage()
-  //     }
-
-  //   });
-
-  // }
-
   setUpPage() {
+    this.seller = JSON.parse(localStorage.getItem("seller"));
+    console.log('[setUpPage] seller',this.seller);
+    console.log('[setUpPage] user',this.user);
+
     this.form.shop_name = this.seller.shop_name;
     this.form.seller_name = this.seller.seller_name;
     this.form.shop_location = this.seller.shop_location;
     this.form.shop_latitude = this.seller.shop_latitude;
     this.form.shop_longitude = this.seller.shop_longitude;
 
+
+    this.user_form.firstname = this.user.firstname;
+    this.user_form.lastname = this.user.lastname;
+    this.user_form.identity_no = this.user.identity_no;
+    this.user_form.telephone_number = this.user.telephone_number;
   }
 
   onCatagorySelected(event) {
@@ -149,7 +144,6 @@ export class EditShopComponent implements OnInit {
 
   onSubmit() {
     this.isClick = !this.isClick;
-
     let temp = {
       shop_name: this.form.shop_name,
       shop_location: this.form.shop_location,
@@ -160,7 +154,7 @@ export class EditShopComponent implements OnInit {
     console.log("onSubmit", temp)
 
 
-    this.sellerService.updateShop(temp, this.seller).subscribe(
+    this.sellerService.updateShop(temp, this.seller.seller_id).subscribe(
       response => {
         console.log("response onSubmit: ", response)
         this.isClick = !this.isClick;
@@ -168,7 +162,11 @@ export class EditShopComponent implements OnInit {
         // this.reloadPage.emit(null)
         if(response.message == 'Successfully') {
           alert("Update shop success!!!");
-          this.router.navigateByUrl('/manage-shop')
+          this.updateProfile()
+          .then(result => {
+            this.router.navigateByUrl('/manage-shop')
+          })
+
         }
 
 
@@ -183,6 +181,38 @@ export class EditShopComponent implements OnInit {
       }
     )
 
+  }
+
+  updateProfile() {
+    let id = localStorage.getItem('user_id')
+    return new Promise((resolve,reject) => {
+      this.authService.editUser(id,this.user_form)
+      .subscribe(response => {
+        console.log('[response] updateProfile: ',response);
+        resolve(response)
+        
+      }, error => {
+        console.log('[error] updateProfile: ',error);
+        reject(error)
+
+  
+      })
+    })
+
+  }
+
+  getUserProfile() {
+    let id = localStorage.getItem('user_id')
+    this.authService.me()
+    .subscribe(response => {
+      console.log('[response] getUserProfile: ',response);
+      this.user = response
+      this.setUpPage()
+
+    },error => {
+      console.log('[response] getUserProfile: ',error);
+
+    }) 
   }
 
 }

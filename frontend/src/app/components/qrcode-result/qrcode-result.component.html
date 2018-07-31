@@ -1,3 +1,57 @@
-<p>
-  qrcode-result works!
-</p>
+<div *ngIf="isLoad">
+  <div class="loader-container">
+    <div class="loader" ></div>
+  </div>
+</div>
+<div class="w3-container" id="container" *ngIf="!isLoad">
+  <div class="w3-row"> 
+    <div class="w3-third">
+      <p></p>
+    </div>
+    <div class="w3-third">
+      <div class="card">
+          <div class="card-header">Order id {{result.order_id}}</div>
+          <div class="card-body">
+            <p>Order total price : {{result.order_total_price}}</p>
+            <p>Receiver firstname : {{result.receiver_firstname}}</p>
+            <p>Receiver lastname : {{result.receiver_lastname}}</p>
+            <p>Receiver location : {{result.receiver_location}}</p>
+            <div class="text-center">
+                <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="receiver_latitude" [longitude]="receiver_longitude" >
+                  <agm-marker  [latitude]="receiver_latitude" [longitude]="receiver_longitude" [label]="labelOptionReceiver">
+                    <agm-info-window #infoWindow>
+                      <strong>{{result.ReceiverName}}</strong><br>
+                    </agm-info-window>
+                  </agm-marker>
+                </agm-map>
+                </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-success btn-block" (click)="acceptScanResult()">OK</button>
+          </div>
+        </div>
+    </div>
+    <div class="w3-third">
+      <p></p>
+    </div>
+  </div>
+
+
+  <!-- <div class="w3-row" id="container" *ngIf="!isLoad">
+    <p>order_id : {{result.order_id}}</p>
+    <p>order_total_price : {{result.order_total_price}}</p>
+    <p>receiver_firstname : {{result.receiver_firstname}}</p>
+    <p>receiver_lastname : {{result.receiver_lastname}}</p>
+    <p>receiver_location : {{result.receiver_location}}</p>
+    <div>
+      <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="receiver_latitude" [longitude]="receiver_longitude" >
+        <agm-marker  [latitude]="receiver_latitude" [longitude]="receiver_longitude" [label]="labelOptionReceiver">
+          <agm-info-window #infoWindow>
+            <strong>{{result.ReceiverName}}</strong><br>
+          </agm-info-window>
+        </agm-marker>
+      </agm-map>
+      </div>
+    <button class="btn btn-success btn-block" (click)="acceptScanResult()">OK</button>
+</div> -->
+</div>

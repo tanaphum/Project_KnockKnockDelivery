@@ -5,15 +5,18 @@
   <div class="container">
     <div class="w3-container w3-padding" [hidden]="isEmpty">
       <div *ngFor="let order of orders;let i = index">
-        <div class="w3-container w3-quarter">
+        <div class="w3-container w3-quarter w3-padding-16">
           <div class="card">
             <div class="card-header">
               <p>
-                <b>Order</b>
+                <b>Order {{order.order_id}}</b>
               </p>
             </div>
             <div class="card-body">
-              <img id="paymentTransferSlip" *ngIf="order.payment_transfer_slip!=null" [src]="baseUrl+order.payment_transfer_slip" >
+              <div class="text-center">
+                  <img id="paymentTransferSlip" *ngIf="order.payment_transfer_slip!=null" [src]="baseUrl+order.payment_transfer_slip" >
+                  <img id="paymentTransferSlip" *ngIf="order.payment_transfer_slip==null" [src]="placeHolder" >
+              </div>
               <p class="card-text">
                 <b>Order id:</b> {{order.order_id}}</p>
               <p class="card-text">
@@ -24,7 +27,7 @@
             <div class="card-footer">
               <button class="btn btn-outline-info btn-block rounded-0" data-toggle="modal" data-target="#seeMoreModal" (click)="seeMore(order)">See More</button>
               <button class="btn btn-outline-success btn-block rounded-0" *ngIf="order.order_status.order_status_id===2&&!isBuyer"  data-toggle="modal" data-target="#UploadModal" (click)="uploadTransfer(order)">Upload transfer</button>
-              <button class="btn btn-outline-warning btn-block rounded-0" [hidden]="isBuyer" data-toggle="modal" data-target="#OpenQRCodeModal" *ngIf="order.order_status.order_status_id!==1&&order.order_status.order_status_id!==2" (click)="openQrCode(order)">Open QR Code</button>
+              <button class="btn btn-outline-warning btn-block rounded-0" [hidden]="isBuyer" data-toggle="modal" data-target="#OpenQRCodeModal" *ngIf="order.order_status.order_status_id!==1&&order.order_status.order_status_id!==2&&order.order_status.order_status_id!==7" (click)="openQrCode(order)">Open QR Code</button>
               <button class="btn btn-outline-success btn-block rounded-0" *ngIf="order.order_status.order_status_id===3&&!isShipper"  (click)="acceptTransfer(order)">Accept transfer</button>
               <button class="btn btn-outline-warning btn-block rounded-0" [hidden]="isShipper" *ngIf="order.order_status.order_status_id===4||order.order_status.order_status_id===5" (click)="scanQRCode(order)">Scan QR Code</button>
             </div>
@@ -54,9 +57,15 @@
           <p>
             <b>Order id:</b> {{seeMore_form.order_id}}</p>
           <p>
+            <b>Create Date:</b> {{seeMore_form.created_at}}</p>
+          <p>
+            <b>Shop name:</b> {{seeMore_form.seller.shop_name}}</p>
+          <p>
             <b>Receiver name:</b> {{seeMore_form.receiver_firstname}} {{seeMore_form.receiver_lastname}}</p>
           <p>
-            <b>Retriever address:</b> {{seeMore_form.receiver_location}}</p>
+            <b>Retriever location:</b> {{seeMore_form.receiver_location}}</p>
+          <p>
+            <b>Product name:</b> {{seeMore_form.receiver_location}}</p>
           <p>
             <b>Service charge:</b> {{seeMore_form.service_charge}}</p>
           <p>
@@ -64,11 +73,31 @@
           <p>
             <b>Updated at:</b> {{seeMore_form.updated_at}}</p>
           <p *ngIf="seeMore_form.shipper!=null">
-            <b>Shipper name:</b>{{seeMore_form.shipper.user.firstname}} {{seeMore_form.shipper.user.lastname}}</p>
+            <b>Shipper name:</b> {{seeMore_form.shipper.user.firstname}} {{seeMore_form.shipper.user.lastname}}</p>
           <p *ngIf="seeMore_form.shipper!=null">
-            <b>Shipper account no:</b>{{seeMore_form.shipper.bank_account_no}} {{seeMore_form.shipper.bank_account.bank_account_name}}</p>
+            <b>Shipper account no:</b> {{seeMore_form.shipper.bank_account_no}}</p>
           <p *ngIf="seeMore_form.shipper!=null">
-            <b>Shipper telephone no:</b>{{seeMore_form.shipper.user.telephone_number}}</p>
+            <b>Shipper account name:</b> {{seeMore_form.shipper.bank_account.bank_account_name}}</p>
+            <p *ngIf="seeMore_form.shipper!=null">
+            <b>Shipper telephone no:</b> {{seeMore_form.shipper.user.telephone_number}}</p>
+            <div class="col-5">
+              <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="ordersdetail.shop_latitude" [longitude]="ordersdetail.shop_longtitude" >
+                <agm-direction [origin]="ordersdetail.direction.origin" [destination]="ordersdetail.direction.destination" 
+                [renderOptions]="options" ></agm-direction>
+                <agm-marker  [latitude]="ordersdetail.shop_latitude" [longitude]="ordersdetail.shop_longtitude" [label]="labelOptionShop">
+                  <agm-info-window #infoWindow>
+                    <strong>{{ordersdetail.seller.shop_name}}</strong><br>
+                  </agm-info-window>
+                </agm-marker>
+                <agm-marker  [latitude]="ordersdetail.direction.destination.lat" [longitude]="ordersdetail.direction.destination.lng" 
+                [label]="labelOptionReceiver">
+                  <agm-info-window #infoWindow>
+                    <strong>{{ordersdetail.receiver_firstname}} {{ordersdetail.receiver_lastname}}</strong><br>
+                  </agm-info-window>
+                </agm-marker>
+              </agm-map>
+              </div>
+
         </div>
         <div class="modal-footer">
           <button type="button rounded-0" class="btn btn" data-dismiss="modal">Close</button>
@@ -123,7 +152,10 @@
         </div>
         <div class="modal-body">
           <!-- <app-qrcode></app-qrcode> -->
-          <img [src]="baseUrl+qrCodeImageUrl.data.qrcode_buyer" >
+          <div class="text-center">
+              <img [src]="baseUrl+qrCodeImageUrl.data.qrcode_buyer" >
+
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn rounded-0" data-dismiss="modal">Close</button>

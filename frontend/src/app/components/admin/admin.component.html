@@ -51,112 +51,18 @@
             </select>
           </div>
           <div class="col">
-            <button class="btn" (click)="searchByRole()">Search</button>
+            <button class="btn btn-primary rounded-0" (click)="searchByRole()">Search</button>
           </div>
         </div>
         <div id="dataTable">
           <div [hidden]="isBuyer">
-
-            <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Address</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th> </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let user of display_buyer;let  i = index">
-                  <td>{{ i+1 }}</td>
-                  <td>{{ user.id }}</td>
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.location }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.status }}</td>
-                  <td>
-                    <div class="btn-group">
-                      <button [disabled]="user.status=='Approve'" type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
-                      <button [disabled]="user.status=='Block'" type="button" class="btn btn-danger" (click)="onClickUpdate(user,4)">Block</button>
-                    </div>
-
-                  </td>
-                </tr>
-              </tbody>
-            </table> -->
             <app-admin-table-data *ngIf="!isBuyer" [_type]="type" [_data]="userInsystem['buyer']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
-
           </div>
           <div [hidden]="isSeller">
-            <!-- <table datatable class="row-border hover">
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>ID</th>
-                  <th>Shop Name</th>
-                  <th>Location</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th> </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let user of display_seller;let  i = index">
-                  <td>{{ i+1 }}</td>
-                  <td>{{ user.id }}</td>
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.location }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.status }}</td>
-                  <td>
-                    <div class="btn-group">
-                      <button [disabled]="user.status=='Approve'" type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
-                      <button [disabled]="user.status=='Block'" type="button" class="btn btn-danger" (click)="onClickUpdate(user,4)">Block</button>
-                    </div>
-
-                  </td>
-                </tr>
-              </tbody>
-            </table> -->
             <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="userInsystem['seller']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
-
           </div>
           <div [hidden]="isDeliver">
-            <!-- <table datatable class="row-border hover">
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Bank Account No</th>
-                  <th>Bank Account Name</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th> </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let user of display_shipper;let  i = index">
-                  <td>{{ i+1 }}</td>
-                  <td>{{ user.id }}</td>
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.bank_account_no }}</td>
-                  <td>{{ user.bank_account_name }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>
-                    <div class="btn-group">
-                      <button [disabled]="user.status=='Approve'" type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
-                      <button [disabled]="user.status=='Block'" type="button" class="btn btn-danger" (click)="onClickUpdate(user,4)">Block</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table> -->
-            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="userInsystem['deliver']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
-
+            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="userInsystem['Shipper']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
           </div>
         </div>
       </div>
@@ -176,114 +82,18 @@
             </select>
           </div>
           <div class="col">
-            <button class="btn" (click)="searchByRole()">Search</button>
+            <button class="btn btn-primary rounded-0" (click)="searchByRole()">Search</button>
           </div>
         </div>
         <div id="dataTable">
-          <div [hidden]="isBuyer">
-             <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
-              <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Email</th>
-                    <th>Status</th>
-                    <th> </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let user of display_buyer;let  i = index">
-                    <td>{{ i+1 }}</td>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.address }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.status }}</td>
-                  <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
-                      <button type="button" class="btn btn-danger" (click)="onClickUpdate(user,3)">Reject</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table> -->
-
+          <!-- <div [hidden]="isBuyer">
             <app-admin-table-data *ngIf="!isBuyer" [_type]="type" [_data]="holdingUsers['buyer']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
-
-          </div>
+          </div> -->
           <div [hidden]="isSeller">
-               <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
-                  <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>ID</th>
-                        <th>Shop Name</th>
-                        <th>Location</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th> </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let user of display_seller;let  i = index">
-                        <td>{{ i+1 }}</td>
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.location }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.status }}</td>
-                      <td>
-                        <div class="btn-group">
-                          <button  type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
-                          <button  type="button" class="btn btn-danger" (click)="onClickUpdate(user,3)">Reject</button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> -->
-
             <app-admin-table-data *ngIf="!isSeller" [_type]="type" [_data]="holdingUsers['seller']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
-
           </div>
           <div [hidden]="isDeliver">
-              <!-- <table datatable [dtOptions]="dtOptions" class="row-border hover">
-                  <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Bank Account No</th>
-                        <th>Bank Account Name</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th> </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let user of display_shipper;let  i = index">
-                        <td>{{ i+1 }}</td>
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.bank_account_no }}</td>
-                        <td>{{ user.bank_account_name }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.status }}</td>
-
-                      <td>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-success" (click)="onClickUpdate(user,2)">Approve</button>
-                          <button type="button" class="btn btn-danger" (click)="onClickUpdate(user,3)">Reject</button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> -->
-
-            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="holdingUsers['deliver']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
-
+            <app-admin-table-data *ngIf="!isDeliver" [_type]="type" [_data]="holdingUsers['Shipper']" (updateUser)="onClickUpdate($event)"></app-admin-table-data>
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ export class ManageShopComponent implements OnInit {
 
     private seller;
     private products;
-    private history;
+    private history=[];
     private noti =[];
     private type;
     
@@ -61,24 +61,25 @@ export class ManageShopComponent implements OnInit {
         console.log("[seller] ",this.seller);
         this.sellerService.getOrderHistory(this.seller.seller_id).subscribe(
             response => {      
-                this.history = response.data       
+                // this.history = response.data       
                 console.log("[response] ",this.products)
-                this.filterHistory()
+                this.filterHistory(response.data)
                 this.isLoad = !this.isLoad;
             },
             error => console.log(error)
         )
     }
 
-    filterHistory() {
-        this.history.forEach(element => {                
+    filterHistory(data) {
+        data.forEach(element => {                
             console.log('[this.history] ',element);
-            if(element.order_status.order_status_id != 6) {
+            if(element.order_status.order_status_id != 6 && element.order_status.order_status_id != 7) {
                 this.noti.push(element)
                 console.log('[Noti] ',this.noti);
-                
             }
-            // this.noti = 
+            else {
+                this.history.push(element)
+            }
         });
     }
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Buyer extends Model
 {
 
-    protected $primaryKey = 'buyer_id';
+    public $primaryKey = 'buyer_id';
 
     protected $fillable = [
         'buyer_address'

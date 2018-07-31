@@ -63,6 +63,7 @@ export class ScannerComponent implements OnInit {
 
   reader(result) {
     console.log('[reader]',result);
+    localStorage.setItem('qr-code-result',result)
     this.router.navigateByUrl('/qr-code-result')
 
   }

@@ -23,6 +23,7 @@ export class TableHistoryComponent implements OnInit {
   private isShow: boolean = false;
   private isOrderInfo: boolean = false;
   private isOpenQRCode: boolean = false;
+  private isAdmin: boolean = false;
   private emit_data;
   private headers;
   private data;
@@ -43,6 +44,12 @@ export class TableHistoryComponent implements OnInit {
     console.log('[_headers] ', this._headers);
     console.log('[_data] ', this._data);
     console.log('[_type] ', this._type);
+    let adminSelect = localStorage.getItem('adminSelect');
+    console.log('admin select: ',adminSelect);
+    if(adminSelect != null) {
+      this.isAdmin = !this.isAdmin
+    }
+    
     this.setPage();
 
   }
@@ -54,17 +61,17 @@ export class TableHistoryComponent implements OnInit {
   }
 
   openOrderInfo(order) {
-    this.isShow = !this.isShow
+    // this.isShow = !this.isShow
     this.isOrderInfo =!this.isOrderInfo
     this.getOrderDetail(order.order_id)
       .then(result => {
         console.log("[detail] seeMore: ", result);
         this.order = result
-        this.isShow = !this.isShow
+        // this.isShow = !this.isShow
 
       }).catch(error => {
         console.log("[error] seeMore: ", error);
-        this.isShow = !this.isShow
+        // this.isShow = !this.isShow
 
 
       })
@@ -106,6 +113,49 @@ export class TableHistoryComponent implements OnInit {
         console.log("[error] ", error);
 
       })
+  }
+
+  cancelOrder(order) {
+    console.log('[order] ',order);
+
+    this.isShow = !this.isShow
+    let body = {
+      order_status_id: 7,
+      shipper_id:null
+    }
+    this.orderService.updateOrder(order.order_id,body)
+    .subscribe(response => {
+      console.log('[response] ',response);
+      alert('Order has been cancel')
+      this.updateDataInTable(response.result)
+    },error => {
+      this.isShow = !this.isShow
+      console.log('[error] ',error);
+
+    })
+  }
+
+  updateDataInTable(order) {
+    let _data = {
+      order_id:order.order_id,
+      order_status:{
+        order_status_id:order.order_status.order_status_id,
+        order_status_name:order.order_status.order_status_name
+      },
+      payment_transfer_slip:order.payment_transfer_slip,
+      updated_at:order.updated_at
+    }
+    for(var i = 0; i < this.data.length; i++) {
+      if(this.data[i].order_id == order.order_id) {
+          this.data[i] = _data
+          this.isShow = !this.isShow
+
+      }
+    }
+  }
+
+  close() {
+    this.isOrderInfo = !this.isOrderInfo
   }
 
 

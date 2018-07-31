@@ -3,69 +3,87 @@
   <h1>Edit shop</h1>
   <form #editShopForm=ngForm (ngSubmit)="onSubmit()">
 
-    <div class="form-group">
-      <label for="input-name">Shop Name</label>
-      <input [disabled]="isClick" type="text" name="shop-name" class="form-control" id="input-name" placeholder="Shop Name"  [(ngModel)]="form.shop_name"
-        required/>
-      <span class="text-danger" [hidden]="!error.shop_name">
-          {{error.shop_name}}
-        </span>
-    </div>
-
-    <div class="form-group">
-      <label for="shop-location">Shop Location</label>
-      <input [disabled]="isClick" type="text" name="shop-location" class="form-control" id="shop-location" placeholder="Shop location"  [(ngModel)]="form.shop_location"
-        required/>
-      <span class="text-danger" [hidden]="!error.shop-location">
-          {{error.shop_location}}
-        </span>
-    </div>
-
-    <div class="d-flex justify-content-center" >
-      <agm-map [zoom]="17" [latitude]="latitude" [longitude]="longtitude" (mapClick)="onChooseLocation($event)" >
-        <agm-marker [latitude]="latitude" [longitude]="longtitude"></agm-marker>
-      </agm-map>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="input-name">Shop Name</label>
+          <input [disabled]="isClick" type="text" name="shop-name" class="form-control" id="input-name" placeholder="Shop Name"  [(ngModel)]="form.shop_name"
+            required/>
+          <span class="text-danger" [hidden]="!error.shop_name">
+              {{error.shop_name}}
+            </span>
+        </div>
+      
+        <div class="form-group">
+          <label for="shop-location">Shop Location</label>
+          <input [disabled]="isClick" type="text" name="shop-location" class="form-control" id="shop-location" placeholder="Shop location"  [(ngModel)]="form.shop_location"
+            required/>
+          <span class="text-danger" [hidden]="!error.shop-location">
+              {{error.shop_location}}
+            </span>
+        </div>
+      
+        <div class="d-flex justify-content-center" >
+          <agm-map [zoom]="17" [latitude]="latitude" [longitude]="longtitude" (mapClick)="onChooseLocation($event)" >
+            <agm-marker [latitude]="latitude" [longitude]="longtitude"></agm-marker>
+          </agm-map>
+        </div>
       </div>
 
-    <!-- <div class="form-group">
-      <label for="selectCatagory">Shop Catagory</label>
-      <select class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="form.selected_catagory"
-        required>
-        <option disabled selected>Select a Catagory</option>
-        <option *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option>
-      </select>
-    </div> -->
+      <div class="col">
 
-    <!-- <div class="form-group">
-        <label for="selectCatagory">Shop Catagory</label>
-        <select [disabled]="isClick" class="form-control" name="selectCatagory" id="selectCatagory" #selectCatagory="ngModel" [(ngModel)]="dafault_catagory" (ngModelChange)="onCatagorySelected($event)"
-          required>
-          <option [disabled]="isClick" *ngFor="let item of catagory" [value]="item.shop_type_id">{{item.shop_type_name}}</option>
-        </select>
-      </div> -->
-<!-- 
-    <div class="form-group">
-      <label for="input-price">Shop Image</label>
-      <br>
-      <input [disabled]="isClick" type='file' id="img" (change)="preview($event)" accept="image/*" />
-      <br>
-      <br>
+        <div class="form-group">
+          <label for="user-firstname">First name</label>
+          <input [disabled]="isClick" type="text" name="user-firstname" class="form-control" id="input-firstname" placeholder="First name"  [(ngModel)]="user_form.firstname"
+            required/>
+          <span class="text-danger" [hidden]="!error.firstname">
+              {{error.firstname}}
+            </span>
+        </div>
 
-      <canvas id="previewImg" #mycanvas></canvas>
-    </div> -->
+        <div class="form-group">
+            <label for="user-lastname">Last name</label>
+            <input [disabled]="isClick" type="text" name="user-lastname" class="form-control" id="input-lastname" placeholder="Last name"  [(ngModel)]="user_form.lastname"
+              required/>
+            <span class="text-danger" [hidden]="!error.lastname">
+                {{error.lastname}}
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="user-identity_no">Identity no</label>
+            <input [disabled]="isClick" type="text" name="user-identity_no" class="form-control" id="input-lastname" placeholder="Identity no"  [(ngModel)]="user_form.identity_no"
+              required/>
+            <span class="text-danger" [hidden]="!error.identity_no">
+                {{error.identity_no}}
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="user-telephone_number">telephone number</label>
+            <input [disabled]="isClick" type="text" name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_form.telephone_number"
+              required/>
+            <span class="text-danger" [hidden]="!error.telephone_number">
+                {{error.telephone_number}}
+            </span>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <br>
 
     <div *ngIf="isClick">
       <p class="loading">Saving</p>
     </div>
-
     <div *ngIf="isCreate">
       <p class="success" >Upload Success</p>
     </div>
-
     <div *ngIf="error">
       <p class="error" >{{errorMessage}}</p>
     </div>
-    
 
     <div class="row">
       <div class="col">

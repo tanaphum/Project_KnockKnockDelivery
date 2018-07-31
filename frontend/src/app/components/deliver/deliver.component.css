@@ -114,4 +114,8 @@
   border:1px solid gray;
   background-color: white;
 }
+img {
+  max-width: 250px;
+  max-height: 200px;
+}
   

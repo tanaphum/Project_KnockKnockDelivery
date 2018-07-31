@@ -88,7 +88,29 @@ class OrderController extends Controller
 
         $order->save();
 
-        return response()->json(['result' => $order]);
+        $findOrder = $this->order->where('order_id', $order->order_id)->with('order_status')->first();
+
+        return response()->json([
+            'result' => [
+                'order_id' => $findOrder->order_id,
+                'receiver_firstname' => $findOrder->receiver_firstname,
+                'receiver_lastname' => $findOrder->receiver_lastname,
+                'receiver_location' => $findOrder->receiver_location,
+                'receiver_latitude' => $findOrder->receiver_latitude,
+                'receiver_longitude' => $findOrder->receiver_longitude,
+                'service_charge' => $findOrder->service_charge,
+                'order_total_price' => $findOrder->order_total_price,
+                'created_at' => $findOrder->created_at->format('Y-m-d'),
+                'updated_at' => $findOrder->updated_at->format('Y-m-d'),
+                'seller_id' => $findOrder->seller_id,
+                'buyer' => $findOrder->buyer_id,
+                'order_status' => [
+                    'order_status_id' => $findOrder->order_status->order_status_id,
+                    'order_status_name' => $findOrder->order_status->order_status_name
+                ],
+                'order_details' => OrderDetail::getOrderDetailsByOrderId($findOrder->order_id)
+            ]
+        ]);
     }
 
     public function uploadPaymentTransferSlip(Request $request, $order_id)

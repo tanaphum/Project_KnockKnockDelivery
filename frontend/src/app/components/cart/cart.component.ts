@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit {
 
-  // private isShow: boolean = false;
+  private baseUrl = 'http://localhost:8000';
   private isCheckOut: boolean = true;
   private isWarting: boolean = true;
   private isSameShop: boolean = true;
@@ -22,6 +22,8 @@ export class CartComponent implements OnInit {
   private isShow:boolean = true;
   private seller_id;
   private buyer_id;
+  private sumPrice = 0;
+  private serviceCharge = 0;
   private totalPrice = 0;
   private cart;
   private orderForm = {
@@ -33,6 +35,7 @@ export class CartComponent implements OnInit {
   }
   latitude: any;
   longtitude: any;
+  distance: any;
 
   constructor(
     private router: Router,
@@ -176,6 +179,12 @@ export class CartComponent implements OnInit {
     });
   }
 
+  calculateDistance(lat1, lng1, lat2, lng2) {
+    const nyc = new google.maps.LatLng(lat1, lng1);
+    const london = new google.maps.LatLng(lat2,lng2);
+    this.distance = (google.maps.geometry.spherical.computeDistanceBetween(nyc, london)/1000)*1.609344;
+  }
+
   createNewOrderRequest() {
     this.isShow = ! this.isShow;
     let orders = localStorage.getItem('orders')
@@ -190,8 +199,8 @@ export class CartComponent implements OnInit {
       receiver_location: this.orderForm.receiver_location,
       receiver_latitude: this.orderForm.receiver_latitude,  
       receiver_longitude: this.orderForm.receiver_longitude,
-      order_total_price: this.totalPrice,
-      service_charge: "40",
+      order_total_price: this.sumPrice,
+      service_charge: this.serviceCharge,
       seller_id: seller_id,
       buyer_id: buyer_id
     }
@@ -207,6 +216,8 @@ export class CartComponent implements OnInit {
       this.isShow = ! this.isShow;
 
       alert('Create order success')
+      this.router.navigateByUrl('/shops')
+
       if(orders == null){
         localStorage.setItem('orders',JSON.stringify(result));
         localStorage.removeItem('cart')
@@ -256,7 +267,21 @@ export class CartComponent implements OnInit {
   }
 
   isCreatedOrder() {
-    this.router.navigateByUrl('/shops')
+    this.isNewOrder = !this.isNewOrder
+    // this.router.navigateByUrl('/shops')
+    // this.calculateDistance(+response.data["seller"].shop_latitude,+response.data["seller"].shop_longitude,
+    // +this.orderForm.receiver_latitude,+this.orderForm.receiver_longitude);
+    //   if(this.distance > 8 && this.distance <= 40){
+    //     this.serviceCharge = Math.round(25+((this.distance-1)*14))
+    //   }else if (this.distance > 5 && this.distance <= 8){
+    //     this.serviceCharge = Math.round(25+((this.distance-1)*11))
+    //   }
+    //   else if (this.distance > 1 && this.distance <= 5){
+    //     this.serviceCharge = Math.round(25+((this.distance-1)*8))
+    //   }else{
+    //     this.serviceCharge = 25;
+    //   }
+    this.sumPrice = this.totalPrice + this.serviceCharge;
   }
 
   cancelOrderRequest() {

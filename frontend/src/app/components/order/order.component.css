@@ -22,6 +22,11 @@
     background-size: cover;
   }
 
+  agm-map {
+    height: 300px;
+    width: 450px;
+  }
+
   
 /* Loading page CSS */
 
@@ -63,4 +68,15 @@
 #paymentTransferSlip {
   height: 100%;
   width: 100%;
+}
+
+.card {
+  max-height: 650px;
+  height: 650px;
+
+}
+
+img {
+  max-width: 250px;
+  max-height: 300px;
 }

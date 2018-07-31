@@ -25,36 +25,60 @@
           </i>
         </div>
     </div>
-
   </div>
 
-  <div class="container" id="list-container">
-    <div class="justify-content-center" *ngFor="let order of orders;let i = index">
-
-      <div class="card rounded-0">
-        <div class="card-header">
-          <p>
-            <b>{{order.shop_name}}</b>
-          </p>
-        </div>
-        <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <div>
-              <p>Shop location: {{order.shop_location}}</p>
+  <div class="w3-container w3-white" id="list-container">
+    <div class="w3-container w3-padding">
+      <div *ngFor="let order of orders;let i = index">
+        <div class="w3-container w3-quarter w3-padding-16">
+          <div class="card rounded-0">
+              <!-- <div class="card-header">
+                <p>
+                  <b>{{order.shop_name}}</b>
+                </p>
+              </div> -->
+              <div class="card-body">
+                <div class="text-center">
+                  <img class="card-img-top" [src]="baseUrl+order.shop_logo_image" alt="">
+                </div>
+                  <p>Shop name: {{order.shop_name}}</p>
+                  <p>Shop location: {{order.shop_location}}</p>
             </div>
-            <div class="d-flex align-items-center btn-group">
-              <button class="btn btn-info rounded-0" (click)="gotoShop(order)">Go to shop</button>
+            <div class="card-footer">
+              <button class="btn btn-info btn-block rounded-0" (click)="gotoShop(order)">See order</button>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
 
+
+
 </div>
 
+<!-- <div class="w3-container w3-white" id="before-footer">
+    <div class="w3-container w3-padding">
+      <div *ngFor="let shop of shops;let i = index">
+        <div class="w3-container w3-quarter w3-padding-16	">
+          <div class="card">
+            <div class="d-flex justify-content-center">
+              <img class="card-img-top" [src]="baseUrl+shop.shop_logo_image" alt="">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title" id="title">Shop name: {{shop.shop_name}}</h5>
+              <p class="card-text" id="description">Shop location: {{shop.shop_location}}</p>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-primary btn-block rounded-0" (click)="goToShop(shop)">Go to shopping</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ -->
 
 
 <!-- //////////////////////////////////// Order Modal /////////////////////////////////////////// -->
@@ -120,11 +144,48 @@
             <label for="input-shipper_transfer_slip">Shipper transfer slip</label>
             <br>
             <input  name="shipper-transfer-slip-image"  type='file' id="img" (change)="previewShipperTransferImage($event.target.files)" accept="image/*">
-                    <br>
-                    <br>
+            <br>
+            <br>
 
-                    <img [hidden]="imageUrlTransfer===null" id="imagePriview" [src]="imageUrlTransfer" />
-                  </div>
+            <img [hidden]="imageUrlTransfer===null" id="imagePriview" [src]="imageUrlTransfer" />
+          </div>
+
+        <!-- profile -->
+        <div class="form-group">
+            <label for="user-firstname">First name</label>
+            <input  type="text" name="user-firstname" class="form-control" id="input-firstname" placeholder="First name"  [(ngModel)]="user_form.firstname"
+              required/>
+            <span class="text-danger" [hidden]="!error.firstname">
+                {{error.firstname}}
+              </span>
+        </div>
+
+        <div class="form-group">
+            <label for="user-lastname">Last name</label>
+            <input type="text" name="user-lastname" class="form-control" id="input-lastname" placeholder="Last name"  [(ngModel)]="user_form.lastname"
+              required/>
+            <span class="text-danger" [hidden]="!error.lastname">
+                {{error.lastname}}
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="user-identity_no">Identity no</label>
+            <input type="text" name="user-identity_no" class="form-control" id="input-lastname" placeholder="Identity no"  [(ngModel)]="user_form.identity_no"
+              required/>
+            <span class="text-danger" [hidden]="!error.identity_no">
+                {{error.identity_no}}
+            </span>
+        </div>
+
+        <div class="form-group">
+            <label for="user-telephone_number">telephone number</label>
+            <input type="text" name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_form.telephone_number"
+              required/>
+            <span class="text-danger" [hidden]="!error.telephone_number">
+                {{error.telephone_number}}
+            </span>
+        </div> 
   
         </div>
         <div class="modal-footer">

@@ -33,7 +33,7 @@ class MasterDataController extends Controller
     }
 
 
-    public function getMasterDate()
+    public function getMasterData()
     {
         $profile_status = $this->profile_status->all()->toArray();
         $bank_account = $this->bank_account->all()->toArray();

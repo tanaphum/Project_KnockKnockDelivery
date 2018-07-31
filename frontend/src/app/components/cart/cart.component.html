@@ -8,6 +8,9 @@
       <div class="card-header">Cart</div>
       <div class="card-body">
         <div class="row" id="inner" *ngFor="let product of cart;let i = index">
+          <div class="col" id="image">
+            <img [src]="baseUrl+product.product_image_1" alt="">
+          </div>
           <div class="col" style="display:flex">
             <p id="remove" (click)="deleteProduct(product)">
               <i class="fa fa-trash"></i>
@@ -26,9 +29,10 @@
               </p>
             </div>
           </div>
+
         </div>
         <div>
-          <p><b>Totla price:</b> {{totalPrice}} &#3647;</p>
+          <p><b>Total price:</b> {{totalPrice}} &#3647;</p>
           <p style="color: red"  [hidden]="!isSame">All items must be in the same shop</p>
           <p style="color: red"  [hidden]="totalPrice<=1000">Total price not more than 1000 Bath</p>
         </div>
@@ -42,7 +46,7 @@
 
     <div class="w3-display-middle" [hidden]="isCheckOut">
       <div class="card card-container rounded-0" [hidden]="!isNewOrder">
-        <div class="card-header">Create new order request</div>
+        <div class="card-header">Reciever information</div>
         <div class="card-body">
             <form #createOrderForm=ngForm>
 
@@ -60,7 +64,7 @@
             </form>
 
             <div class="form-group">
-                <agm-map [zoom]="18" [latitude]="latitude" [longitude]="longtitude" (mapClick)="onChooseLocation($event)" >
+                <agm-map [zoom]="17" [latitude]="latitude" [longitude]="longtitude" (mapClick)="onChooseLocation($event)" >
                   <agm-marker [latitude]="latitude" [longitude]="longtitude"></agm-marker>
                 </agm-map>
                 </div>
@@ -68,17 +72,22 @@
         </div>
         <div class="card-footer d-flex justify-content-end">
             <button class="btn btn-danger rounded-0" (click)="cancelOrderRequest()">Cancel</button>
-            <button class="btn btn-success rounded-0" (click)="createNewOrderRequest()">Create</button>
+            <button class="btn btn-success rounded-0" (click)="isCreatedOrder()">Create</button>
         </div>
       </div>
 
       <div class="card card-container" [hidden]="isNewOrder">
-        <div class="card-header">Created order</div>
+        <div class="card-header">Create new order</div>
         <div class="card-body">
-          <h2>Waiting shipper accept order</h2>
+          <p>Reciever name: {{orderForm.receiver_firstname}} {{orderForm.receiver_lastname}}</p>
+          <p>Reciever location: {{orderForm.receiver_location}} </p>
+          <p>Service price: {{serviceCharge}}</p>
+          <p>Product price: {{sumPrice}}</p>
+          <p>Total price: {{totalPrice}}</p>
         </div>
-        <div class="card-footer d-flex justify-content-end">
-            <button class="btn btn-success rounded-0" (click)="isCreatedOrder()">Ok</button>
+        <div class="card-footer d-flex justify-content-end">            
+          <button class="btn btn-danger rounded-0" (click)="cancelOrderRequest()">Cancel</button>
+          <button class="btn btn-success rounded-0" (click)="createNewOrderRequest()">Ok</button>
         </div>
       </div>
     </div>

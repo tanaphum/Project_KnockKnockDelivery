@@ -67,6 +67,7 @@
 .card {
   max-height: 400px;
   height: 400px;
+  padding-top:25px;
 
 }
 
@@ -77,7 +78,7 @@ img {
 
 #searchBox {
   /* margin-bottom: 5px; */
-  height: 100px;
+  height: 110px;
   background-color: #003E52;
 
 }
@@ -201,14 +202,15 @@ agm-map {
 
 }
 
+  
 @media screen and (max-width: 375px) {
   .cart-num {
     position: absolute;
     background: #f36e36;
     color: #fff;
-    top: 170px;
+    top: 165px;
     /* font-weight: 400; */
-    right: 160px; 
+    right: 285px; 
     /* left: px; */
     text-align: center;
     border: 3px solid #f36e36;
@@ -218,6 +220,28 @@ agm-map {
     border-radius: 50%;
     display: inline-block;
 
+}
+
+.history-num{
+  position: absolute;
+  background: #f36e36;
+  color: #fff;
+  top: 165px;
+  /* font-weight: 400; */
+  right: 160px; 
+  /* left: px; */
+  text-align: center;
+  border: 3px solid #f36e36;
+  font-size: 14px;
+  min-width: 20px;
+  /* line-height: 14px; */
+  border-radius: 50%;
+  display: inline-block;
+}
+
+agm-map {
+  height: 250px;
+  width: 300px;
 }
   
 }

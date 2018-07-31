@@ -29,24 +29,6 @@
       </select>
     </div>
 
-    <!-- <div class="form-group">
-        <label for="selectCatagory">Shop Catagory</label>
-        <select class="form-control"  id="selectCatagory" [(ngModel)]="dafault_catagory" (ngModelChange)="onCatagorySelected($event)"
-          required>
-          <option value="" disabled selected>Select a Catagory</option>
-          <option *ngFor="let item of catagory" [value]="item.category_id">{{item.category_name}}</option>
-        </select>
-      </div> -->
-
-    <!-- <div class="form-group">
-      <label for="input-price">Product Amount Unit</label>
-      <input [disabled]="isClick" type="number" name="amount_unit" class="form-control" id="input-amount-unit" placeholder="Product Unit Amount" [(ngModel)]="form.unit_in_stock"
-        required>
-      <span class="text-danger" [hidden]="!error.unit_in_stock">
-        {{error.unit_in_stock}}
-      </span>
-    </div> -->
-
     <div class="form-group">
       <label for="input-description">Description</label>
       <textarea [disabled]="isClick" type="text" name="description" class="form-control" id="input-description" placeholder="Product Description" [(ngModel)]="form.product_description"
@@ -59,7 +41,7 @@
     <div class="form-group">
       <label for="input-price">Product Image</label>
       <br>
-      <input [disabled]="isClick"type='file' id="img" (change)="preview($event.target.files)" accept="image/*" #fileInput/>
+      <input [disabled]="isClick" type='file' id="img" (change)="preview($event.target.files)" accept="image/*" #fileInput/>
       <br>
       <br>
       <img [hidden]="imageUrl==null" [src]="imageUrl" style="width:50%;height: 50%;">

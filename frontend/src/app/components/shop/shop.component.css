@@ -22,8 +22,8 @@
     margin: auto;
   }
   agm-map {
-    height: 100%;
-    width: 300px;
+    height: 200px;;
+    width: 350px;;
   }
   
   .loader {
@@ -58,6 +58,7 @@
     max-height: 200px;
   }
   
+  
   @media screen and (max-width: 375px) {
     #catagory_container {
       width: 100%;
@@ -75,7 +76,7 @@
   
   #searchBox {
     /* margin-bottom: 5px; */
-    height: 100px;
+    height: 110px;
     background-color: #003E52;
   
   }
@@ -141,6 +142,13 @@
   .card {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
   }
+
+  .card {
+    max-height: 400px;
+    height: 400px;
+    padding-top:25px;
+  
+  }
   
   
   /* Cart CSS */
@@ -202,9 +210,9 @@
       position: absolute;
       background: #f36e36;
       color: #fff;
-      top: 170px;
+      top: 185px;
       /* font-weight: 400; */
-      right: 160px; 
+      right: 285px; 
       /* left: px; */
       text-align: center;
       border: 3px solid #f36e36;
@@ -214,6 +222,23 @@
       border-radius: 50%;
       display: inline-block;
   
+  }
+
+  .history-num{
+    position: absolute;
+    background: #f36e36;
+    color: #fff;
+    top: 185px;
+    /* font-weight: 400; */
+    right: 155px; 
+    /* left: px; */
+    text-align: center;
+    border: 3px solid #f36e36;
+    font-size: 14px;
+    min-width: 20px;
+    /* line-height: 14px; */
+    border-radius: 50%;
+    display: inline-block;
   }
     
   }

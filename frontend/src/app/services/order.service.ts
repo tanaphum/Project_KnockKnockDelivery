@@ -44,7 +44,7 @@ export class OrderService {
   }
 
   updateOrder(oid, body) {
-    return this.http.put(`${this.baseUrl}order/` + oid, body, this.httpOptions)
+    return this.http.put<order>(`${this.baseUrl}order/` + oid, body, this.httpOptions)
 
   }
 
@@ -70,12 +70,20 @@ export class OrderService {
   }
 
   QRcodeUpdateStatusOrderByOrderId(id,body) {
-    return this.http.put(`${this.baseUrl}orderQRcode/order/${id}`,body, this.httpOptions)
+    return this.http.put<order>(`${this.baseUrl}orderQRcode/order/${id}`,body, this.httpOptions)
 
   }
 
   ShipperAcceptOrder(id) {
-    return this.http.put(`${this.baseUrl}orderQRcode/order/${id}/shipper-accept`, this.httpOptions)
+    let header = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + this.UAT,
+        Accept: "application/json, text/plain, */*",
+        'Content-Type':"multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
+
+      })
+    };
+    return this.http.put(`${this.baseUrl}orderQRcode/order/${id}/shipper-accept`,{},this.httpOptions)
 
   }
 
@@ -99,7 +107,9 @@ export interface image {
 }
 
 export interface order {
-  result: null
+  result: {
+    order_id:''
+  }
 }
 
 export interface orders {

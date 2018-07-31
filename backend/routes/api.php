@@ -19,7 +19,7 @@ Route::post('auth/resetPassword', 'ChangePasswordController@process');
 Route::group([
    'middleware' => ['auth:api','CORS'],
 ], function ($router) {
-    Route::get('masterData', 'MasterDataController@getMasterDate');
+    Route::get('masterData', 'MasterDataController@getMasterData');
 });
 
 Route::group([

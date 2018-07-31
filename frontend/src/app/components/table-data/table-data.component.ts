@@ -11,7 +11,7 @@ import { SellerService } from '../../services/seller.service';
 })
 export class TableDataComponent implements OnInit {
 
-  @Input() products: Object;
+  @Input() products;
   @Output() reloadPage = new EventEmitter();
   @Output() isLoad = new EventEmitter();
 
@@ -24,13 +24,18 @@ export class TableDataComponent implements OnInit {
   private product_price;
   private unit_in_stock;
   private product_available;
+  private product_status
+  private status
   private selected_catagory;
+  private selected_status;
   private error:boolean = false;
   private errorMessage:String;
   private seller;
   private catagory;
   private product_image;
   private dafault_catagory: Number;
+  private dafault_status: Number;
+
   private baseUrl = 'http://localhost:8000';
 
 
@@ -45,6 +50,8 @@ export class TableDataComponent implements OnInit {
     this.seller = JSON.parse(localStorage.getItem("seller"));
     let masterData = JSON.parse(localStorage.getItem('masterData'))
     this.catagory = masterData.product_category;
+    this.status = masterData.product_status;
+
 
     this.isDelete = false;
     this.isEdit = false;
@@ -58,6 +65,7 @@ export class TableDataComponent implements OnInit {
     this.unit_in_stock = data.unit_in_stock;
     this.product_available = data.product_available;
     this.product_image = this.baseUrl+data.product_image_1
+
     console.log("this.product_image ",this.product_image)
 
 
@@ -67,6 +75,7 @@ export class TableDataComponent implements OnInit {
         this.selected_catagory = data.product_category.product_category_name;
       }
     });
+
   }
 
   openEdit(data) {
@@ -82,6 +91,13 @@ export class TableDataComponent implements OnInit {
       if (element.product_category_id == data.product_category.product_category_id) {
         this.dafault_catagory = idx + 1;
         this.selected_catagory = idx + 1;
+      }
+    });
+
+    this.status.forEach((element, idx) => {
+      if (element.product_status_id == data.product_status.product_status_id) {
+        this.dafault_status = idx + 1;
+        this.selected_status = idx + 1;
       }
     });
   }
@@ -104,7 +120,7 @@ export class TableDataComponent implements OnInit {
       product_description: this.product_description,
       product_price: this.product_price,
       unit_in_stock: this.unit_in_stock,
-      product_status_id: 1,
+      product_status_id: this.selected_status,
       product_category_id: this.selected_catagory,
       product_image_1:null,
       product_image_2:null,
@@ -119,7 +135,7 @@ export class TableDataComponent implements OnInit {
         console.log("response onEdit: ", response);
         this.isClick = !this.isClick;
         this.isEdit = true;
-
+        this.updateDataInTable(response.result)
       },
       error => {
         this.isClick = !this.isClick;
@@ -147,7 +163,30 @@ export class TableDataComponent implements OnInit {
   }
 
   onClose() {
-    this.reloadPage.emit(null)
+    // this.reloadPage.emit(null)
+  }
+
+
+  updateDataInTable(data) {
+    this.products.forEach(element => {
+      if(element.product_id === data.product_id) {
+        element.product_name = data.product_name
+        element.product_price = data.product_price
+        element.product_description = data.product_description
+        this.catagory.forEach((element, idx) => {
+          if (element.product_category_id == data.product_category_id) {
+            element.dafault_catagory = idx + 1;
+            element.selected_catagory = idx + 1;
+          }
+        });
+        this.status.forEach((element, idx) => {
+          if (element.product_status_id == data.product_status_id) {
+            element.dafault_status = idx + 1;
+            element.selected_status = idx + 1;
+          }
+        });
+      }
+    });
   }
 
 }

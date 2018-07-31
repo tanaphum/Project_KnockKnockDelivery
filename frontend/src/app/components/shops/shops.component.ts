@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BuyerService } from '../../services/buyer.service';
 import { SellerService } from '../../services/seller.service';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 
@@ -14,6 +15,7 @@ export class ShopsComponent implements OnInit {
 
   private keyWord = '';
   private products;
+  private user;
   private product_catagory;
   private shops;
   private isShow: boolean = true;
@@ -32,7 +34,12 @@ export class ShopsComponent implements OnInit {
   latitude = 18.800738;
   longtitude = 98.950392;
 
-
+  private user_form = {
+    firstname: null,
+    lastname: null,
+    identity_no: null,
+    telephone_number: null,
+  }
 
   private form = {
     product_name: null,
@@ -54,13 +61,16 @@ export class ShopsComponent implements OnInit {
     private BuyerService: BuyerService,
     private SellerService: SellerService,
     private UserService: UserService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+
   ) { }
 
   ngOnInit() {
     this.setCartNum();
     this.getAllProducts();
     this.setOrderNum();
+    this.getUserProfile();
   }
 
   getAllProducts() {
@@ -177,7 +187,7 @@ export class ShopsComponent implements OnInit {
     console.log("cart: ",cart);
 
     if(cart != null) {
-          this.cart_num = cart.length;
+        this.cart_num = cart.length;
     } 
     else if(cart == {}) {
       this.cart_num = 0;
@@ -187,19 +197,17 @@ export class ShopsComponent implements OnInit {
   }
 
   setOrderNum(){
-    // let orders = JSON.parse(localStorage.getItem("orders"));
-    // console.log("orders: ",orders);
-    // if(orders != null) {
-    //       this.orders_num = orders.length;
-    // } 
-    // else if(orders == {}) {
-    //   this.orders_num = 0;
-    // }
+    let order;
     let id = localStorage.getItem('buyer_id')
     this.BuyerService.getOrderByBuyerId(id)
     .subscribe(response => {
-      console.log("[response] ", response)
-      this.orders_num = response.data.length
+      console.log("[response] setOrderNum", response)
+      order = response.data
+      order.forEach(element => {
+        if(element.order_status.order_status_id != 7 && element.order_status.order_status_id != 6) {
+          this.orders_num += 1;
+        }
+      })
       , error => {
         console.log('error',error);
       }
@@ -240,6 +248,7 @@ export class ShopsComponent implements OnInit {
       buyer_address: this.buyer_profile.buyer_address,
       profile_status_id: 1
     }
+    this.updateProfile()
 
     this.BuyerService.updateBuyer(temp,id)
     .subscribe(response => {
@@ -262,6 +271,41 @@ export class ShopsComponent implements OnInit {
       console.log("[error] searchShop",error);
 
     })
+  }
+
+  getUserProfile() {
+    let id = localStorage.getItem('user_id')
+    this.authService.me()
+    .subscribe(response => {
+      console.log('[response] getUserProfile: ',response);
+      this.user = response
+
+      this.user_form.firstname = this.user.firstname;
+      this.user_form.lastname = this.user.lastname;
+      this.user_form.identity_no = this.user.identity_no;
+      this.user_form.telephone_number = this.user.telephone_number;
+    },error => {
+      console.log('[response] getUserProfile: ',error);
+
+    }) 
+  }
+
+  updateProfile() {
+    let id = localStorage.getItem('user_id')
+    return new Promise((resolve,reject) => {
+      this.authService.editUser(id,this.user_form)
+      .subscribe(response => {
+        console.log('[response] updateProfile: ',response);
+        resolve(response)
+        
+      }, error => {
+        console.log('[error] updateProfile: ',error);
+        reject(error)
+
+  
+      })
+    })
+
   }
 
 }

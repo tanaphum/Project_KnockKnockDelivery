@@ -25,95 +25,47 @@
     </div>
     <div class="w3-col m3 w3-center" id="cart">
       <div class="d-flex justify-content-around">
-        <i class="fa fa-shopping-cart w3-padding" (click)="goToCart()">
-          <span *ngIf="cart_num!=0" class="cart-num" id="topActionCartNumber">{{cart_num}}</span>
-        </i>
-        <i class="fa fa-history w3-padding" (click)="goToOrder()">
-          <span *ngIf="orders_num!=0" class="history-num" id="topActionHistoryNumber">{{orders_num}}</span>
-        </i>
-        <i class="fa fa-user w3-padding" data-toggle="modal" data-target="#editBuyerModal" (click)="openEditBuyer()">
-        </i>
+        <div>
+          <i class="fa fa-shopping-cart w3-padding" (click)="goToCart()">
+            <span *ngIf="cart_num!=0" class="cart-num" id="topActionCartNumber">{{cart_num}}</span>
+            <p style="font-size:12px;">Cart</p>
+          </i>
+        </div>
+        <div>
+          <i class="fa fa-history w3-padding" (click)="goToOrder()">
+            <span *ngIf="orders_num!=0" class="history-num" id="topActionHistoryNumber">{{orders_num}}</span>
+            <p style="font-size:12px;">History</p>
+          </i>
+        </div>
+        <div>
+          <i class="fa fa-user w3-padding" data-toggle="modal" data-target="#editBuyerModal" (click)="openEditBuyer()">
+            <p style="font-size:12px;">Edit</p>
+          </i>
+        </div>
       </div>
     </div>
 
   </div>
 
-  <!--
-    <div class="row" id="header-container">
-      <div class="col-2" id="catagory_container">
-        <p id="catagory" *ngFor="let catagory of product_catagory"> {{catagory.product_category_name}}</p>
-      </div>
-      <div class="col-10 w3-green">
-        </div>
-    </div> -->
-
-  <!--
-    <div class="w3-container" id="btn-container">
-      <div class="w3-quarter w3-padding">
-        <button class="btn btn-success btn-block" id="btn-Shop" type="button">Shop</button>
-      </div>
-      <div class="w3-quarter w3-padding">
-        <button class="btn btn-danger btn-block" id="btn-Collection" type="button">Collection</button>
-      </div>
-      <div class="w3-quarter w3-padding">
-        <button class="btn btn-warning btn-block" id="btn-Promo" type="button">Promotion</button>
-      </div>
-      <div class="w3-quarter w3-padding">
-        <button class="btn btn-primary btn-block" id="btn-Recommend" type="button">Recommend For You</button>
-      </div>
-    </div> -->
-
-
-
-
-
-  <!-- <div class="w3-container w3-padding w3-light-grey">
-      <div *ngFor="let product of products;let i = index" [hidden]="i >= 12">
-        <div class="w3-container w3-quarter">
-          <div class="card">
-            <div class="d-flex justify-content-center">
-                <img class="card-img-top" [src]="baseUrl+product.product_image_1" alt="" >
-            </div>
-            <div class="card-body">
-              <h5 class="card-title" id="title">{{product.product_name}}</h5>
-              <p class="card-text" id="description">{{product.product_description}}</p>
-              <h4 class="card-text" id="text">&#3647; {{product.product_price}}</h4>
-              <a class="btn btn-primary btn-block" data-toggle="modal" data-target="#infoModal" (click)="openInfo(product)">Detail</a>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="w3-padding-32 w3-light-grey">
-      <button class="btn btn-outline-info btn-block">See More</button>
-    </div> -->
-
-
-
   <div class="w3-container w3-white" id="before-footer">
     <div class="w3-container w3-padding">
-      <div *ngFor="let shop of shops;let i = index" [hidden]="i >= 12">
-        <div class="w3-container w3-quarter">
+      <div *ngFor="let shop of shops;let i = index">
+        <div class="w3-container w3-quarter w3-padding-16	">
           <div class="card">
             <div class="d-flex justify-content-center">
               <img class="card-img-top" [src]="baseUrl+shop.shop_logo_image" alt="">
             </div>
             <div class="card-body">
-              <h5 class="card-title" id="title">{{shop.shop_name}}</h5>
-              <p class="card-text" id="description">{{shop.shop_location}}</p>
-              <!-- <p class="card-text" id="text">{{shop.shop_type.shop_type_name}}</p> -->
-
+              <h5 class="card-title" id="title">Shop name: {{shop.shop_name}}</h5>
+              <p class="card-text" id="description">Shop location: {{shop.shop_location}}</p>
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary btn-block rounded-0" (click)="goToShop(shop)">Go to shop</a>
+                <a class="btn btn-primary btn-block rounded-0" (click)="goToShop(shop)">Go to shopping</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- Contact Section -->
@@ -251,6 +203,44 @@
           <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="Address" [(ngModel)]="buyer_profile.buyer_address"
             required></textarea>
         </div>
+
+        <!-- profile -->
+        <div class="form-group">
+            <label for="user-firstname">First name</label>
+            <input [disabled]="isClick" type="text" name="user-firstname" class="form-control" id="input-firstname" placeholder="First name"  [(ngModel)]="user_form.firstname"
+              required/>
+            <span class="text-danger" [hidden]="!error.firstname">
+                {{error.firstname}}
+              </span>
+          </div>
+  
+          <div class="form-group">
+              <label for="user-lastname">Last name</label>
+              <input [disabled]="isClick" type="text" name="user-lastname" class="form-control" id="input-lastname" placeholder="Last name"  [(ngModel)]="user_form.lastname"
+                required/>
+              <span class="text-danger" [hidden]="!error.lastname">
+                  {{error.lastname}}
+              </span>
+          </div>
+  
+          <div class="form-group">
+              <label for="user-identity_no">Identity no</label>
+              <input [disabled]="isClick" type="text" name="user-identity_no" class="form-control" id="input-lastname" placeholder="Identity no"  [(ngModel)]="user_form.identity_no"
+                required/>
+              <span class="text-danger" [hidden]="!error.identity_no">
+                  {{error.identity_no}}
+              </span>
+          </div>
+  
+          <div class="form-group">
+              <label for="user-telephone_number">telephone number</label>
+              <input [disabled]="isClick" type="text" name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_form.telephone_number"
+                required/>
+              <span class="text-danger" [hidden]="!error.telephone_number">
+                  {{error.telephone_number}}
+              </span>
+          </div>
+  
 
       </div>
       <div class="modal-footer">

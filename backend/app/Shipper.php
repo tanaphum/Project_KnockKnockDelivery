@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shipper extends Model
 {
-    protected $primaryKey = 'shipper_id';
+    public $primaryKey = 'shipper_id';
 
     protected $fillable = [
         'bank_account_no',

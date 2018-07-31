@@ -3,6 +3,7 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import { DeliverService } from '../../services/deliver.service';
 import { OrderService } from '../../services/order.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-deliver-orders',
@@ -11,11 +12,15 @@ import { Router } from '@angular/router';
 })
 export class DeliverOrdersComponent implements OnInit {
 
+  private baseUrl = 'http://localhost:8000';
   private haveOrder: boolean = false;
   private orders_num = 0;
   private orders = [];
+  private seller = [];
+  private user;
   private orderDetail = [];
   private keyWord = '';
+  private isOrder: boolean = true;
   private isShow:boolean = true;
   shop_latitude: any;
   shop_longtitude: any;
@@ -25,7 +30,23 @@ export class DeliverOrdersComponent implements OnInit {
   options = {
     suppressMarkers: true,
   };
+  private user_form = {
+    firstname: null,
+    lastname: null,
+    identity_no: null,
+    telephone_number: null,
+  }
   distance: any;
+  private see_more = {
+    order_id:'',
+    recieverName: '',
+    receiverLocation: '',
+    shopName:'',
+    shopLocation:'',
+    create_at:'',
+    service_charge:'',
+    total_price:''
+  }
 
   labelOptionShop = {
     color: '#fff',
@@ -33,15 +54,15 @@ export class DeliverOrdersComponent implements OnInit {
     fontSize: '15px',
     fontWeight: 'bold',
     text: 'S',
-    }
+  }
 
-    labelOptionReceiver = {
-      color: '#fff',
-      fontFamily: '',
-      fontSize: '15px',
-      fontWeight: 'bold',
-      text: 'R',
-      }
+  labelOptionReceiver = {
+    color: '#fff',
+    fontFamily: '',
+    fontSize: '15px',
+    fontWeight: 'bold',
+    text: 'R',
+  }
   
   private deliver_profile;
   private isUpdate:boolean = false;
@@ -49,7 +70,7 @@ export class DeliverOrdersComponent implements OnInit {
     bank_account_id:null,
     bank_account_no:null,
     profile_status_id:null,
-    shipper_transfer_slip:null,
+    shipper_transfer_slip_Image:null,
     selected_bank:null
 
   }
@@ -61,15 +82,22 @@ export class DeliverOrdersComponent implements OnInit {
   constructor(
     private deliverService: DeliverService,
     private orderService: OrderService,
-    private router: Router
-
+    private router: Router,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
+    this.seller = JSON.parse(localStorage.getItem('shop'))
+    console.log('[this.seller] ',this.seller );
+    this.shop_latitude = +this.seller["shop_latitude"];
+    this.shop_longtitude = +this.seller["shop_longitude"]
+    
     this.getShopOrders()
     this.getProfile();
     this.setBankAccount();
     this.setOrderNum();
+    this.getUserProfile();
+
   }
 
   getAcceptOrder() {
@@ -85,16 +113,21 @@ export class DeliverOrdersComponent implements OnInit {
   }
 
   setOrderNum(){
-    
+    let order;
     let id = JSON.parse(localStorage.getItem('deliver')).shipper_id
     this.deliverService.getOrderByDeliverId(id)
     .subscribe(
       response => {
-        console.log("[response] setOrderNum",response.data.length)
-        this.orders_num = response.data.length
-        if(this.orders_num != 0) {
-          this.haveOrder = !this.haveOrder
-        }
+        console.log("[response] setOrderNum",response.data)
+
+        order = response.data
+        order.forEach(element => {
+          if(element.order_status.order_status_id != 7 && element.order_status.order_status_id != 6) {
+            this.orders_num += 1;
+            this.haveOrder = true
+          }
+        })  
+        
 
         this.isShow = !this.isShow
 
@@ -147,7 +180,7 @@ export class DeliverOrdersComponent implements OnInit {
     // });
     this.orderService.getOrderBySellerId(id)
     .subscribe(response => {
-      console.log("[response] ",response)
+      console.log("[response] getShopOrders",response)
       this.orders = response.data;
       // this.getOrderDetail(this.orders)
 
@@ -167,7 +200,16 @@ export class DeliverOrdersComponent implements OnInit {
         this.calculateDistance(+element.seller.shop_latitude,+element.seller.shop_longitude,
           +element.receiver_latitude,+element.receiver_longitude);
           element["distance"] = this.distance;
-          element["serviceCharge"] = this.distance;
+          if(this.distance > 8 && this.distance <= 40){
+          element["service_charge"] = Math.round(25+((this.distance-1)*14))
+          }else if (this.distance > 5 && this.distance <= 8){
+            element["service_charge"] = Math.round(25+((this.distance-1)*11))
+          }
+          else if (this.distance > 1 && this.distance <= 5){
+            element["service_charge"] = Math.round(25+((this.distance-1)*8))
+          }else{
+            element["service_charge"] = 25;
+          }
         })
 
 
@@ -264,6 +306,89 @@ export class DeliverOrdersComponent implements OnInit {
 
     })
   }
+
+  seeMore(order) {
+    console.log('[See more] ',order);
+    
+    this.isOrder = !this.isOrder
+    this.see_more = {
+      order_id:order.order_id,
+      recieverName: order.receiver_firstname + ' ' +order.receiver_lastname,
+      receiverLocation: order.receiver_location,
+      shopName:order.seller.shop_name,
+      shopLocation:order.seller.shop_location,
+      create_at:order.created_at,
+      service_charge:order.service_charge,
+      total_price:order.order_total_price
+    }
+  }
+
+  goBack() {
+    this.isOrder = !this.isOrder
+  }
+
+  goBackDeliver() {
+    this.router.navigateByUrl('/deliver')
+  }
+
+  onUpdateProfile() {
+    console.log("[Update]")
+    let id = this.deliver_profile.shipper_id;
+    let form = {
+      bank_account_id:this.form.bank_account_id,
+      bank_account_no:this.form.bank_account_no,
+      shipper_transfer_slip_Image:this.form.shipper_transfer_slip_Image,
+      // profile_status_id:this.form.profile_status_id
+    }
+    this.updateProfile().then(result => {
+    this.deliverService.updateDeliver(form,id)
+    .subscribe(response => {
+      console.log("[Response] ",response)
+    },
+    error => {
+      console.log("[Error] ",error)
+
+    })
+    })
+
+  }
+
+
+  getUserProfile() {
+    let id = localStorage.getItem('user_id')
+    this.authService.me()
+    .subscribe(response => {
+      console.log('[response] getUserProfile: ',response);
+      this.user = response
+
+      this.user_form.firstname = this.user.firstname;
+      this.user_form.lastname = this.user.lastname;
+      this.user_form.identity_no = this.user.identity_no;
+      this.user_form.telephone_number = this.user.telephone_number;
+    },error => {
+      console.log('[response] getUserProfile: ',error);
+
+    }) 
+  }
+
+  updateProfile() {
+    let id = localStorage.getItem('user_id')
+    return new Promise((resolve,reject) => {
+      this.authService.editUser(id,this.user_form)
+      .subscribe(response => {
+        console.log('[response] updateProfile: ',response);
+        resolve(response)
+        
+      }, error => {
+        console.log('[error] updateProfile: ',error);
+        reject(error)
+
+  
+      })
+    })
+
+  }
+
 
 
 

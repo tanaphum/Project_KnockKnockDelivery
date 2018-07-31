@@ -11,7 +11,7 @@ use App\User;
 
 class ShipperController extends Controller
 {
-    private $deliver;
+    private $shipper;
     private $profile;
     private $user;
 

@@ -24,13 +24,13 @@
         <!-- <td [hidden]="adminSelect==='holdingUser'">{{user.profile_status.profile_status_name}}</td> -->
         <td [hidden]="adminSelect==='holdingUser'">
             <select class="form-control" name="selectStatus" #selectStatus="ngModel" (change)="onClickUpdate(selectStatus.value)" [(ngModel)]="user.profile_status.profile_status_name">
-              <option>Approve</option>
-              <option [ngValue]="status">Block</option>
+                <option>Approve</option>
+                <option [ngValue]='({user: user.buyer_id, status: 4})'>Block</option>
             </select>
           </td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.buyer_id,2)">Approve</button>
+            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.buyer_id, status: 2})">Approve</button>
             <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
 
@@ -66,13 +66,13 @@
         <td [hidden]="adminSelect==='holdingUser'">
           <select class="form-control" name="selectStatus" #selectStatus="ngModel" (change)="onClickUpdate(selectStatus.value)" [(ngModel)]="user.profile_status.profile_status_name">
             <option>Approve</option>
-            <option [ngValue]="status">Block</option>
+            <option [ngValue]='({user: user.seller_id, status: 4})'>Block</option>
           </select>
         </td>
         <td>
           <div class="btn-group">
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
-            <button type="button" class="btn btn-success rounded-0"  [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.seller_id,2)">Approve</button>
+            <button type="button" class="btn btn-success rounded-0"  [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.seller_id, status: 2})">Approve</button>
             <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
             <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" [hidden]="adminSelect==='holdingUser'">Info</button>
             <button type="button" class="btn btn-warning rounded-0"  data-toggle="modal" data-target="#editUser" (click)="onClickEdit(user)" [hidden]="adminSelect==='holdingUser'">Edit</button>
@@ -106,13 +106,13 @@
         <!-- <td [hidden]="adminSelect==='holdingUser'">{{ user.profile_status.profile_status_name }}</td> -->
         <td [hidden]="adminSelect==='holdingUser'">
             <select class="form-control" name="selectStatus" #selectStatus="ngModel" (change)="onClickUpdate(selectStatus.value)" [(ngModel)]="user.profile_status.profile_status_name">
-              <option>Approve</option>
-              <option [ngValue]="status">Block</option>
+                <option>Approve</option>
+                <option [ngValue]='({user: user.shipper_id, status: 4})'>Block</option>
             </select>
           </td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate(user.shipper_id,2)">Approve</button>
+            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.shipper_id, status: 2})">Approve</button>
             <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
 
@@ -259,7 +259,7 @@
 
 
   <!-- ////////////////////////////////// user info ///////////////////////////////////////-->
-  <div class="modal fade" id="userInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div *ngIf="userInfo" class="modal fade" id="userInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -269,7 +269,16 @@
           </button>
         </div>
         <div class="modal-body">
-
+          <p>First name: {{user_info.firstname}}</p>
+          <p>Last name: {{user_info.lastname}}</p>
+          <p>Email: {{user_info.email}}</p>
+          <p>Telephone number: {{user_info.telephone_number}}</p>
+          <p>Identity no: {{user_info.identity_no}}</p>
+          <p *ngIf="_type==='buyer'">Buyer address: {{user_info.buyer_address}}</p>
+          <p *ngIf="_type==='seller'">Shop name: {{user_info.shop_name}}</p>
+          <p *ngIf="_type==='seller'">Shop location: {{user_info.shop_location}}</p>
+          <p *ngIf="_type==='deliver'">Bank account no: {{user_info.bank_account_no}}</p>
+          <p *ngIf="_type==='deliver'">Bamk account name: {{user_info.bank_account_name}}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
@@ -279,7 +288,7 @@
   </div>
 
   <!-- ////////////////////////////////// edit user ///////////////////////////////////////-->
-  <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div *ngIf="editUser" class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -289,10 +298,78 @@
             </button>
           </div>
           <div class="modal-body">
+
+            <div class="form-group">
+              <label for="user-firstname">First name</label>
+              <input type="text" name="user-firstname" class="form-control" id="input-firstname" placeholder="First name"  [(ngModel)]="user_info.firstname"
+                required/>
+            </div>
+
+            <div class="form-group">
+              <label for="user-lastname">Last name</label>
+              <input type="text" name="user-lastname" class="form-control" id="input-lastname" placeholder="Last name"  [(ngModel)]="user_info.lastname"
+                required/>
+            </div>
+
+            <!-- <div class="form-group">
+              <label for="user-email">email</label>
+              <input type="email" name="user-email" class="form-control" id="input-email" placeholder="Email"  [(ngModel)]="user_info.email"
+                required/>
+            </div> -->
+
+            <div class="form-group">
+              <label for="user-telephone_number">Telephone number</label>
+              <input type="number" name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_info.telephone_number"
+                required/>
+            </div>
+
+            <div class="form-group">
+              <label for="user-identity_no">Identity_no</label>
+              <input type="number" name="user-identity_no" class="form-control" id="input-identity_no" placeholder="Identity no"  [(ngModel)]="user_info.identity_no"
+                required/>
+            </div>
+
+            <div class="form-group" *ngIf="_type==='buyer'">
+              <label for="user-buyer_address">Buyer address</label>
+              <input type="text" name="user-buyer_address" class="form-control" id="input-buyer_address" placeholder="Buyer address"  [(ngModel)]="user_info.buyer_address"
+                required/>
+            </div>
+
+            <div class="form-group" *ngIf="_type==='seller'">
+              <label for="user-shop_name">Shop name</label>
+              <input type="text" name="user-shop_name" class="form-control" id="input-shop_name" placeholder="Shop name"  [(ngModel)]="user_info.shop_name"
+                required/>
+            </div>
+
+            <div class="form-group" *ngIf="_type==='seller'">
+              <label for="user-shop_location">Shop location</label>
+              <textarea type="text" name="user-shop_location" class="form-control" id="input-shop_location" placeholder="Shop location"  [(ngModel)]="user_info.shop_location"
+                required></textarea>
+            </div>
+
+            <div class="form-group" *ngIf="_type==='deliver'">
+              <label for="user-bank_account_no">Bank account no</label>
+              <input type="number" name="user-bank_account_no" class="form-control" id="input-bank_account_no" placeholder="Bank account no"  [(ngModel)]="user_info.bank_account_no"
+                required/>
+            </div>
+
+            
+            <div class="form-group" *ngIf="_type==='deliver'">
+              <label for="selectBank">Select bank account</label>
+              <select [disabled]="isClick" class="form-control" name="selectBank" id="selectBank" [(ngModel)]="user_info.bank_account_name" #selectBank="ngModel" (ngModelChange)="onBankSelected($event)"
+                required>
+                <option value="" disabled selected>Select bank account</option>
+                <option *ngFor="let bank of bankAccount" [value]="bank.bank_account_id">{{bank.bank_account_name}}</option>
+              </select>
+            </div>
+
+
   
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-warning rounded-0" data-dismiss="modal" (click)="onEdit()">Edit</button>
+
           </div>
         </div>
       </div>

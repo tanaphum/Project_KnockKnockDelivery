@@ -103,6 +103,7 @@ export class DeliverComponent implements OnInit {
       },
       error => {
         console.log("[response] ",error)
+        alert(error.message)
 
       }
     )
@@ -128,8 +129,9 @@ export class DeliverComponent implements OnInit {
     },
     error => {
       console.log("[Error] ",error)
+      alert(error.message)
 
-    })
+      })
     })
 
   }
@@ -142,6 +144,8 @@ export class DeliverComponent implements OnInit {
 
     },error => {
       console.log("[Error] ",error)
+      alert(error.message)
+
     })
   }
 
@@ -163,6 +167,7 @@ export class DeliverComponent implements OnInit {
     console.log("[response] ",response)
     },error => {
       console.log("[error] ",error)
+      alert(error.message)
 
     })
   }
@@ -183,6 +188,8 @@ export class DeliverComponent implements OnInit {
 
       , error => {
         console.log('error',error);
+        alert(error.message)
+
       }
     })
   }
@@ -201,6 +208,7 @@ export class DeliverComponent implements OnInit {
 
     },error => {
       console.log("[error] searchShop",error);
+      alert(error.message)
 
     })
   }
@@ -219,6 +227,7 @@ export class DeliverComponent implements OnInit {
       this.user_form.telephone_number = this.user.telephone_number;
     },error => {
       console.log('[response] getUserProfile: ',error);
+      alert(error.message)
 
     }) 
   }

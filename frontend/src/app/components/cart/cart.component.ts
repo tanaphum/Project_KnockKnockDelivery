@@ -26,6 +26,8 @@ export class CartComponent implements OnInit {
   private serviceCharge = 0;
   private totalPrice = 0;
   private cart;
+  private shop_latitude;
+  private shop_longitude;
   private orderForm = {
     receiver_firstname: null,
     receiver_lastname:  null,
@@ -74,6 +76,8 @@ export class CartComponent implements OnInit {
     this.cart.forEach((element,index) => {
         this.cart[index].amount =1;
         this.cart[index].master_price = element.product_price;
+        this.shop_latitude = element.seller.shop_latitude;
+        this.shop_longitude = element.seller.shop_longtitude;
 
       });
     console.log("Cart : ", this.cart)
@@ -269,18 +273,18 @@ export class CartComponent implements OnInit {
   isCreatedOrder() {
     this.isNewOrder = !this.isNewOrder
     // this.router.navigateByUrl('/shops')
-    // this.calculateDistance(+response.data["seller"].shop_latitude,+response.data["seller"].shop_longitude,
-    // +this.orderForm.receiver_latitude,+this.orderForm.receiver_longitude);
-    //   if(this.distance > 8 && this.distance <= 40){
-    //     this.serviceCharge = Math.round(25+((this.distance-1)*14))
-    //   }else if (this.distance > 5 && this.distance <= 8){
-    //     this.serviceCharge = Math.round(25+((this.distance-1)*11))
-    //   }
-    //   else if (this.distance > 1 && this.distance <= 5){
-    //     this.serviceCharge = Math.round(25+((this.distance-1)*8))
-    //   }else{
-    //     this.serviceCharge = 25;
-    //   }
+    this.calculateDistance(this.shop_latitude,this.shop_longitude,
+    +this.orderForm.receiver_latitude,+this.orderForm.receiver_longitude);
+      if(this.distance > 8 && this.distance <= 40){
+        this.serviceCharge = Math.round(25+((this.distance-1)*14))
+      }else if (this.distance > 5 && this.distance <= 8){
+        this.serviceCharge = Math.round(25+((this.distance-1)*11))
+      }
+      else if (this.distance > 1 && this.distance <= 5){
+        this.serviceCharge = Math.round(25+((this.distance-1)*8))
+      }else{
+        this.serviceCharge = 25;
+      }
     this.sumPrice = this.totalPrice + this.serviceCharge;
   }
 

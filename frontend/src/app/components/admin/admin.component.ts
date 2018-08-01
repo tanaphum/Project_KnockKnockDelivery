@@ -403,12 +403,16 @@ export class AdminComponent implements OnInit {
             location.reload();
           }).catch(error => {
             console.log('[error] ',error);
+            alert(error.message)
+
           })
 
         
       },
         error => {
           console.log("[Error] ", error);
+          alert(error.message)
+
         })
 
   }
@@ -456,6 +460,8 @@ export class AdminComponent implements OnInit {
 
       }, error => {
         console.log("[error] ", error);
+        alert(error.message)
+
 
       })
   }
@@ -470,6 +476,8 @@ export class AdminComponent implements OnInit {
         this.isLoad = !this.isLoad;
       }, error => {
         console.log("[error] ", error);
+        alert(error.message)
+
 
       })
   }
@@ -493,16 +501,22 @@ export class AdminComponent implements OnInit {
               },
               error => {
                 console.log("[Error]", error)
+                alert(error.message)
+
               }
             )
           },
           error => {
             console.log("[Error]", error)
+            alert(error.message)
+
           }
         )
       },
       error => {
         console.log("[Error]", error)
+        alert(error.message)
+
       }
     )
   }

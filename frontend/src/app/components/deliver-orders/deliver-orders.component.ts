@@ -45,7 +45,20 @@ export class DeliverOrdersComponent implements OnInit {
     shopLocation:'',
     create_at:'',
     service_charge:'',
-    total_price:''
+    total_price:'',
+    shop_latitude: null,
+    shop_longitude: null,
+    receiver_latitude: null,
+    receiver_longitude: null,
+    origin: {
+      lat: null,
+      lng: null
+    },
+    destination: {
+      lat: null,
+      lng: null
+    }
+
   }
 
   labelOptionShop = {
@@ -197,19 +210,19 @@ export class DeliverOrdersComponent implements OnInit {
             lng: +element.receiver_longitude
           }
         };
-        this.calculateDistance(+element.seller.shop_latitude,+element.seller.shop_longitude,
-          +element.receiver_latitude,+element.receiver_longitude);
-          element["distance"] = this.distance;
-          if(this.distance > 8 && this.distance <= 40){
-          element["service_charge"] = Math.round(25+((this.distance-1)*14))
-          }else if (this.distance > 5 && this.distance <= 8){
-            element["service_charge"] = Math.round(25+((this.distance-1)*11))
-          }
-          else if (this.distance > 1 && this.distance <= 5){
-            element["service_charge"] = Math.round(25+((this.distance-1)*8))
-          }else{
-            element["service_charge"] = 25;
-          }
+        // this.calculateDistance(+element.seller.shop_latitude,+element.seller.shop_longitude,
+        //   +element.receiver_latitude,+element.receiver_longitude);
+        //   element["distance"] = this.distance;
+        //   if(this.distance > 8 && this.distance <= 40){
+        //   element["service_charge"] = Math.round(25+((this.distance-1)*14))
+        //   }else if (this.distance > 5 && this.distance <= 8){
+        //     element["service_charge"] = Math.round(25+((this.distance-1)*11))
+        //   }
+        //   else if (this.distance > 1 && this.distance <= 5){
+        //     element["service_charge"] = Math.round(25+((this.distance-1)*8))
+        //   }else{
+        //     element["service_charge"] = 25;
+        //   }
         })
 
 
@@ -281,7 +294,7 @@ export class DeliverOrdersComponent implements OnInit {
 
       this.orders.forEach((element,index) => {
         element["shop_latitude"] = +element.seller.shop_latitude;
-        element["shop_longtitude"] = +element.seller.shop_longitude;
+        element["shop_longitude"] = +element.seller.shop_longitude;
         element["direction"] = {
           origin: {
             lat: +element.seller.shop_latitude,
@@ -319,7 +332,19 @@ export class DeliverOrdersComponent implements OnInit {
       shopLocation:order.seller.shop_location,
       create_at:order.created_at,
       service_charge:order.service_charge,
-      total_price:order.order_total_price
+      total_price:order.order_total_price,
+      shop_latitude: order.direction.origin.lat,
+      shop_longitude: order.direction.origin.lng,
+      receiver_latitude: order.direction.destination.lat,
+      receiver_longitude: order.direction.destination.lng,
+      origin: {
+        lat: order.direction.origin.lat,
+        lng: order.direction.origin.lng
+      },
+      destination: {
+        lat: order.direction.destination.lat,
+        lng: order.direction.destination.lng
+      }
     }
   }
 

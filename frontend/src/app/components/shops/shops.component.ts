@@ -254,7 +254,9 @@ export class ShopsComponent implements OnInit {
     .subscribe(response => {
       console.log("[response] onEditBuyer: ",response)
     }
-    ,error => {console.log("[error] onEditBuyer: ",error)})
+    ,error => {
+      console.log("[error] onEditBuyer: ",error)
+    })
   }
 
   searchShop() {

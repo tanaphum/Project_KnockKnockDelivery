@@ -20,9 +20,12 @@
       </div>
     <div class="w3-col m3 w3-center" id="user">
       <div class="d-flex justify-content-around">
-        <i class="fa fa-user" data-toggle="modal" data-target="#infoModal" (click)="openProfile()"></i>
+        <i class="fa fa-user" data-toggle="modal" data-target="#infoModal" (click)="openProfile()">
+          <p style="font-size:12px;">Edit</p>
+        </i>
         <i class="fa fa-history" data-toggle="modal" data-target="#recieveOrderModal" (click)="openAcceptOrder()">
           <span *ngIf="orders_num!=0" class="history-num" >{{orders_num}}</span>
+          <p style="font-size:12px;">History</p>
         </i>
       </div>
     </div>
@@ -165,25 +168,23 @@
                     <b>Total price:</b> {{see_more.total_price}}</p>
               </div>
               <div class="col">
-                <p>Map here</p>
+                <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="see_more.shop_latitude" [longitude]="see_more.shop_longitude" >
+                 <agm-direction [origin]="see_more.origin" [destination]="see_more.destination" 
+                  [renderOptions]="options" ></agm-direction>
+                  <agm-marker  [latitude]="see_more.shop_latitude" [longitude]="see_more.shop_longitude" [label]="labelOptionShop">
+                    <agm-info-window #infoWindow>
+                      <strong>{{see_more.shopName}}</strong><br>
+                    </agm-info-window>
+                  </agm-marker>
+                  <agm-marker  [latitude]="see_more.receiver_latitude" [longitude]="see_more.receiver_longitude" 
+                  [label]="labelOptionReceiver">
+                    <agm-info-window #infoWindow>
+                      <strong>{{see_more.recieverName}}</strong><br>
+                    </agm-info-window>
+                  </agm-marker>
+                </agm-map>
               </div>
-         <!-- <div>
-                      <agm-map [minZoom]="12" [maxZoom]="18" [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" >
-                        <agm-direction [origin]="order.direction.origin" [destination]="order.direction.destination" 
-                        [renderOptions]="options" ></agm-direction>
-                        <agm-marker  [latitude]="order.shop_latitude" [longitude]="order.shop_longtitude" [label]="labelOptionShop">
-                          <agm-info-window #infoWindow>
-                            <strong>{{order.seller.shop_name}}</strong><br>
-                          </agm-info-window>
-                        </agm-marker>
-                        <agm-marker  [latitude]="order.direction.destination.lat" [longitude]="order.direction.destination.lng" 
-                        [label]="labelOptionReceiver">
-                          <agm-info-window #infoWindow>
-                            <strong>{{order.receiver_firstname}} {{order.receiver_lastname}}</strong><br>
-                          </agm-info-window>
-                        </agm-marker>
-                      </agm-map>
-                    </div> -->
+        
             </div>
           </div>
           <div class="card-footer">

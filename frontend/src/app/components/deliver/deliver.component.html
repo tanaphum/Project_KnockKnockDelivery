@@ -19,9 +19,12 @@
     </div>
     <div class="w3-col m3 w3-center" id="user">
         <div class="d-flex justify-content-around">
-          <i class="fa fa-user"  data-toggle="modal" data-target="#infoModal" (click)="openProfile()"></i>
+          <i class="fa fa-user"  data-toggle="modal" data-target="#infoModal" (click)="openProfile()">
+            <p style="font-size:12px;">Edit</p>
+          </i>
           <i class="fa fa-history" data-toggle="modal" data-target="#recieveOrderModal" (click)="openAcceptOrder()">
               <span *ngIf="orders_num!=0" class="history-num" >{{orders_num}}</span>
+              <p style="font-size:12px;">History</p>
           </i>
         </div>
     </div>
@@ -135,9 +138,6 @@
             <label for="input-bank_account_no">Bank account no</label>
             <input [disabled]="isUpdate" type="text" name="bank_account_no" class="form-control" id="input-bank_account_no" placeholder="Bank account no"
               [(ngModel)]="form.bank_account_no" required/>
-            <!-- <span class="text-danger" [hidden]="!error.bank_account_no">
-                      {{error.bank_account_no}}
-                    </span> -->
           </div>
   
           <div class="form-group">

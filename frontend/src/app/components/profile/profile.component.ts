@@ -176,8 +176,8 @@ export class ProfileComponent implements OnInit {
           },error => {
             console.log('[error] ',error);
             if(error.status === 401) {
-              location.reload();
-
+              alert(error.message)
+              this.authService.removeToken();
             }
           })
 

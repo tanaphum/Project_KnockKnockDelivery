@@ -30,8 +30,8 @@
           </td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.buyer_id, status: 2})">Approve</button>
-            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
+            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="confirmFunction({user: user.buyer_id, status: 2})">Approve</button>
+            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="confirmFunction({user: user.buyer_id,status: 3})">Reject</button>
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
 
             <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" [hidden]="adminSelect==='holdingUser'">Info</button>
@@ -72,9 +72,9 @@
         <td>
           <div class="btn-group">
             <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
-            <button type="button" class="btn btn-success rounded-0"  [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.seller_id, status: 2})">Approve</button>
-            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
-            <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" [hidden]="adminSelect==='holdingUser'">Info</button>
+            <button type="button" class="btn btn-success rounded-0"  [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="confirmFunction({user: user.seller_id, status: 2})">Approve</button>
+            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="confirmFunction({user: user.seller_id, status: 3})">Reject</button>
+            <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" >Info</button>
             <button type="button" class="btn btn-warning rounded-0"  data-toggle="modal" data-target="#editUser" (click)="onClickEdit(user)" [hidden]="adminSelect==='holdingUser'">Edit</button>
           </div>
         </td>
@@ -112,11 +112,11 @@
           </td>
         <td>
           <div class="btn-group">
-            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" [disabled]="user.profile_status.profile_status_id===2" (click)="onClickUpdate({user: user.shipper_id, status: 2})">Approve</button>
-            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="onClickUpdate(user.buyer_id,3)">Reject</button>
-            <!-- <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='holdingUser'" (click)="onClickUpdate(user.buyer_id,4)">Block</button> -->
-
-            <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" [hidden]="adminSelect==='holdingUser'">Info</button>
+            <button type="button" class="btn btn-success rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="confirmFunction({user: user.shipper_id, status: 2})">Approve</button>
+            <!-- (click)="onClickUpdate({user: user.shipper_id, status: 2})" -->
+            <button type="button" class="btn btn-danger rounded-0" [hidden]="adminSelect==='userInSystem'" (click)="confirmFunction({user: user.shipper_id, status: 3})">Reject</button> 
+            <!-- (click)="onClickUpdate({user: user.shipper_id, status: 3})" -->
+            <button type="button" class="btn btn-info rounded-0" data-toggle="modal" data-target="#userInfo" (click)="onClickInfo(user)" >Info</button>
             <button type="button" class="btn btn-warning rounded-0"  data-toggle="modal" data-target="#editUser" (click)="onClickEdit(user)" [hidden]="adminSelect==='holdingUser'">Edit</button>
           </div>
         </td>
@@ -232,7 +232,7 @@
       </div>
   
     <!-- ////////////////////////////////// deleteModal ///////////////////////////////////////-->
-      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <!-- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -242,7 +242,6 @@
               </button>
             </div>
             <div class="modal-body">
-              <!-- <p>Delete {{ product_name }} ??</p> -->
               <div *ngIf="isDelete">
                 <p style="color:red">Product has been delete</p>
               </div>
@@ -254,7 +253,30 @@
             </div>
           </div>
         </div>
+      </div> -->
+
+    <!-- ////////////////////////////////// confirm ///////////////////////////////////////-->
+    <div class="modal fade" id="confirmModel" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Product Information</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
+    </div>
+
+
+        
   </div>
 
 
@@ -269,11 +291,15 @@
           </button>
         </div>
         <div class="modal-body">
+          <div class="text-center">
+              <img  *ngIf="_type==='deliver'" class="card-img-top" [src]="baseUrl + user_info.shipper_transfer_slip" alt="">
+              <img  *ngIf="_type==='seller'" class="card-img-top" [src]="baseUrl + user_info.shop_logo_image" alt="">
+            </div>
           <p>First name: {{user_info.firstname}}</p>
           <p>Last name: {{user_info.lastname}}</p>
           <p>Email: {{user_info.email}}</p>
           <p>Telephone number: {{user_info.telephone_number}}</p>
-          <p>Identity no: {{user_info.identity_no}}</p>
+          <p>Citizen Id: {{user_info.identity_no}}</p>
           <p *ngIf="_type==='buyer'">Buyer address: {{user_info.buyer_address}}</p>
           <p *ngIf="_type==='seller'">Shop name: {{user_info.shop_name}}</p>
           <p *ngIf="_type==='seller'">Shop location: {{user_info.shop_location}}</p>
@@ -303,12 +329,18 @@
               <label for="user-firstname">First name</label>
               <input type="text" name="user-firstname" class="form-control" id="input-firstname" placeholder="First name"  [(ngModel)]="user_info.firstname"
                 required/>
+                <span class="text-danger" [hidden]="!error.firstname">
+                    {{error.firstname}}
+                </span>
             </div>
 
             <div class="form-group">
               <label for="user-lastname">Last name</label>
               <input type="text" name="user-lastname" class="form-control" id="input-lastname" placeholder="Last name"  [(ngModel)]="user_info.lastname"
                 required/>
+                <span class="text-danger" [hidden]="!error.lastname">
+                    {{error.lastname}}
+                </span>
             </div>
 
             <!-- <div class="form-group">
@@ -319,38 +351,60 @@
 
             <div class="form-group">
               <label for="user-telephone_number">Telephone number</label>
-              <input type="number" name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_info.telephone_number"
+              <input type="number" pattern="[0-9]*" maxlength="10" 
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+              name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_info.telephone_number"
                 required/>
+                <span class="text-danger" [hidden]="!error.telephone_number">
+                    {{error.telephone_number}}
+                </span>
             </div>
 
             <div class="form-group">
-              <label for="user-identity_no">Identity_no</label>
-              <input type="number" name="user-identity_no" class="form-control" id="input-identity_no" placeholder="Identity no"  [(ngModel)]="user_info.identity_no"
+              <label for="user-identity_no">Citizen Id</label>
+              <input type="number" name="user-identity_no" maxlength="13"
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+              class="form-control" id="input-identity_no" placeholder="Citizen Id"  [(ngModel)]="user_info.identity_no"
                 required/>
+                <span class="text-danger" [hidden]="!error.identity_no">
+                    {{error.identity_no}}
+                </span>
             </div>
 
             <div class="form-group" *ngIf="_type==='buyer'">
               <label for="user-buyer_address">Buyer address</label>
               <input type="text" name="user-buyer_address" class="form-control" id="input-buyer_address" placeholder="Buyer address"  [(ngModel)]="user_info.buyer_address"
                 required/>
+                <span class="text-danger" [hidden]="!error.buyer_address">
+                    {{error.buyer_address}}
+                </span>
             </div>
 
             <div class="form-group" *ngIf="_type==='seller'">
               <label for="user-shop_name">Shop name</label>
               <input type="text" name="user-shop_name" class="form-control" id="input-shop_name" placeholder="Shop name"  [(ngModel)]="user_info.shop_name"
                 required/>
+                <span class="text-danger" [hidden]="!error.shop_name">
+                    {{error.shop_name}}
+                </span>
             </div>
 
             <div class="form-group" *ngIf="_type==='seller'">
               <label for="user-shop_location">Shop location</label>
               <textarea type="text" name="user-shop_location" class="form-control" id="input-shop_location" placeholder="Shop location"  [(ngModel)]="user_info.shop_location"
                 required></textarea>
+                <span class="text-danger" [hidden]="!error.shop_location">
+                    {{error.shop_location}}
+                </span>
             </div>
 
             <div class="form-group" *ngIf="_type==='deliver'">
               <label for="user-bank_account_no">Bank account no</label>
               <input type="number" name="user-bank_account_no" class="form-control" id="input-bank_account_no" placeholder="Bank account no"  [(ngModel)]="user_info.bank_account_no"
                 required/>
+                <span class="text-danger" [hidden]="!error.bank_account_no">
+                    {{error.bank_account_no}}
+                </span>
             </div>
 
             
@@ -368,13 +422,13 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-0" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-warning rounded-0" data-dismiss="modal" (click)="onEdit()">Edit</button>
+            <button type="button" class="btn btn-warning rounded-0" (click)="onEdit()">Confirm</button>
 
           </div>
         </div>
       </div>
-    </div>
-  
+  </div>
 
 </div>
+
 

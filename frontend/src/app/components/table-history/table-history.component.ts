@@ -30,6 +30,7 @@ export class TableHistoryComponent implements OnInit {
   private imageUrl = null;
   private order = {}
   private product = {}
+  private tempOrder;
 
   constructor(
     private modalService: NgbModal,
@@ -77,6 +78,10 @@ export class TableHistoryComponent implements OnInit {
       })
   }
 
+  getOrderInfoDetail(orderId) {
+
+  }
+
   getOrderDetail(id) {
     return new Promise((resolve, reject) => {
       this.orderService.getOrderDetail(id)
@@ -115,9 +120,10 @@ export class TableHistoryComponent implements OnInit {
       })
   }
 
-  cancelOrder(order) {
-    console.log('[order] ',order);
+  cancelOrder() {
+    console.log('[order] ',);
 
+    let order = this.tempOrder;
     this.isShow = !this.isShow
     let body = {
       order_status_id: 7,
@@ -157,6 +163,12 @@ export class TableHistoryComponent implements OnInit {
   close() {
     this.isOrderInfo = !this.isOrderInfo
   }
+
+  confirmCancel(order){
+    this.tempOrder = order;
+    
+  }
+
 
 
 

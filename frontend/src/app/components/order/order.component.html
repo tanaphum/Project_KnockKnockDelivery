@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
               <div class="text-center">
-                  <img id="paymentTransferSlip" *ngIf="order.payment_transfer_slip!=null" [src]="baseUrl+order.payment_transfer_slip" >
+                  <img id="paymentTransferSlip" *ngIf="order.payment_transfer_slip!=null && order.order_status.order_status_id != 2" [src]="baseUrl+order.payment_transfer_slip" >
                   <img id="paymentTransferSlip" *ngIf="order.payment_transfer_slip==null" [src]="placeHolder" >
               </div>
               <p class="card-text">
@@ -126,11 +126,14 @@
             <br>
             <img [hidden]="imageUrl==null" [src]="imageUrl" style="width:50%;height: 50%;">
           </div>
+          <div class="alert alert-danger" [hidden]="!error.image">
+            {{error.image}}
+          </div>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn rounded-0" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success rounded-0" data-dismiss="modal" (click)="updateOrder()">Upload</button>
+          <button type="button" class="btn btn-success rounded-0" (click)="updateOrder()">Upload</button>
 
         </div>
       </div>

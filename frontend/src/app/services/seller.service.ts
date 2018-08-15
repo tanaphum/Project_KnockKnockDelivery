@@ -106,6 +106,11 @@ export class SellerService {
 
   }
 
+
+  getShopByProductCategoryId(id) {
+    return this.http.get<shops>(`${this.baseUrl}shops/product-category/${id}`,this.httpOptions)
+  }
+
 }
 
 

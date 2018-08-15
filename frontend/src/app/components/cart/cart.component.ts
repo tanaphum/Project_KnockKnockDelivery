@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { isNull } from '../../../../node_modules/@angular/compiler/src/output/output_ast';
  
 
 @Component({
@@ -28,10 +29,15 @@ export class CartComponent implements OnInit {
   private cart;
   private shop_latitude;
   private shop_longitude;
-  private orderForm = {
+  private error = {
     receiver_firstname: null,
-    receiver_lastname:  null,
-    receiver_location:  null,
+    receiver_lastname: null,
+    receiver_location: null,
+  };
+  private orderForm = {
+    receiver_firstname: "",
+    receiver_lastname:  "",
+    receiver_location:  "",
     receiver_latitude: null,
     receiver_longitude: null,
   }
@@ -266,29 +272,51 @@ export class CartComponent implements OnInit {
 
     },error => {
       console.log('[error] ',error);
+      alert(error.message)
+      this.isShow = !this.isShow
 
     })
   }
 
   isCreatedOrder() {
-    this.isNewOrder = !this.isNewOrder
-    // this.router.navigateByUrl('/shops')
-    this.calculateDistance(this.shop_latitude,this.shop_longitude,
-    +this.orderForm.receiver_latitude,+this.orderForm.receiver_longitude);
-      if(this.distance > 8 && this.distance <= 40){
-        this.serviceCharge = Math.round(25+((this.distance-1)*14))
-      }else if (this.distance > 5 && this.distance <= 8){
-        this.serviceCharge = Math.round(25+((this.distance-1)*11))
-      }
-      else if (this.distance > 1 && this.distance <= 5){
-        this.serviceCharge = Math.round(25+((this.distance-1)*8))
-      }else{
-        this.serviceCharge = 25;
-      }
-    this.sumPrice = this.totalPrice + this.serviceCharge;
+    console.log('[isCreatedOrder] ',this.orderForm);
+
+    this.error.receiver_firstname = false
+    this.error.receiver_lastname = false
+    this.error.receiver_location = false
+    if(this.orderForm.receiver_firstname.length == 0 ) {
+      this.error.receiver_firstname = 'Please input receiver firstname.'
+    }
+    if(this.orderForm.receiver_lastname.length == 0 ) {
+      this.error.receiver_lastname = 'Please input receiver lastname.'
+    }    
+    if(this.orderForm.receiver_location.length == 0 ) {
+      this.error.receiver_location = 'Please input receiver location.'
+    }
+    if(this.error.receiver_firstname == false && this.error.receiver_lastname == false && this.error.receiver_location == false) {
+      this.isNewOrder = !this.isNewOrder
+      this.calculateDistance(this.shop_latitude,this.shop_longitude,
+      +this.orderForm.receiver_latitude,+this.orderForm.receiver_longitude);
+        if(this.distance > 8 && this.distance <= 40){
+          this.serviceCharge = Math.round(25+((this.distance-1)*14))
+        }else if (this.distance > 5 && this.distance <= 8){
+          this.serviceCharge = Math.round(25+((this.distance-1)*11))
+        }
+        else if (this.distance > 1 && this.distance <= 5){
+          this.serviceCharge = Math.round(25+((this.distance-1)*8))
+        }
+        else{
+          this.serviceCharge = 25;
+        }
+      this.sumPrice = this.totalPrice + this.serviceCharge;
+    }
+    console.log('[error] ',this.error)
+
+
   }
 
   cancelOrderRequest() {
+    this.isNewOrder = !this.isNewOrder
     this.isCheckOut = !this.isCheckOut
   }
 
@@ -298,8 +326,8 @@ export class CartComponent implements OnInit {
 
   checkSameShop() {
     for(let i=1;i<=this.cart.length ; i++) {
-      console.log("seller.seller_id - 1",this.cart[i-1].seller.seller_id)
-      console.log("seller.seller_id",this.cart[i].seller.seller_id)
+      // console.log("seller.seller_id - 1",this.cart[i-1].seller.seller_id)
+      // console.log("seller.seller_id",this.cart[i].seller.seller_id)
       if(this.cart[i-1].seller.seller_id != this.cart[i].seller.seller_id) {
         this.isSame = !this.isSame;
       }

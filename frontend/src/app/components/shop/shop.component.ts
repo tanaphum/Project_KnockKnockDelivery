@@ -14,11 +14,13 @@ export class ShopComponent implements OnInit {
 
     private baseUrl = 'http://localhost:8000';
     private products;
+    private isEdit:boolean = false;
     private isShow: boolean = true;
     private isEmpty: boolean = false;
     private cart_num = 0;
     private seller = [];
     private user;
+    private error = [];
     private seller_id;
     private form = {
         product_name: null,
@@ -230,16 +232,41 @@ export class ShopComponent implements OnInit {
   onEditBuyer() {
     let id = localStorage.getItem('buyer_id')
     console.log("[buyer] ",this.buyer_profile)
-    let temp = {
-      buyer_address: this.buyer_profile.buyer_address,
-      profile_status_id: 1
+    this.error['buyer_address'] = false
+    this.error['firstname'] = false
+    this.error['lastname'] = false
+    this.error['identity_no'] = false
+    this.error['telephone_number'] = false
+
+    if(this.buyer_profile.buyer_address.length == 0) {
+      this.error['buyer_address'] = 'Please fill in address.'
     }
-    this.updateProfile();
-    this.BuyerService.updateBuyer(temp,id)
-    .subscribe(response => {
-      console.log("[response] onEditBuyer: ",response)
+    if(this.user_form.firstname.length == 0) {
+      this.error['firstname'] = 'Please fill in first name.'
     }
-    ,error => {console.log("[error] onEditBuyer: ",error)})
+    if(this.user_form.lastname.length == 0) {
+      this.error['lastname'] = 'Please fill in last name.'
+    }
+    if(this.user_form.identity_no.length == 0) {
+      this.error['identity_no'] = 'Please fill in citizen id'
+    }
+    if(this.user_form.telephone_number.length == 0) {
+      this.error['telephone_number'] = 'Please fill in telephone number'
+    }
+    else {
+      let temp = {
+        buyer_address: this.buyer_profile.buyer_address,
+        profile_status_id: 1
+      }
+      this.user_form.telephone_number = '0' + this.user_form.telephone_number.toString();
+      this.updateProfile();
+      this.BuyerService.updateBuyer(temp,id)
+      .subscribe(response => {
+        console.log("[response] onEditBuyer: ",response)
+      }
+      ,error => {console.log("[error] onEditBuyer: ",error)}
+    )}
+
   }
 
 
@@ -266,6 +293,7 @@ export class ShopComponent implements OnInit {
       this.authService.editUser(id,this.user_form)
       .subscribe(response => {
         console.log('[response] updateProfile: ',response);
+        alert('Update profile success')
         resolve(response)
         
       }, error => {

@@ -1,6 +1,6 @@
 <div class="container">
   <br>
-  <h1>Edit shop</h1>
+  <h1>Shop’s profile</h1>
   <form #editShopForm=ngForm (ngSubmit)="onSubmit()">
 
     <div class="row">
@@ -18,7 +18,7 @@
           <label for="shop-location">Shop Location</label>
           <input [disabled]="isClick" type="text" name="shop-location" class="form-control" id="shop-location" placeholder="Shop location"  [(ngModel)]="form.shop_location"
             required/>
-          <span class="text-danger" [hidden]="!error.shop-location">
+          <span class="text-danger" [hidden]="!error.shop_location">
               {{error.shop_location}}
             </span>
         </div>
@@ -51,9 +51,9 @@
         </div>
 
         <div class="form-group">
-            <label for="user-identity_no">Identity no</label>
-            <input [disabled]="isClick" type="text" name="user-identity_no" class="form-control" id="input-lastname" placeholder="Identity no"  [(ngModel)]="user_form.identity_no"
-              required/>
+            <label for="user-identity_no">Citizen Id</label>
+            <input [disabled]="isClick" type="number" name="user-identity_no" class="form-control" id="input-lastname" placeholder="Citizen Id"  maxlength="13" [(ngModel)]="user_form.identity_no"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required/>
             <span class="text-danger" [hidden]="!error.identity_no">
                 {{error.identity_no}}
             </span>
@@ -61,8 +61,9 @@
 
         <div class="form-group">
             <label for="user-telephone_number">telephone number</label>
-            <input [disabled]="isClick" type="text" name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_form.telephone_number"
-              required/>
+            <input [disabled]="isClick" type="number" name="user-telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number"  [(ngModel)]="user_form.telephone_number"
+            pattern="[0-9]*" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            maxlength="10" required/>
             <span class="text-danger" [hidden]="!error.telephone_number">
                 {{error.telephone_number}}
             </span>
@@ -81,18 +82,16 @@
     <div *ngIf="isCreate">
       <p class="success" >Upload Success</p>
     </div>
-    <div *ngIf="error">
+    <!-- <div *ngIf="error">
       <p class="error" >{{errorMessage}}</p>
-    </div>
+    </div> -->
 
     <div class="row">
       <div class="col">
-        <button type="submit" class="btn btn-success btn-block rounded-0" [disabled]="isClick">Edit</button>
-
+        <button class="btn btn-danger btn-block rounded-0" (click)="onClear()">Clear</button>
       </div>
       <div class="col">
-        <button class="btn btn-danger btn-block rounded-0" (click)="onClear()">Clear</button>
-
+        <button type="submit" class="btn btn-success btn-block rounded-0" [disabled]="isClick">Edit</button>
       </div>
     </div>
   </form>

@@ -89,11 +89,30 @@ export class CreateProductComponent implements OnInit {
     console.log("onCreate")
     console.log("form: ", this.form)
     console.log("Image: ", this.image)
+    this.error['product_name'] = false;
+    this.error['product_price'] = false;
+    this.error['selected_catagory'] = false;
+    this.error['product_description'] = false;
+    this.error['product_image_1'] = false;
+    this.error['product_price'] = false;
 
     this.isClick = !this.isClick;
-
+    if (this.form.product_name == null) {
+      this.error['product_name'] = 'product name is required'
+    }
+    if (this.form.product_price == null) {
+      this.error['product_price'] = 'product price is required'
+    }
+    if (this.form.selected_catagory == null) {
+      this.error['selected_catagory'] = 'product catagory is required'
+    }
+    if (this.form.product_description == null) {
+      this.error['product_description'] = 'product description is required'
+    }
+    if (this.form.product_image_1 == null) {
+      this.error['product_image_1'] = 'product image is required'
+    }
     if (this.form.product_price > 1000) {
-      this.isClick = !this.isClick;
       this.error['product_price'] = 'product price not more than 1000'
     }
     else {
@@ -108,8 +127,6 @@ export class CreateProductComponent implements OnInit {
       }
 
       let seller_id = this.seller_id;
-      // console.log("tempForm: ", tempForm)
-
 
       this.sellerService.createProduct(tempForm, seller_id).subscribe(
         response => {

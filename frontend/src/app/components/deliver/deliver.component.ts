@@ -17,6 +17,7 @@ export class DeliverComponent implements OnInit {
   private deliver_profile;
   private isShow:boolean = true;
   private isUpdate:boolean = false;
+  private isEdit:boolean = false
   private keyWord = '';
   private user;
   private form = {
@@ -34,12 +35,11 @@ export class DeliverComponent implements OnInit {
     telephone_number: null,
   }
   private dafault_bank;
-  private error;
   private orders = [];
   private bankAcc;
   private orders_num = 0;
   private imageUrlTransfer = null;
-
+  private error = [];
   @ViewChild("mycanvas") mycanvas;
 
   constructor(
@@ -114,25 +114,52 @@ export class DeliverComponent implements OnInit {
   }
 
   onUpdateProfile() {
-    console.log("[Update]")
-    let id = this.deliver_profile.shipper_id;
-    let form = {
-      bank_account_id:this.form.bank_account_id,
-      bank_account_no:this.form.bank_account_no,
-      shipper_transfer_slip_Image:this.form.shipper_transfer_slip_Image,
-      // profile_status_id:this.form.profile_status_id
-    }
-    this.updateProfile().then(result => {
-    this.deliverService.updateDeliver(form,id)
-    .subscribe(response => {
-      console.log("[Response] ",response)
-    },
-    error => {
-      console.log("[Error] ",error)
-      alert(error.message)
+    console.log("[Update] ",this.user_form)
+    this.error['bank_account_no'] = false;
+    this.error['firstname'] = false;
+    this.error['lastname'] = false;
+    this.error['identity_no'] = false;
+    this.error['telephone_number'] = false;
 
+    if(this.form.bank_account_no.length == 0) {
+      this.error['bank_account_no'] = 'Please fill in bank account no.'
+    }
+    if(this.user_form.firstname.length == 0) {
+      this.error['firstname'] = 'Please fill in first name.'
+    }
+    if(this.user_form.lastname.length == 0) {
+      this.error['lastname'] = 'Please fill in last name.'
+    }
+    if(this.user_form.identity_no.length == 0) {
+      this.error['identity_no'] = 'Please fill in citizen id'
+    }
+    if(this.user_form.telephone_number == null) {
+      this.error['telephone_number'] = 'Please fill in telephone number'
+    }
+    else {
+      let id = this.deliver_profile.shipper_id;
+      let form = {
+        bank_account_id:this.form.bank_account_id,
+        bank_account_no:this.form.bank_account_no,
+        shipper_transfer_slip_Image:this.form.shipper_transfer_slip_Image,
+        // profile_status_id:this.form.profile_status_id
+      }
+      this.isEdit  = !this.isEdit
+      this.user_form.telephone_number = '0' + this.user_form.telephone_number.toString();
+      this.updateProfile().then(result => {
+      this.deliverService.updateDeliver(form,id)
+      .subscribe(response => {
+        alert("This profile has been updated!!!")
+        this.isEdit  = !this.isEdit
+        console.log("[Response] ",response)
+      },
+      error => {
+        console.log("[Error] ",error)
+        alert(error.message)
+  
+        })
       })
-    })
+    }
 
   }
 

@@ -31,12 +31,32 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('[onSubmit] ',this.form);
+    
     this.isClick = !this.isClick;    
-    this.isShow = !this.isShow;   
-    this.authService.login(this.form).subscribe(
+    this.isShow = !this.isShow; 
+    if(this.form.email == "") {
+      this.isShow = !this.isShow;   
+      this.isClick = !this.isClick;    
+      this.error = 'The email field is required';
+    }  
+    if(this.form.password == "") {
+      this.isShow = !this.isShow;   
+      this.isClick = !this.isClick;    
+      this.error = 'The password field is required';
+    }
+    if(this.form.email == "" && this.form.password == "") {
+      this.isShow = !this.isShow;   
+      this.isClick = !this.isClick;    
+      this.error = 'The email and password field is required';
+    }
+    else if(this.form.email != "" && this.form.password != ""){
+      this.authService.login(this.form).subscribe(
       data => this.handleResponse(data),
       error => this.handleError(error)
     )
+    }
+
   }
 
   handleResponse(data) {
@@ -59,7 +79,7 @@ export class LoginComponent implements OnInit {
   handleError(error) {
     this.isShow = !this.isShow;   
     this.isClick = !this.isClick;    
-    this.error = error.error.error;
+    this.error = 'Email or password wrong';
 
   }
 

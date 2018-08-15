@@ -82,19 +82,25 @@
           <form #editProductForm=ngForm>
             <div class="form-group">
               <label for="input-id">Product id</label>
-              <input [disabled]="isClick" type="number" name="id" class="form-control" id="input-id" placeholder="Product Name" [(ngModel)]="product_id" disabled/>
+              <input type="number" name="id" class="form-control" id="input-id" placeholder="Product Name" [(ngModel)]="product_id" disabled/>
             </div>
 
             <div class="form-group">
               <label for="input-name">Product name</label>
               <input [disabled]="isClick" type="text" name="name" class="form-control" id="input-name" placeholder="Product name" [(ngModel)]="product_name"
                 required/>
+                <span class="text-danger" [hidden]="!error.product_name">
+                  {{error.product_name}}
+                </span>
             </div>
 
             <div class="form-group">
                 <label for="input-price">Product Price</label>
-                <input [disabled]="isClick" type="text" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="product_price"
+                <input [disabled]="isClick" type="number" name="price" class="form-control" id="input-price" placeholder="Product Price" [(ngModel)]="product_price"
                   required>
+                  <span class="text-danger" [hidden]="!error.product_price">
+                    {{error.product_price}}
+                  </span>
               </div>
 
 
@@ -119,14 +125,17 @@
               <label for="input-description">Product Description</label>
               <textarea [disabled]="isClick" type="text" name="description" class="form-control" id="input-description" placeholder="Product Description" [(ngModel)]="product_description"
                 required></textarea>
+                <span class="text-danger" [hidden]="!error.product_description">
+                  {{error.product_description}}
+                </span>
             </div>
           </form>
           <div *ngIf="isEdit">
             <p style="color:Green">Product has been edit</p>
           </div>
-          <div *ngIf="error">
+          <!-- <div *ngIf="error">
             <p style="color:red">error</p>
-          </div>
+          </div> -->
           <div *ngIf="isClick" class="w3-display-middle">
             <p class="loading">Saving</p>
           </div>

@@ -119,6 +119,39 @@ img {
   max-height: 200px;
 }
 
+
+@media screen and (max-width: 375px) {
+
+  .history-num{
+    position: absolute;
+    background: #f36e36;
+    color: #fff;
+    top: 165px;
+    /* font-weight: 400; */
+    right:75px; 
+    /* left: px; */
+    text-align: center;
+    border: 3px solid #f36e36;
+    font-size: 14px;
+    min-width: 20px;
+    /* line-height: 14px; */
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  #container {
+    margin-top: 55px;
+    /* background-color: #F1F1F1F1; */
+    height: 100%;
+    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    /* font-family: "Raleway"; */
+  }
+
+  
+}
+  
   
   
   

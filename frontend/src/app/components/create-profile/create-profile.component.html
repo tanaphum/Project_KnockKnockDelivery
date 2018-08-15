@@ -13,35 +13,19 @@
                 <label for="input-shop-name">Shop Name</label>
                 <input type="text" name="shop-name" class="form-control" id="input-shop-name" placeholder="Shop Name" [(ngModel)]="sellerForm.shop_name"
                   required>
-                <span class="text-danger" [hidden]="!error.shopName">
-                  {{error.shopName}}
-                </span>
+              </div>
+              <div class="alert alert-danger"  [hidden]="!error.shopName">
+                {{error.shopName}}
               </div>
 
               <div class="form-group">
                 <label for="input-localtion">Location</label>
                 <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="location" [(ngModel)]="sellerForm.shop_location"
                   required></textarea>
-                <span class="text-danger" [hidden]="!error.location">
-                  {{error.location}}
-                </span>
               </div>
-<!-- 
-              <div class="form-group">
-                <label for="input-lat">Shop Latitude</label>
-                <input type="number" name="lat" class="form-control" id="input-lat" placeholder="Latitude" [(ngModel)]="sellerForm.shop_latitude">
-                <span class="text-danger" [hidden]="!error.lat">
-                  {{error.lat}}
-                </span>
+              <div class="alert alert-danger"  [hidden]="!error.shop_location">
+                {{error.shop_location}}
               </div>
-
-              <div class="form-group">
-                <label for="input-long">Shop Longtitude</label>
-                <input type="number" name="long" class="form-control" id="input-long" placeholder="Longtitude" [(ngModel)]="sellerForm.shop_longitude">
-                <span class="text-danger" [hidden]="!error.long">
-                  {{error.long}}
-                </span>
-              </div> -->
 
               <div class="form-group">
                 <agm-map [zoom]="18" [latitude]="latitude" [longitude]="longtitude" (mapClick)="onChooseLocation($event)" >
@@ -52,12 +36,12 @@
               <div class="form-group">
                 <label for="input-image">Shop Image</label><br>
                 <input  name="shop-image"  type='file' id="img" (change)="preview($event.target.files)" accept="image/*" required>
-                <span class="text-danger" [hidden]="!error.shop_logo_image">
-                  {{error.shop_logo_image}}
-                </span>
                 <div>
-                <img [hidden]="imageUrl===null" id="imagePriview" [src]="imageUrl" />
+                  <img [hidden]="imageUrl===null" id="imagePriview" [src]="imageUrl" />
+                </div>
               </div>
+              <div class="alert alert-danger"  [hidden]="!error.shop_logo_image">
+                {{error.shop_logo_image}}
               </div>
               <br>
 
@@ -80,9 +64,9 @@
                 <label for="input-localtion">Address</label>
                 <textarea type="text" name="localtion" class="form-control" id="input-localtion" placeholder="Address" [(ngModel)]="buyerForm.buyer_location"
                   required></textarea>
-                <span class="text-danger" [hidden]="!error.buyer_location">
-                  {{error.buyer_location}}
-                </span>
+              </div>
+              <div class="alert alert-danger"  [hidden]="!error.buyer_location">
+                {{error.buyer_location}}
               </div>
 
 
@@ -103,30 +87,37 @@
 
               <div class="form-group">
                 <label for="input-bank_account_no">Bank account no</label>
-                <input type="text" name="bank_account_no" class="form-control" id="input-bank_account_no" placeholder="Bank account no" [(ngModel)]="deliverForm.bank_account_no" required/>
-                <span class="text-danger" [hidden]="!error.bank_account_no">
-                  {{error.bank_account_no}}
-                </span>
+                <input type="number" name="bank_account_no" maxlength="10" class="form-control" id="input-bank_account_no" placeholder="Bank account no" [(ngModel)]="deliverForm.bank_account_no" 
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required/>
+              </div>
+              <div class="alert alert-danger"  [hidden]="!error.bank_account_no">
+                {{error.bank_account_no}}
               </div>
 
               <div class="form-group">
-                  <label for="selectBank">Select bank account</label>
-                  <select [disabled]="isClick" class="form-control" name="selectBank" id="selectBank" [(ngModel)]="dafault_bank" #selectBank="ngModel" (ngModelChange)="onBankSelected($event)"
-                    required>
-                    <option value="" disabled selected>Select bank account</option>
-                    <option [disabled]="isUpdate" *ngFor="let bank of bankAcc" [value]="bank.bank_account_id">{{bank.bank_account_name}}</option>
-                  </select>
-                </div>
+                <label for="selectBank">Select bank account</label>
+                <select [disabled]="isClick" class="form-control" name="selectBank" id="selectBank" [(ngModel)]="dafault_bank" #selectBank="ngModel" (ngModelChange)="onBankSelected($event)"
+                  required>
+                  <option value="" disabled selected>Select bank account</option>
+                  <option [disabled]="isUpdate" *ngFor="let bank of bankAcc" [value]="bank.bank_account_id">{{bank.bank_account_name}}</option>
+                </select>
+              </div>
+              <div class="alert alert-danger"  [hidden]="!error.dafault_bank">
+                {{error.dafault_bank}}
+              </div>
 
                 <div class="form-group">
-                    <label for="input-shipper_transfer_slip">Shipper transfer slip</label>
-                    <br>
-                    <input  name="shipper-transfer-slip-image"  type='file' id="img" (change)="previewShipperTransferImage($event.target.files)" accept="image/*" required>
-                    <br>
-                    <br>
+                  <label for="input-shipper_transfer_slip">Shipper transfer slip</label>
+                  <br>
+                  <input  name="shipper-transfer-slip-image"  type='file' id="img" (change)="previewShipperTransferImage($event.target.files)" accept="image/*" required>
+                  <br><br>
+                  <img [hidden]="imageUrlTransfer===null" id="imagePriview" [src]="imageUrlTransfer" />
+                </div>
+                <div class="alert alert-danger"  [hidden]="!error.shipper_transfer_slip_Image">
+                  {{error.shipper_transfer_slip_Image}}
+                </div>
 
-                    <img [hidden]="imageUrlTransfer===null" id="imagePriview" [src]="imageUrlTransfer" />
-                  </div>
+
                   <br>
               <button type="submit" id="rotate" class="btn btn-block btn-success rounded-0">Create</button>
             </form>

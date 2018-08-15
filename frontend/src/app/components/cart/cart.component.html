@@ -50,18 +50,24 @@
         <div class="card-body">
             <form #createOrderForm=ngForm>
 
-              <!-- <label for="input-firstname">Receiver firstname</label> -->
               <input type="text" name="receiver_firstname" class="form-control" id="input-receiver_firstname" placeholder="Receiver firstname" [(ngModel)]="orderForm.receiver_firstname"
               required/>
+              <span class="text-danger" [hidden]="!error.receiver_firstname">
+                {{error.receiver_firstname}}
+              </span>
 
-              <!-- <label for="input-receiver_lastname">Receiver lastname</label> -->
               <input type="text" name="receiver_lastname" class="form-control" id="input-receiver_lastname" placeholder="Receiver lastname" [(ngModel)]="orderForm.receiver_lastname"
               required/>
+              <span class="text-danger" [hidden]="!error.receiver_lastname">
+                {{error.receiver_lastname}}
+              </span>
 
-              <!-- <label for="input-receiver_location">Receiver location</label> -->
               <textarea type="text" name="receiver_location" class="form-control" id="input-receiver_location" placeholder="Receiver location" [(ngModel)]="orderForm.receiver_location"
               required></textarea>
             </form>
+            <span class="text-danger" [hidden]="!error.receiver_location">
+              {{error.receiver_location}}
+            </span>
 
             <div class="form-group">
                 <agm-map [zoom]="17" [latitude]="latitude" [longitude]="longtitude" (mapClick)="onChooseLocation($event)" >

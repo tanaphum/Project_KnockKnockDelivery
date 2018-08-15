@@ -6,14 +6,11 @@
     <div class="card">
       <div class="card-header">Sign Up</div>
       <div class="card-body">
-        <form #signupForm=ngForm (ngSubmit)="onSubmit()">
-          <!-- <div class="alert alert-danger" [hidden]="!error">
-          {{error}}
-        </div> -->
+        <form #signupForm=ngForm >
 
           <div class="form-group">
             <label for="input-name">First Name</label>
-            <input type="text" name="firstname" class="form-control" id="input-firstname" placeholder="First Name" [(ngModel)]="form.firstname" required/>
+            <input type="text" name="firstname" class="form-control" id="input-firstname" placeholder="First Name" (keyup)="onChange()" [(ngModel)]="form.firstname" required/>
             <span class="text-danger" [hidden]="!error.firstname">
               {{error.firstname}}
             </span>
@@ -21,15 +18,17 @@
 
           <div class="form-group">
             <label for="input-name">Last Name</label>
-            <input type="text" name="lastname" class="form-control" id="input-lastname" placeholder="Last Name" [(ngModel)]="form.lastname" required/>
+            <input type="text" name="lastname" class="form-control" id="input-lastname" placeholder="Last Name" (keyup)="onChange()" [(ngModel)]="form.lastname" required/>
             <span class="text-danger" [hidden]="!error.lastname">
               {{error.lastname}}
             </span>
           </div>
 
           <div class="form-group">
-            <label for="input-email">Identity No.</label>
-            <input type="text" name="identity_no" class="form-control" id="input-identity_no" placeholder="Identity no." [(ngModel)]="form.identity_no" required>
+            <label for="input-email">Citizen Id</label>
+            <input type="number" maxlength="13"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            name="identity_no" class="form-control" id="input-identity_no" placeholder="Citizen Id" (keyup)="onChange()" [(ngModel)]="form.identity_no" required/>
             <span class="text-danger" [hidden]="!error.identity_no">
               {{error.identity_no}}
             </span>
@@ -37,7 +36,9 @@
 
           <div class="form-group">
             <label for="input-email">Telephone number</label>
-            <input type="number" name="telephone_number" class="form-control" id="input-telephone_number" placeholder="Telephone number" [(ngModel)]="form.telephone_number" required>
+            <input type="number" pattern="[0-9]*" maxlength="10" name="telephone_number" 
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            class="form-control" id="input-telephone_number" placeholder="Telephone number" (keyup)="onChange()" [(ngModel)]="form.telephone_number" required>
             <span class="text-danger" [hidden]="!error.telephone_number">
               {{error.telephone_number}}
             </span>
@@ -45,7 +46,7 @@
 
           <div class="form-group">
             <label for="input-email">Email</label>
-            <input type="email" name="email" class="form-control" id="input-email" placeholder="Email" [(ngModel)]="form.email" required>
+            <input type="email" name="email" class="form-control" id="input-email" placeholder="Email" [(ngModel)]="form.email" (keyup)="onChange()" required>
             <span class="text-danger" [hidden]="!error.email">
               {{error.email}}
             </span>
@@ -53,21 +54,24 @@
 
           <div class="form-group">
             <label for="input-password">Password</label>
-            <input type="password" name="password" class="form-control" id="input-password" placeholder="Password" [(ngModel)]="form.password"
+            <input type="password" minLength="8" maxlength="15" name="password" class="form-control" id="input-password" placeholder="Password" (keyup)="onChange()"  [(ngModel)]="form.password"
               required>
-          </div>
-
-          <div class="form-group">
-            <label for="input-confirm-password">Confirm Password</label>
-            <input type="password" minLength="8" name="confirmPassword" class="form-control" id="input-confirm-password" placeholder="Confirm Password"
-              [(ngModel)]="form.password_confirmation" required>
               <span class="text-danger" [hidden]="!error.password">
                 {{error.password}}
               </span>
           </div>
 
+          <div class="form-group">
+            <label for="input-confirm-password">Confirm Password</label>
+            <input type="password" minLength="8" maxlength="15" name="confirmPassword" class="form-control" id="input-confirm-password" (keyup)="onChange()" placeholder="Confirm Password"
+              [(ngModel)]="form.password_confirmation" required>
+              <span class="text-danger" [hidden]="!error.password">
+                {{error.password_confirmation}}
+              </span>
+          </div>
 
-          <button type="submit" class="btn btn-block">Sign Up</button>
+
+          <button class="btn btn-block" (click)="onSubmit()">Sign Up</button>
         </form>
       </div>
     </div>

@@ -38,7 +38,7 @@ export class EditShopComponent implements OnInit {
   private seller;
   private user;
   private masterData;
-  private error: boolean = false;
+  private error=[];
   private errorMessage;
   title: string = 'My first AGM project';
   latitude: any;
@@ -143,43 +143,71 @@ export class EditShopComponent implements OnInit {
   }
 
   onSubmit() {
-    this.isClick = !this.isClick;
-    let temp = {
-      shop_name: this.form.shop_name,
-      shop_location: this.form.shop_location,
-      shop_latitude:this.form.shop_latitude,
-      shop_longitude:this.form.shop_longitude,
-      shop_logo_image:null,
+    console.log('[onSubmit] ',this.form);
+    console.log('[onSubmit] ',this.user_form);
+
+    this.error['shop_name'] = false;
+    this.error['shop_location'] = false;
+    this.error['firstname'] = false;
+    this.error['lastname'] = false;
+    this.error['identity_no'] = false;
+    this.error['telephone_number'] = false;
+
+    if(this.form.shop_name.length == 0) {
+      this.error['shop_name'] = 'Please fill in shop name.'
+    }    
+    if(this.form.shop_location.length == 0) {
+      this.error['shop_location'] = 'Please fill in shop location'
     }
-    console.log("onSubmit", temp)
-
-
-    this.sellerService.updateShop(temp, this.seller.seller_id).subscribe(
-      response => {
-        console.log("response onSubmit: ", response)
-        this.isClick = !this.isClick;
-        this.isEdit = !this.isEdit;
-        // this.reloadPage.emit(null)
-        if(response.message == 'Successfully') {
-          alert("Update shop success!!!");
-          this.updateProfile()
-          .then(result => {
-            this.router.navigateByUrl('/manage-shop')
-          })
-
-        }
-
-
-      },
-      error => { 
-        console.log("error onSubmit: ", error) 
-        this.isClick = !this.isClick;
-        this.error = !this.error;
-        this.errorMessage = error.error.message
-
-      
+    if(this.user_form.firstname.length == 0) {
+      this.error['firstname'] = 'Please fill in first name.'
+    }
+    if(this.user_form.lastname.length == 0) {
+      this.error['lastname'] = 'Please fill in last name.'
+    }
+    if(this.user_form.identity_no == null) {
+      this.error['identity_no'] = 'Please fill in citizen id'
+    }
+    if(this.user_form.telephone_number == null) {
+      this.error['telephone_number'] = 'Please fill in telephone number'
+    }
+    else {
+      this.isClick = !this.isClick;
+      let temp = {
+        shop_name: this.form.shop_name,
+        shop_location: this.form.shop_location,
+        shop_latitude:this.form.shop_latitude,
+        shop_longitude:this.form.shop_longitude,
+        shop_logo_image:null,
       }
-    )
+      this.user_form.telephone_number = '0' + this.user_form.telephone_number.toString();
+
+      console.log("onSubmit", temp)
+      this.sellerService.updateShop(temp, this.seller.seller_id).subscribe(
+        response => {
+          console.log("response onSubmit: ", response)
+          this.isClick = !this.isClick;
+          this.isEdit = !this.isEdit;
+          // this.reloadPage.emit(null)
+          if(response.message == 'Successfully') {
+            alert("Update shop success!!!");
+            this.updateProfile()
+            .then(result => {
+              this.router.navigateByUrl('/manage-shop')
+            })
+          }
+        },
+        error => { 
+          console.log("error onSubmit: ", error) 
+          this.isClick = !this.isClick;
+          // this.error = !this.error;
+          this.errorMessage = error.error.message
+  
+        
+        }
+      )
+  
+    }
 
   }
 

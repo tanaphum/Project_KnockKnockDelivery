@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -7,14 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./request-reset.component.css']
 })
 export class RequestResetComponent implements OnInit {
-  
+
   public form = {
     email: null
   };
   private error = null
 
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -31,10 +32,13 @@ export class RequestResetComponent implements OnInit {
   handleResponse(res) {
     console.log('res.data:',res.data)
     this.form.email = null;
+    this.router.navigateByUrl('/login')
   }
 
   handleError(error) {
     this.error = error.error.error;
+    this.router.navigateByUrl('/login')
+
   }
 
 }

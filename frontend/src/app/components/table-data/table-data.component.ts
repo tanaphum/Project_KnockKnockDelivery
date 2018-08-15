@@ -28,7 +28,7 @@ export class TableDataComponent implements OnInit {
   private status
   private selected_catagory;
   private selected_status;
-  private error:boolean = false;
+  private error = [];
   private errorMessage:String;
   private seller;
   private catagory;
@@ -113,37 +113,53 @@ export class TableDataComponent implements OnInit {
   }
 
   onEdit() {
-    console.log("onEdit");
-    this.isClick = !this.isClick;
-    var product = {
-      product_name: this.product_name,
-      product_description: this.product_description,
-      product_price: this.product_price,
-      unit_in_stock: this.unit_in_stock,
-      product_status_id: this.selected_status,
-      product_category_id: this.selected_catagory,
-      product_image_1:null,
-      product_image_2:null,
-      product_image_3:null
+    this.error['product_name'] = false;
+    this.error['product_price'] = false;
+    this.error['product_description'] = false;
+
+    if(this.product_name.length == 0 ) {
+      this.error['product_name'] = 'Please fill in Product name.'
     }
-    console.log("product: ",product);
-    console.log("id: ",this.product_id);
-
-
-    this.sellerService.updateProduct(this.product_id,product,this.seller).subscribe(
-      response => { 
-        console.log("response onEdit: ", response);
-        this.isClick = !this.isClick;
-        this.isEdit = true;
-        this.updateDataInTable(response.result)
-      },
-      error => {
-        this.isClick = !this.isClick;
-        this.error = true;
-        this.errorMessage = error
-        console.log("error: ", error)
+    if(this.product_price.length == 0 ) {
+      this.error['product_price'] = 'Please fill in Product price.'
+    }
+    if(this.product_description.length == 0 ) {
+      this.error['product_description'] = 'Please fill in Product description.'
+    }
+    else {
+      this.isClick = !this.isClick;
+      var product = {
+        product_name: this.product_name,
+        product_description: this.product_description,
+        product_price: this.product_price,
+        unit_in_stock: this.unit_in_stock,
+        product_status_id: this.selected_status,
+        product_category_id: this.selected_catagory,
+        product_image_1:null,
+        product_image_2:null,
+        product_image_3:null
       }
-    )
+      console.log("product: ",product);
+      console.log("id: ",this.product_id);
+  
+  
+      this.sellerService.updateProduct(this.product_id,product,this.seller).subscribe(
+        response => { 
+          console.log("response onEdit: ", response);
+          this.isClick = !this.isClick;
+          // this.isEdit = true;
+          alert('Product has been edit')
+          this.updateDataInTable(response.result)
+        },
+        error => {
+          this.isClick = !this.isClick;
+          // this.error = true;
+          this.errorMessage = error
+          console.log("error: ", error)
+        }
+      )
+  
+    }
 
   }
 

@@ -18,6 +18,7 @@ export class DeliverOrdersComponent implements OnInit {
   private orders = [];
   private seller = [];
   private user;
+  private isEdit:boolean = false
   private orderDetail = [];
   private keyWord = '';
   private isOrder: boolean = true;
@@ -88,7 +89,7 @@ export class DeliverOrdersComponent implements OnInit {
 
   }
   private dafault_bank;
-  private error;
+  private error = [];
   private bankAcc;
   @ViewChild("mycanvas") mycanvas;
 
@@ -210,19 +211,6 @@ export class DeliverOrdersComponent implements OnInit {
             lng: +element.receiver_longitude
           }
         };
-        // this.calculateDistance(+element.seller.shop_latitude,+element.seller.shop_longitude,
-        //   +element.receiver_latitude,+element.receiver_longitude);
-        //   element["distance"] = this.distance;
-        //   if(this.distance > 8 && this.distance <= 40){
-        //   element["service_charge"] = Math.round(25+((this.distance-1)*14))
-        //   }else if (this.distance > 5 && this.distance <= 8){
-        //     element["service_charge"] = Math.round(25+((this.distance-1)*11))
-        //   }
-        //   else if (this.distance > 1 && this.distance <= 5){
-        //     element["service_charge"] = Math.round(25+((this.distance-1)*8))
-        //   }else{
-        //     element["service_charge"] = 25;
-        //   }
         })
 
 
@@ -357,24 +345,50 @@ export class DeliverOrdersComponent implements OnInit {
   }
 
   onUpdateProfile() {
-    console.log("[Update]")
-    let id = this.deliver_profile.shipper_id;
-    let form = {
-      bank_account_id:this.form.bank_account_id,
-      bank_account_no:this.form.bank_account_no,
-      shipper_transfer_slip_Image:this.form.shipper_transfer_slip_Image,
-      // profile_status_id:this.form.profile_status_id
+    console.log("[Update]",this.form)
+    console.log("[Update]",this.user_form)
+    this.error['bank_account_no'] = false;
+    this.error['firstname'] = false;
+    this.error['lastname'] = false;
+    this.error['identity_no'] = false;
+    this.error['telephone_number'] = false;
+    if(this.form.bank_account_no == null) {
+      this.error['bank_account_no'] = 'Please fill in bank account no.'
     }
-    this.updateProfile().then(result => {
-    this.deliverService.updateDeliver(form,id)
-    .subscribe(response => {
-      console.log("[Response] ",response)
-    },
-    error => {
-      console.log("[Error] ",error)
-
-    })
-    })
+    if(this.user_form.firstname.length == 0) {
+      this.error['firstname'] = 'Please fill in first name.'
+    }
+    if(this.user_form.lastname.length == 0) {
+      this.error['lastname'] = 'Please fill in last name.'
+    }
+    if(this.user_form.identity_no == null) {
+      this.error['identity_no'] = 'Please fill in citizen id'
+    }
+    if(this.user_form.telephone_number == null) {
+      this.error['telephone_number'] = 'Please fill in telephone number'
+    }
+    else{
+      let id = this.deliver_profile.shipper_id;
+      let form = {
+        bank_account_id:this.form.bank_account_id,
+        bank_account_no:this.form.bank_account_no,
+        shipper_transfer_slip_Image:this.form.shipper_transfer_slip_Image,
+        // profile_status_id:this.form.profile_status_id
+      }
+      this.isEdit  = !this.isEdit
+      this.updateProfile().then(result => {
+      this.deliverService.updateDeliver(form,id)
+      .subscribe(response => {
+        console.log("[Response] ",response)
+        alert("This profile has been updated!!!")
+        this.isEdit  = !this.isEdit
+      },
+      error => {
+        console.log("[Error] ",error)
+  
+        })
+      })
+    }
 
   }
 

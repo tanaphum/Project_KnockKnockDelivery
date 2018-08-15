@@ -190,7 +190,7 @@ agm-map {
     color: #fff;
     top: 85px;
     /* font-weight: 400; */
-    right: 250px; 
+    right: 260px; 
     /* left: px; */
     text-align: center;
     border: 3px solid #f36e36;
@@ -202,13 +202,17 @@ agm-map {
 
 }
 
+#selectCatagory {
+  margin-top: 30px;
+  width: 100%
+}
   
 @media screen and (max-width: 375px) {
   .cart-num {
     position: absolute;
     background: #f36e36;
     color: #fff;
-    top: 165px;
+    top: 215px;
     /* font-weight: 400; */
     right: 285px; 
     /* left: px; */
@@ -226,7 +230,7 @@ agm-map {
   position: absolute;
   background: #f36e36;
   color: #fff;
-  top: 165px;
+  top: 215px;
   /* font-weight: 400; */
   right: 160px; 
   /* left: px; */
